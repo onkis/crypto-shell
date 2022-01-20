@@ -1,0 +1,8 @@
+name = "giftcard-app"
+type = "javascript"
+
+account_id = "8cb6693230e2ff3788e058dfacde43fc"
+workers_dev = true
+route = ""
+zone_id = ""
+compatibility_date = "2022-01-20"
