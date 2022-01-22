@@ -8,6 +8,12 @@ Install cloudflare wrangler
 npm install -g @cloudflare/wrangler
 ```
 
+Install npm packages
+```
+npm install
+```
+
+
 login to cloudflare account. This might not be required
 ```
 wrangler login
@@ -19,3 +25,12 @@ to run the application locally
 wrangler dev
 ```
 then visit http://127.0.0.1:8787/
+
+## Builds
+
+The wrangler cli tool is configured by the wrangler.toml[https://developers.cloudflare.com/workers/cli-wrangler/configuration] file
+In the toml file a "build" step is specified
+The build command is "make build"
+
+The make task ensures the /dist directory is removed
+and can be modified to run any additional scripts/steps
