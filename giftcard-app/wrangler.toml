@@ -1,4 +1,4 @@
-name = "giftcard-app"
+name = "giftcard-app-dev"
 type = "javascript"
 
 account_id = "8cb6693230e2ff3788e058dfacde43fc"
@@ -6,3 +6,15 @@ workers_dev = true
 route = ""
 zone_id = ""
 compatibility_date = "2022-01-20"
+webpack_config="webpack.config.js"
+
+[build]
+command = "make build"
+
+[build.upload]
+format = "service-worker"
+
+
+[env.production]
+name = "giftcard-app-prod"
+webpack_config = "webpack.production.js"
