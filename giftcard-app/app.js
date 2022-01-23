@@ -1,17 +1,18 @@
 import { Router } from 'itty-router'
+import { res } from './lib/response.js'
 
 const router = Router()
 
+router.get('/', async (request) => {
+  // const home = await VIEWS.get('home');
 
-router.get('/', function(request){
   //TODO: I think this "new Response" syntax
   //is ugly and could easily be wrapped with a simpler
   //more elegant API like express
   //Response.text()?
   //or Response.json
-  return new Response("Hello Nurse", {
-    headers: { 'content-type': 'text/plain' }
-  })
+
+  return res.render('<h1>Hello Nurse</h1>'); //maybe this?
 })
 
 
