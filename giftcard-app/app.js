@@ -12,7 +12,7 @@ router.get('/', async (request) => {
   //Response.text()?
   //or Response.json
 
-  return res.render('<h1>Hello Nurse</h1>'); //maybe this?
+  return res.render('<h1>Hello Nurse</h1>'); //maybe this? ✅
 })
 
 
