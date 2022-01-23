@@ -12,9 +12,14 @@ webpack_config="webpack.config.js"
 command = "make build"
 
 [build.upload]
-format = "service-worker"
+format = "modules"
+main = "./main.mjs"
+dir = "./dist"
 
+[[build.upload.rules]]
+type = "CompiledWasm"
+globs = ["**/*.wasm"]
 
 [env.production]
 name = "giftcard-app-prod"
-webpack_config = "webpack.production.js"
+#webpack_config = "webpack.production.js"

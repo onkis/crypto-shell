@@ -3,5 +3,10 @@ module.exports = {
   entry: './app.js',
   target: 'webworker',
   mode: "production",
-  devtool: false
+  devtool: false,
+  
+  experiments: {
+    asyncWebAssembly: true,
+    syncWebAssembly: true
+  }
 }

@@ -1,7 +1,29 @@
 import { Router } from 'itty-router'
 import { res } from './lib/response.js'
+import { Client } from './lib/driver/postgres'
 
 const router = Router()
+
+async function query(){
+  const client = new Client({
+    user: 'postgres',
+    database: 'giftcard_app_dev',
+    // hostname is the full URL to your pre-created Cloudflare Tunnel, see documentation here:
+    // https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/create-tunnel
+    hostname: env.TUNNEL_HOST || 'https://postgres-dev.oilbirt.com',
+    password: env.DATABASE_PASSWORD || 'password', // use a secret to store passwords
+    port: 5432,
+  })
+  
+  await client.connect()
+  
+  let query = await client.queryObject(`select * from "whatever"`);
+  
+  console.log("query result", query);
+  return query;
+  
+}
+
 
 router.get('/', async (request) => {
   // const home = await VIEWS.get('home');
@@ -11,7 +33,7 @@ router.get('/', async (request) => {
   //more elegant API like express
   //Response.text()?
   //or Response.json
-
+  await query();
   return res.render('<h1>Hello Nurse</h1>'); //maybe this? ✅
 })
 
@@ -21,6 +43,13 @@ router.all('*', () => new Response('Not Found.', { status: 404 }))
 
 
 // attach the router "handle" to the event handler
-addEventListener('fetch', event =>
-  event.respondWith(router.handle(event.request))
-)
+// addEventListener('fetch', event =>
+//   event.respondWith(router.handle(event.request))
+// )
+
+const app = {
+  async fetch(event){
+    event.respondWith(router.handle(event.request))
+  }
+};
+export default app;
