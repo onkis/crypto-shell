@@ -26,9 +26,22 @@ wrangler dev
 ```
 then visit http://127.0.0.1:8787/
 
+
+Connecting to Postgres
+
+To connect to a local postgres db you'll need to have a local
+postgres db running ()
+https://postgresapp.com/
+
+install cloudflare's tunnel service
+```
+brew install cloudflare/cloudflare/cloudflared
+```
+More on that Tunnel service here: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/create-tunnel
+
 ## Builds
 
-The wrangler cli tool is configured by the wrangler.toml[https://developers.cloudflare.com/workers/cli-wrangler/configuration] file
+The wrangler cli tool is configured by the [wrangler.toml](https://developers.cloudflare.com/workers/cli-wrangler/configuration) file
 In the toml file a "build" step is specified
 The build command is "make build"
 
