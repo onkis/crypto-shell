@@ -3,7 +3,7 @@ import { res } from './lib/response.js'
 import { Client } from './lib/driver/postgres'
 
 const router = Router()
-
+const env = {}
 async function query(){
   const client = new Client({
     user: 'postgres',
@@ -48,8 +48,8 @@ router.all('*', () => new Response('Not Found.', { status: 404 }))
 // )
 
 const app = {
-  async fetch(event){
-    event.respondWith(router.handle(event.request))
+  async fetch(request){
+    return router.handle(request);
   }
 };
 export default app;
