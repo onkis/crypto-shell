@@ -5,3 +5,4 @@ clean:
 
 build:
 	node_modules/.bin/webpack --mode development
+	node ./scripts/deploy_views.js
