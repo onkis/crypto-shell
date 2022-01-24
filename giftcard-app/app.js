@@ -17,9 +17,10 @@ async function query(){
   
   await client.connect()
   
-  let query = await client.queryObject(`select * from "whatever"`);
+  let query = await client.queryObject(`select * from "Whatever"`);
   
   console.log("query result", query);
+  console.dir(query)
   return query;
   
 }
