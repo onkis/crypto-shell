@@ -5,36 +5,31 @@ const path = require('path');
 const pug = require('pug');
 const secret = 'veryimportantsecret';
 
+/* KV Namespace ID for 'VIEWS' */
+const KV_ID_VIEWS = '5c5f567b7fde4418baf641c8ff0d678e';
 const viewsDir = `${__dirname}/../views/`;
 const outputFile = `${__dirname}/../dist/views.json`;
-const output = [];
+const views = [];
 
 if(fs.existsSync(outputFile)) fs.unlinkSync(outputFile);
 
-fs.readdir(viewsDir, function(err, files){
-  if(err) console.error("failed to get files", err);
-  else{
-    files.forEach(filename => {
-      const filePath = `${viewsDir}${filename}`;
-      const value = pug.renderFile(filePath, {});
-      const sha = crypto.createHmac("sha256", secret);
-      const checksum = sha.update(value).digest("hex");
+const files = fs.readdirSync (viewsDir);
+files.forEach(filename => {
+  const filePath = `${viewsDir}${filename}`;
+  const value = pug.renderFile(filePath, {});
+  const sha = crypto.createHmac("sha256", secret);
+  const checksum = sha.update(value).digest("hex");
 
-      console.log(filename, checksum);
+  /* filename + checksum */
+  const key = filename.split(".pug").join(`_${checksum}`);
+  const mb = Buffer.byteLength(value, 'utf8') * 0.000001;
 
-      /* filename + checksum */
-      const key = filename.split(".pug").join(`_${checksum}`);
+  if(mb > 25) console.log(`${filePath} HAS EXCEEDED 25MB!`);
 
-      const mb = Buffer.byteLength(value, 'utf8') * 0.000001;
+  views.push({ key, value });
+});
 
-      if(mb > 25) console.log(`${filePath} HAS EXCEEDED 25MB!`);
+fs.writeFileSync(outputFile, JSON.stringify(views));
 
-      output.push({ key, value });
-    });
+exec(`wrangler kv:bulk put --namespace-id='${KV_ID_VIEWS}' '${outputFile}'`);
 
-    fs.writeFile(outputFile, JSON.stringify(output), (err) => {
-      if (err) console.log("failed to write!", err);
-      console.log(outputFile);
-    });
-  }
-})
