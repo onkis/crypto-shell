@@ -63,4 +63,19 @@ and can be modified to run any additional scripts/steps
 
 
 # Postgres options
+
+
+What does this project need for db layer
+
+1. Migrations: Primary use case add and remove tables, indexes etc from DB
+2. Model files: 
+	centralize query re-use
+	centralize function re-use
+	provide methods for making CRUD operations easier
+	
+3. Security. Should make writing safe (no sql injection) queries easy
+
+https://knexjs.org/
+
 https://github.com/brianc/node-sql
+
