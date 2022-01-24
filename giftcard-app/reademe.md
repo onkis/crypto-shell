@@ -60,3 +60,7 @@ The build command is "make build"
 
 The make task ensures the /dist directory is removed
 and can be modified to run any additional scripts/steps
+
+
+# Postgres options
+https://github.com/brianc/node-sql

@@ -19,8 +19,8 @@ async function query(){
   
   let query = await client.queryObject(`select * from "Whatever"`);
   
-  console.log("query result", query);
-  console.dir(query)
+  console.log("query result", query.rows[0]);
+  console.log(Object.keys(query))
   return query;
   
 }
