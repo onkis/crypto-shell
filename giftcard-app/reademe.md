@@ -42,6 +42,16 @@ More on that Tunnel service here: https://developers.cloudflare.com/cloudflare-o
 instructions followed
 https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide
 
+Setup a tunnel config like this
+~/.cloudflared/config.yml
+```
+url: tcp://localhost:5432
+tunnel: d794ce22-e94d-4222-8d6d-258a8df71b16
+credentials-file: /Users/mike/.cloudflared/d794ce22-e94d-4222-8d6d-258a8df71b16.json
+```
+
+
+
 ## Builds
 
 The wrangler cli tool is configured by the [wrangler.toml](https://developers.cloudflare.com/workers/cli-wrangler/configuration) file
