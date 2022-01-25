@@ -6,4 +6,5 @@ clean:
 build:
 	node_modules/.bin/esbuild --bundle --sourcemap --outfile=dist/main.mjs --format=esm ./app.js --external:*.wasm --inject:./lib/deno/workers-override.ts
 	cp ./lib/driver/**/*.wasm ./dist
+	node ./lib/deploy_views.js
 	#node_modules/.bin/webpack --mode development
