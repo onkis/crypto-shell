@@ -6,7 +6,8 @@ const pug = require('pug');
 const secret = 'veryimportantsecret';
 
 /* KV Namespace ID for 'VIEWS' */
-const KV_ID_VIEWS = '5c5f567b7fde4418baf641c8ff0d678e';
+const USE_CHECKSUM = false;
+const KV_ID_VIEWS = 'd96c3b4cf4164af78f326b707568ff31';
 const viewsDir = `${__dirname}/../views/`;
 const outputFile = `${__dirname}/../dist/views.json`;
 const views = [];
@@ -18,10 +19,10 @@ files.forEach(filename => {
   const filePath = `${viewsDir}${filename}`;
   const value = pug.renderFile(filePath, {});
   const sha = crypto.createHmac("sha256", secret);
-  const checksum = sha.update(value).digest("hex");
+  const checksum = (USE_CHECKSUM) ? `_${sha.update(value).digest("hex")}` : '';
 
   /* filename + checksum */
-  const key = filename.split(".pug").join(`_${checksum}`);
+  const key = filename.split(".pug").join(checksum);
   const mb = Buffer.byteLength(value, 'utf8') * 0.000001;
 
   if(mb > 25) console.log(`${filePath} HAS EXCEEDED 25MB!`);

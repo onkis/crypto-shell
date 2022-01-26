@@ -2,8 +2,8 @@ import { Router } from 'itty-router'
 import { res } from './lib/response.js'
 import { Client } from './lib/driver/postgres'
 
+let isKvSet = false;
 const router = Router()
-const env = {}
 async function query(){
   const client = new Client({
     user: 'postgres',
@@ -21,36 +21,31 @@ async function query(){
   
   console.log("query result", query.rows[0]);
   console.log(Object.keys(query))
-  return query;
-  
+  return query; 
 }
 
-
-router.get('/', async (request) => {
-  // const home = await VIEWS.get('home');
-
-  //TODO: I think this "new Response" syntax
-  //is ugly and could easily be wrapped with a simpler
-  //more elegant API like express
-  //Response.text()?
-  //or Response.json
-  await query();
-  return res.render('<h1>Hello Nurse</h1>'); //maybe this? ✅
+router.get('/', async (request) => {  
+  // await query(); I'm having trouble with the DB + Tunneling
+  return res.render('home') // maybe this? ✅
 })
 
+router.get('/daisy', async (request) => {
+  return res.render('daisy') // Now its exactly like express
+})
 
 // 404 for everything else
-router.all('*', () => new Response('Not Found.', { status: 404 }))
-
-
-// attach the router "handle" to the event handler
-// addEventListener('fetch', event =>
-//   event.respondWith(router.handle(event.request))
-// )
+router.all('*', () => {
+  new Response('Not Found.', { status: 404 })
+})
 
 const app = {
-  async fetch(request){
-    return router.handle(request);
+  async fetch(request, env) {
+    if(!isKvSet){
+      res.setViews(env.VIEWS);
+      isKvSet = true;
+    }
+    return router.handle(request, env);
   }
 };
+
 export default app;
