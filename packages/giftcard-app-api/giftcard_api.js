@@ -2,7 +2,10 @@ import { Router } from 'itty-router'
 import { res } from 'cs-http-handlers'
 import { Client } from './lib/driver/postgres'
 
+const env = {}
+
 const router = Router()
+
 async function query(){
   const client = new Client({
     user: 'postgres',
@@ -24,7 +27,7 @@ async function query(){
 }
 
 router.get('/', async (request) => {  
-  // await query(); I'm having trouble with the DB + Tunneling
+   await query(); //I'm having trouble with the DB + Tunneling
   return res.render('<h1>home</h1>') // maybe this? ✅
 })
 // 404 for everything else
