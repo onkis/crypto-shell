@@ -7,17 +7,17 @@ route = ""
 zone_id = ""
 compatibility_date = "2022-01-20"
 
-\# [[kv_namespaces]]
-\# binding = "VIEWS"
-\# preview_id = "d96c3b4cf4164af78f326b707568ff31"
-\# id = "5c5f567b7fde4418baf641c8ff0d678e"
+# [[kv_namespaces]]
+# binding = "VIEWS"
+# preview_id = "d96c3b4cf4164af78f326b707568ff31"
+# id = "5c5f567b7fde4418baf641c8ff0d678e"
 
 [build]
 command = "make build"
 
 [build.upload]
 format = "modules"
-main = "./main.mjs"
+main = "./giftcard_api.mjs"
 dir = "./dist"
 
 [[build.upload.rules]]

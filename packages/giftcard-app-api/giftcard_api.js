@@ -25,21 +25,16 @@ async function query(){
 
 router.get('/', async (request) => {  
   // await query(); I'm having trouble with the DB + Tunneling
-  return res.render('home') // maybe this? ✅
+  return res.render('<h1>home</h1>') // maybe this? ✅
 })
 // 404 for everything else
 router.all('*', () => {
-  new Response('Not Found.', { status: 404 })
+  return new Response('Not Found.', { status: 404 })
 })
 
 const app = {
-  async fetch(request, env) {
-    if(!isKvSet){
-      res.setViews(env.VIEWS);
-      isKvSet = true;
-    }
-    return router.handle(request, env);
+  async fetch(request){
+    return router.handle(request);
   }
 };
-
 export default app;

@@ -12,6 +12,6 @@
   "dependencies": {
     "esbuild": "^0.14.14",
     "itty-router": "^2.4.10",
-    "cs-http-handlers": "0.0.0"
+    "cs-http-handlers": "file:../cs-http-handlers"
   }
 }

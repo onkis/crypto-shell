@@ -7,12 +7,10 @@
   "homepage": "https://github.com/onkis/crypto-shell#readme",
   "license": "",
   "main": "cs-http-handlers.js",
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/onkis/crypto-shell.git"
+    "url": "git+https://github.com/onkis/crypto-shell.git",
+    "directory": "packages/cs-http-handlers"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

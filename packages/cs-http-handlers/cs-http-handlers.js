@@ -7,7 +7,7 @@ export const res = {
       headers: { 'content-type': 'application/json' }
     })
   },
-  render: async function(view){
+  render: async function(html){
     return new Response(html, {
       headers: { 'content-type': 'text/html' }
     })

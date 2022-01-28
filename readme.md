@@ -15,6 +15,21 @@ npm install -g lerna
 for some functionality
 
 
+To Make a "shared" module
+
+```
+cd packages
+lerna create cs-<packgeName>
+```
+
+"cs-" is the namespace for the private crypto shell modules
+
+Then Link the packages
+```
+lerna bootstrap
+```
+
+
 ##Major Components
 
 This will contain the cloudflare app that allows users to setup email => giftcard parings
