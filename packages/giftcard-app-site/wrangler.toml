@@ -1,4 +1,4 @@
-account_id = ""
+account_id = "8cb6693230e2ff3788e058dfacde43fc"
 name = "giftcard-app-site"
 type = "webpack"
 workers_dev = true

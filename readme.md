@@ -51,3 +51,21 @@ This will contain the wallet app. Probably cloudflare and chrome ext based. This
 ```
 /wallet-app
 ```
+
+
+
+
+
+## Issues so far with cloudflare
+1. Lack of clear "happy" Path within the platform
+workers, modules, pages, page functions
+which to chose and why? What will have the best support?
+Where will the edge cases be?
+
+To me it currently seems like we should implement a single worker, via the module api
+and take advantage of the kv asset handler API if it makes sense
+```
+import { getAssetFromKV, mapRequestToAsset } from '@cloudflare/kv-asset-handler'
+```
+
+Otherwise we should just roll our own like our initial implementation

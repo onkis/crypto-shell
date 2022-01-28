@@ -1,4 +1,7 @@
 node_modules/*
 packages/*/node_modules/*
 packages/*/dist/*
+reference/*/dist/*
+reference/*/node_modules/*
+
 *.DS_Store
