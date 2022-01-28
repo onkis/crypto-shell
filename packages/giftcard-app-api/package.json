@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "giftcard-app-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "giftcard_api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mike Ball <mike.ball3@gmail.com>",
+  "license": "",
+  "dependencies": {
+    "esbuild": "^0.14.14",
+    "itty-router": "^2.4.10",
+    "cs-http-handlers": "0.0.0"
+  }
+}
