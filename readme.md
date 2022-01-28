@@ -4,6 +4,17 @@ Initial Use case: Give the gift of crypto. Allow user to gift crypto to an email
 Eventually allow a Marketer to upload a list of email address to do similar gifting as a part of a campaign
 
 
+##Lerna
+This project is a lerna(https://github.com/lerna/lerna) repo
+
+Might be necessary to run 
+
+```
+npm install -g lerna
+```
+for some functionality
+
+
 ##Major Components
 
 This will contain the cloudflare app that allows users to setup email => giftcard parings
