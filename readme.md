@@ -24,10 +24,19 @@ lerna create cs-<packgeName>
 
 "cs-" is the namespace for the private crypto shell modules
 
+When you require this module in your package json use
+```
+"dependencies": {
+	"cs-<packageName>": "file:../cs-<packageName>"
+  }
+```
+
 Then Link the packages
 ```
 lerna bootstrap
 ```
+
+
 
 
 ##Major Components
