@@ -1,0 +1,12 @@
+{
+  "name": "service",
+  "version": "1.0.0",
+  "description": "This will contain the service tier",
+  "main": "service.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "",
+  "private": true
+}
