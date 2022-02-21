@@ -8,4 +8,5 @@ This branch is all about building a "traditional" node/express/knex app shell
 2. Simple "pug" views
 3. Model Layer (knex)
 4. build for deployment with esbuild? (single files?)
- 
+5. Logger? 
+6. use .env for secrets 
