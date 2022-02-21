@@ -1,13 +1,19 @@
-const debug = require('debug')('crypto-shell:server');
-const http = require('http');
+//const debug = require('debug')('crypto-shell:server');
+import dbg from 'debug';
+const debug = dbg('crypto-shell:server')
+import http from 'http';
 
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import  cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import routes from './api/routes.js';
 
-const routes = require('./api/routes.js');
+//to replace dirname
+import { dirname as dir } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dir(fileURLToPath(import.meta.url));
 
 
 const app = express();
@@ -23,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 
+//all the /public routes..
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
