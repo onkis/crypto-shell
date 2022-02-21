@@ -1,18 +1,11 @@
 # Welcome to Cypto Shell. A holding place for initial crypto ideas
 
-Initial Use case: Give the gift of crypto. Allow user to gift crypto to an email address.
-Eventually allow a Marketer to upload a list of email address to do similar gifting as a part of a campaign
+The crypto ecosystem moves very quickly. Being able to adapt rapidly is important
 
+This branch is all about building a "traditional" node/express/knex app shell
 
-##Major Components
-
-This will contain the cloudflare app that allows users to setup email => giftcard parings
-```
-/giftcard-app/
-```
-
-
-This will contain the wallet app. Probably cloudflare and chrome ext based. This will allow a gift recipient to redeem their crypto. Send it to another wallet or take other actions in the ecosystem.
-```
-/wallet-app
-```
+1. express shell
+2. Simple "pug" views
+3. Model Layer (knex)
+4. build for deployment with esbuild? (single files?)
+ 
