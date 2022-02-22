@@ -11,3 +11,4 @@ This branch is all about building a "traditional" node/express/knex app shell
 5. login
 6. Logger?
 7. use .env for secrets 
+8. deployment

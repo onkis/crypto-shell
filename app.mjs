@@ -10,7 +10,7 @@ import  cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import routes from './api/routes.js';
 
-//to replace dirname
+//to replace __dirname
 import { dirname as dir } from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = dir(fileURLToPath(import.meta.url));
