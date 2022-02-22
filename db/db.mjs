@@ -1,9 +1,8 @@
 import knex  from 'knex';
 
-const pg = knex({
+export const pg = knex({
   client: 'pg',
   connection: process.env.PG_CONNECTION_STRING
 });
-export { pg };
 
 

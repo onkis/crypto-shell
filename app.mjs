@@ -11,9 +11,9 @@ import logger from 'morgan';
 import routes from './api/routes.js';
 
 //to replace __dirname
-import { dirname as dir } from 'path';
+import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-const __dirname = dir(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 import { pg } from './db/db.mjs'
 
