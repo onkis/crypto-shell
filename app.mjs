@@ -15,6 +15,8 @@ import { dirname as dir } from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = dir(fileURLToPath(import.meta.url));
 
+import { pg } from './db/db.mjs'
+
 
 const app = express();
 
