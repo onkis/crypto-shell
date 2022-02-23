@@ -1,10 +1,10 @@
 #.PHONY db-migrate migration-create
 
 clean:
-	rm -r ./dist/
+	rm app-built.js
 
 build-app:
-	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outdir=./dist --format=cjs
+	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
 
 db-migrate:
 	./node_modules/.bin/knex migrate:latest --knexfile=./db/knexfile.js --migrations-directory=./db/migrations
