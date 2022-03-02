@@ -6,9 +6,11 @@ This branch is all about building a "traditional" node/express/knex app shell
 
 1. express shell <Done>
 2. Simple "pug" views <Done>
-3. Model Layer (knex)
-4. build for deployment with esbuild? (single files?)
-5. login
-6. Logger?
+3. Model Layer (knex) <In Progress> [MB]
+4. build for deployment with esbuild? (single files?) 
+5. login <?>
+6. Logger <?>
 7. use .env for secrets 
 8. deployment
+9. "Merchant/Non Profit" fake page [MB]
+10. Solana Pay "Button" deployed to merchant page. Hardcoded accounts [MY]
