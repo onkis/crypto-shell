@@ -1,4 +1,7 @@
-#.PHONY db-migrate migration-create
+#.PHONY db-migrate migration-create test-site
+
+test-site:
+	python3 -m http.server --directory ./test_site
 
 clean:
 	rm app-built.js
