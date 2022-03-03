@@ -16,6 +16,7 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "caxa": "^2.1.0",
     "esbuild": "^0.14.23"
   }
 }
