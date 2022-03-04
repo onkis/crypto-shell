@@ -1,19 +1,17 @@
 import assert from 'assert/strict';
 import {asyncWrap} from '../../lib/core.mjs';
 
-export default class Core {
+export default class core {
   
   /**
    * Basic required fields for db interaction
    * @param {Object} knex - connection to pg
    * @param {String} tableName - The name of the table
    */
-  constructor(knex, tableName){
+  constructor(knex){
     this.pg = knex;
-    this.tableName = tableName;
-    
     assert(this.pg, "models/core.mjs Must have a pg knex object");
-    assert(this.tableName, "models/core.mjs Must have defined table name");
+    // assert(this.tableName, "models/core.mjs Must have defined table name");
   }
   
   /**

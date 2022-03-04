@@ -1,9 +1,10 @@
-import Core from './core.mjs';
+import core from './core.mjs';
 
-export default class User extends Core{
+export default class user extends core{
   
-  constructor(knex, tableName){
-    super(knex, tableName);
+  constructor(knex){
+    super(knex);
+    this.tableName = "users";
   }
   
   

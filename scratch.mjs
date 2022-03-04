@@ -1,7 +1,7 @@
-import {user} from './db/db.mjs';
+import {User} from './db/db.mjs';
 
 async function main(){
-  let err, ret = await user.findById(1);
+  let err, ret = await User.findById(1);
   console.log("result", err, ret);  
 }
 
