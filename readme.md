@@ -14,3 +14,22 @@ This branch is all about building a "traditional" node/express/knex app shell
 8. deployment
 9. "Merchant/Non Profit" fake page [MB]
 10. Solana Pay "Button" deployed to merchant page. Hardcoded accounts [MY]
+
+
+
+# Using the Solana CLI refrence
+
+Installation
+```
+brew install solana
+```
+
+Airdrop 1 SOL testnet
+```
+solana airdrop 1 <ADDRESS> --url https://api.testnet.solana.com
+```
+
+Airdrop 1 SOL devnet
+```
+solana airdrop 1 <ADDRESS> --url https://api.devnet.solana.com
+```
