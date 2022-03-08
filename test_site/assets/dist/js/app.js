@@ -6,7 +6,7 @@ async function main() {
   const connection = new Connection(clusterApiUrl('testnet'), 'confirmed');
   const recipient = new PublicKey('wBgDX9D5sn9opVV4EQYDEvsLYT4intU5TttZRi7LqK8');
 
-  const amount = new BigNumber(1),
+  const amount = new BigNumber(0.001),
         reference = new Keypair().publicKey,
         label = 'MackCash',
         message = 'Order: #001234',
@@ -14,7 +14,7 @@ async function main() {
         qrCodeSize = 250;
  
   const url = encodeURL({ recipient, amount, reference, label, message, memo });
-
+  console.log("url", url)
   const qrCode = createQR(url, qrCodeSize);
 
   /* Adding QR Code To DOM */
