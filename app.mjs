@@ -54,7 +54,7 @@ const buildablePaths = {
 
 app.use(function handleStaticAssets(req, res, next){
   let buildCmd = buildablePaths[req.path];
-  if(buildCmd){
+  if(buildCmd){ //TODO: don't run this in "production builds"
     console.log("running dynamicbuild", buildCmd);
     exec(buildCmd, function(error, stdout, stderr){
       if(error){
