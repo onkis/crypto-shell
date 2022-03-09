@@ -51,7 +51,7 @@ const staticMiddleware = express.static(path.join(__dirname, 'public'),{
 //Static builds
 //any request for a "buildablePath" results in the command being run
 const buildablePaths = {
-  "/dist/js/donate_client.js": "./node_modules/.bin/esbuild ./frontend/donate_client.mjs  --outfile=./public/dist/js/donate_client.js --bundle --define:global=window --minify"
+  "/dist/js/donate_client.js": "./node_modules/.bin/esbuild ./frontend/donate_client.mjs  --outfile=./public/dist/js/donate_client.js --bundle --define:global=window"
 }
 
 app.use(function handleStaticAssets(req, res, next){
