@@ -34,6 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //all the /public routes..
+//Setup the middleware but don't "use" it yet....
 const staticMiddleware = express.static(path.join(__dirname, 'public'),{
   dotfiles: 'ignore',
   etag: false,
@@ -48,8 +49,9 @@ const staticMiddleware = express.static(path.join(__dirname, 'public'),{
 });
 
 //Static builds
+//any request for a "buildablePath" results in the command being run
 const buildablePaths = {
-  "/dist/js/main.js": "./node_modules/.bin/esbuild ./frontend/app.mjs  --outfile=./public/dist/js/main.js --bundle --define:global=window --minify"
+  "/dist/js/donate_client.js": "./node_modules/.bin/esbuild ./frontend/donate_client.mjs  --outfile=./public/dist/js/donate_client.js --bundle --define:global=window --minify"
 }
 
 app.use(function handleStaticAssets(req, res, next){
