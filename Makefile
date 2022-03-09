@@ -2,7 +2,7 @@
 
 test-site:
 	#npx webpack-cli build ./test_site/assets/dist/js/app.js --output-path ./test_site/assets/dist/js/
-	./node_modules/.bin/esbuild ./test_site/assets/dist/js/app.mjs --outfile=./test_site/assets/dist/js/main.js --bundle --define:global=window --minify
+	./node_modules/.bin/esbuild ./frontend/app.mjs  --outfile=./test_site/assets/dist/js/main.js --bundle --define:global=window --minify
 	python3 -m http.server --directory ./test_site
 
 clean:
