@@ -9,6 +9,7 @@ import path from 'path';
 import  cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import routes from './api/routes.js';
+import { exec } from 'child_process';
 
 //to replace __dirname
 // import { dirname } from 'path';
@@ -33,7 +34,45 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //all the /public routes..
-app.use(express.static(path.join(__dirname, 'public')));
+const staticMiddleware = express.static(path.join(__dirname, 'public'),{
+  dotfiles: 'ignore',
+  etag: false,
+  //extensions: ['htm', 'html'],
+  index: false,
+  lastModified: true,
+  maxAge: 0,//'1d',
+  redirect: false
+  // setHeaders: function (res, path, stat) {
+  //   res.set('x-timestamp', Date.now())
+  // }
+});
+
+//Static builds
+const buildablePaths = {
+  "/dist/js/main.js": "./node_modules/.bin/esbuild ./frontend/app.mjs  --outfile=./public/dist/js/main.js --bundle --define:global=window --minify"
+}
+
+app.use(function handleStaticAssets(req, res, next){
+  let buildCmd = buildablePaths[req.path];
+  if(buildCmd){
+    console.log("running dynamicbuild", buildCmd);
+    exec(buildCmd, function(error, stdout, stderr){
+      if(error){
+        console.error("Problem with build", error);
+      }
+      else if(stderr){
+        console.error("Problem with build", stderr);
+      }
+      else{
+        console.log(stdout);
+      }
+      staticMiddleware(req,res,next);
+    });
+  }
+  else{
+    staticMiddleware(req,res,next);
+  }
+});
 
 app.use('/', routes);
 
