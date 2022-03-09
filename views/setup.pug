@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to dork on! #{title}
+  hr
+  #setup
+    .mb-3
+      label.form-label Donation Address
+      input.form-control(type='text' placeholder='Donation Address')
+    .mb-3
+      label.form-label Redirect Url
+      input.form-control(type='text' placeholder='Redirect Url')
+    .mb-3
+      textarea.form-control(rows='3' readOnly='true').
+        <script>
+          /* Code Snippet Here */
+        </script>

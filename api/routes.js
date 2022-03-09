@@ -9,8 +9,8 @@ router.get('/another/route', function(req, res){
   res.render('index', { title: 'yes another route' });
 });
 
-router.get('/purchase', function(req, res){
-  res.render('purchase', { title: 'purchase page' });
+router.get('/setup', function(req, res){
+  res.render('setup', { title: 'setup page' });
 });
 
 module.exports = router;
