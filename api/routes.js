@@ -13,7 +13,6 @@ router.get('/another/route', function(req, res){
 });
 
 router.get('/setup', function(req, res){
-  console.log("setup =>", script);
   res.render('setup', { title: 'setup page' });
 });
 
