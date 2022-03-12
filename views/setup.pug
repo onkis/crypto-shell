@@ -15,9 +15,7 @@ block content
       textarea.form-control(rows='5' readOnly='true').
         <script>
           (function(d, src){
-            console.log(d);
-            var e = d.createElement('script');
-            e.src = src;
+            var e = d.createElement('script');e.src = src;
             d.querySelector('head').appendChild(e);
           })(document, 'http://localhost:3000/x?id=1');
         </script>
