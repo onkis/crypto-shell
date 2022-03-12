@@ -17,8 +17,7 @@ import { exec } from 'child_process';
 // const __dirname = dirname(fileURLToPath(import.meta.url));
 const __dirname = path.dirname(process.argv[1]);
 
-import { pg } from './db/db.mjs'
-
+import { pg } from './db/db.mjs';
 
 const app = express();
 
@@ -28,7 +27,7 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 
-app.use(express.json({limit: "100kb"}));
+app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
