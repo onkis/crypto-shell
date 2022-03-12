@@ -8,7 +8,7 @@ clean:
 	rm crypo-shell
 
 build-app:
-	./node_modules/.bin/esbuild ./frontend/donate_client.mjs  --outfile=./test_site/assets/dist/js/donate_client.js --bundle --define:global=window --minify
+	./node_modules/.bin/esbuild ./frontend/donate.js  --outfile=./public/dist/js/bundle.js --bundle --define:global=window --minify
 	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
 
 build:

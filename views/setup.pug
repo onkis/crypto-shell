@@ -12,7 +12,12 @@ block content
       label.form-label Redirect Url
       input.form-control(type='text' placeholder='Redirect Url')
     .mb-3
-      textarea.form-control(rows='3' readOnly='true').
+      textarea.form-control(rows='5' readOnly='true').
         <script>
-          /* Code Snippet Here */
+          (function(d, src){
+            console.log(d);
+            var e = d.createElement('script');
+            e.src = src;
+            d.querySelector('head').appendChild(e);
+          })(document, 'http://localhost:3000/x?id=1');
         </script>

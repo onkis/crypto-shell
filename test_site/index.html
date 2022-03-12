@@ -65,6 +65,9 @@
 
 <main class="container">
   <div class="bg-light p-5 rounded">
+    <span id="sol_pay">
+    </span>
+
     <h1>Navbar example</h1>
     <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
     <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
@@ -73,8 +76,17 @@
   </div>
 </main>
 
-    <script src="http://localhost:3000/dist/js/donate_client.js"></script>
+    <!-- <script src="http://localhost:8000/assets/dist/js/donate_client.js"></script> -->
+    <script src="http://localhost:3000/dist/js/bundle.js"></script>
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-      
+    
+    <script>
+      // (function(d, src){
+      //   var e = d.createElement('script');
+      //   e.src = src;
+      //   d.querySelector('head').appendChild(e);
+      // })(document, 'http://localhost:3000/dist/js/donate_bundled.js');
+    </script>
+
   </body>
 </html>
