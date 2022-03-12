@@ -1,5 +1,6 @@
 import knex  from 'knex';
 import user from './models/user.mjs';
+import assets from './models/assets.mjs';
 
 export const pg = knex({
   client: 'pg',
@@ -7,6 +8,7 @@ export const pg = knex({
 });
 
 export const User = new user(pg);
+export const Assets = new assets(pg);
 
 //TODO: Include knex logging in whatever logger we choose
 /*

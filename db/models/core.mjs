@@ -24,4 +24,15 @@ export default class core {
   async findById(id){
     return asyncWrap(this.pg.select("*").where({id: id}).from(this.tableName).limit(1));
   }
+
+  async create(record){
+    const NOW = new Date().toISOString();
+    const newRecord = {
+      ...record,
+      created_at: NOW,
+      updated_at: NOW
+    };
+    
+    return asyncWrap(this.pg(this.tableName).insert(newRecord));
+  }
 }
