@@ -2,10 +2,10 @@ const vuePlugin = require("esbuild-plugin-vue3")
 const sassPlugin = require('esbuild-sass-plugin').sassPlugin;
 
 require('esbuild').build({
-    entryPoints: ['uikit/main.js'],
+    entryPoints: ['frontend/uikit/main.js'],
     bundle: true,
     //outfile: 'dist/out.js',
-    outdir: '../public/dist/',
+    outdir: 'public/dist/',
     plugins: [vuePlugin(), sassPlugin({
       
     })],
