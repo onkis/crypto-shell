@@ -9,7 +9,7 @@ import path from 'path';
 import  cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import routes from './api/routes.js';
-import { exec } from 'child_process';
+import { handleStaticAssets } from './lib/middleware.mjs';
 
 //to replace __dirname
 // import { dirname } from 'path';
@@ -33,47 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //all the /public routes..
-//Setup the middleware but don't "use" it yet....
-const staticMiddleware = express.static(path.join(__dirname, 'public'),{
-  dotfiles: 'ignore',
-  etag: false,
-  //extensions: ['htm', 'html'],
-  index: false,
-  lastModified: true,
-  maxAge: 0,//'1d',
-  redirect: false
-  // setHeaders: function (res, path, stat) {
-  //   res.set('x-timestamp', Date.now())
-  // }
-});
-
-//Static builds
-//any request for a "buildablePath" results in the command being run
-const buildablePaths = {
-  "/dist/js/donate_client.js": "./node_modules/.bin/esbuild ./frontend/donate_client.mjs  --outfile=./public/dist/js/donate_client.js --bundle --define:global=window"
-}
-
-app.use(function handleStaticAssets(req, res, next){
-  let buildCmd = buildablePaths[req.path];
-  if(buildCmd){ //TODO: don't run this in "production builds"
-    console.log("running dynamicbuild", buildCmd);
-    exec(buildCmd, function(error, stdout, stderr){
-      if(error){
-        console.error("Problem with build", error);
-      }
-      else if(stderr){
-        console.error("Problem with build", stderr);
-      }
-      else{
-        console.log(stdout);
-      }
-      staticMiddleware(req,res,next);
-    });
-  }
-  else{
-    staticMiddleware(req,res,next);
-  }
-});
+app.use(handleStaticAssets)
 
 app.use('/', routes);
 
