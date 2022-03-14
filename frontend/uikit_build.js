@@ -6,6 +6,7 @@ require('esbuild').build({
     bundle: true,
     //outfile: 'dist/out.js',
     outdir: 'public/dist/',
+    publicPath: '/dist/',
     plugins: [vuePlugin(), sassPlugin({
       
     })],
