@@ -2,7 +2,8 @@ const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
-const script = fs.readFileSync('./public/dist/js/bundle.js', { encoding: 'utf8' });
+const script = "";
+//const script = fs.readFileSync('./public/dist/js/bundle.js', { encoding: 'utf8' });
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
