@@ -19,3 +19,6 @@ db-migrate:
 
 migration-create:
 	./node_modules/.bin/knex migrate:make new_migration --knexfile=./db/knexfile.js --migrations-directory=./db/migrations
+
+build-uikit:
+	node frontend/uikit_build.js
