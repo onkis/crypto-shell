@@ -32,7 +32,18 @@ export default class core {
       created_at: NOW,
       updated_at: NOW
     };
-    
+
     return asyncWrap(this.pg(this.tableName).insert(newRecord));
+  }
+
+  async update({where, update}){
+    const updated_at = new Date().toISOString();
+    const updatedRecord = {...update, updated_at};
+
+    return asyncWrap(
+      this.pg(this.tableName)
+      .where(where)
+      .update(updatedRecord)
+     );
   }
 }
