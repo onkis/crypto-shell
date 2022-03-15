@@ -19,3 +19,11 @@ block content
             d.querySelector('head').appendChild(e);
           })(document, 'http://localhost:3000/x?id=1');
         </script>
+  script.
+    async function init(){
+      const body = await fetch("/api/assets/3");
+      const json = await body.json();
+      console.log(json);
+    }
+    
+    init();

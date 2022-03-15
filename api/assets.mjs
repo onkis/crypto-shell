@@ -3,13 +3,13 @@ import { Assets } from '../db/db.mjs';
 export async function get(req, res){
   const { params } = req;
 
-  const [err, asset] = await Assets.findById(params.id);
+  const [err, assets] = await Assets.findById(params.id);
   if(err){
     console.error(err);
     return res.send(500);
   }
 
-  res.json(asset).send();
+  res.json(assets[0]).send();
 }
 
 export default { get };
