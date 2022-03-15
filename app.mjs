@@ -8,7 +8,7 @@ import express from 'express';
 import path from 'path';
 import  cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import routes from './api/routes.js';
+import routes from './api/routes.mjs';
 import { handleStaticAssets } from './lib/middleware.mjs';
 
 //to replace __dirname

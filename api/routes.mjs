@@ -1,6 +1,8 @@
-const fs = require('fs');
-const express = require('express');
+import assets from './assets.mjs';
+import fs from 'fs';
+import express from 'express';
 const router = express.Router();
+export default router;
 
 const script = fs.readFileSync('./public/dist/js/bundle.js', { encoding: 'utf8' });
 
@@ -16,7 +18,10 @@ router.get('/setup', function(req, res){
   res.render('setup', { title: 'setup page' });
 });
 
-/*  */
+/* API For Assets Table */
+router.get('/api/assets/:id', assets.get);
+
+/* TODO: move to separate file... but for now its probably fine */
 router.get('/x', function(req, res){
   const { id } = req.query;
   /* TODO: Get Org Details */
@@ -38,5 +43,3 @@ function _buildScript(address, label, message){
 
   return response;
 }
-
-module.exports = router;
