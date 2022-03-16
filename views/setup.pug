@@ -9,6 +9,9 @@ block content
       label.form-label Donation Address
       input#donationAddress.form-control(onchange="update()" type='text' placeholder='Donation Address')
     .mb-3
+      label.form-label Label
+      input#label.form-control(onchange="update()" type='text' placeholder='Label')
+    .mb-3
       label.form-label Redirect Url
       input#redirectUrl.form-control(onchange="update()" type='text' placeholder='Redirect Url')
     .mb-3
@@ -17,7 +20,7 @@ block content
           (function(d, src){
             var e = d.createElement('script');e.src = src;
             d.querySelector('head').appendChild(e);
-          })(document, 'http://localhost:3000/x?id=1');
+          })(document, 'http://localhost:3000/x?id=3');
         </script>
   script.
     let id;
@@ -29,13 +32,15 @@ block content
       config = { ...asset.config };
 
       document.querySelector('input#donationAddress').value = config.address || "";
+      document.querySelector('input#label').value = config.label || "";
       document.querySelector('input#redirectUrl').value = config.redirectUrl || "";
     }
 
     async function update(){
       const config = {
         address: document.querySelector('input#donationAddress').value,
-        redirectUrl: document.querySelector('input#redirectUrl').value,
+        label: document.querySelector('input#label').value,
+        redirectUrl: document.querySelector('input#redirectUrl').value
       };
 
       const options = {

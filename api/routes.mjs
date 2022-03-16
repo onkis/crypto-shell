@@ -1,3 +1,4 @@
+import { Assets } from '../db/db.mjs';
 import assets from './assets.mjs';
 import fs from 'fs';
 import express from 'express';
@@ -24,14 +25,19 @@ router.put('/api/assets/:id', assets.update);
 router.delete('/api/assets/:id', assets.destroy);
 
 /* TODO: move to separate file... but for now its probably fine */
-router.get('/x', function(req, res){
+router.get('/x', async function(req, res){
   const { id } = req.query;
   /* TODO: Get Org Details */
+  const [err, record] = await Assets.findById(id);
+  if(err){
+    console.log(err);
+    return res.send(500);
+  }
+
+  const { address, label } = record[0].config;
 
   /* Build Donation Script  */
-  const address = 'wBgDX9D5sn9opVV4EQYDEvsLYT4intU5TttZRi7LqK8',
-        label = 'Donation For Mack',
-        message = 'Donation ID: 100';
+  const message = 'Donation ID: 100';
 
   const response = _buildScript(address, label, message);
   res.send(response);
