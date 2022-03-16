@@ -20,6 +20,8 @@ router.get('/setup', function(req, res){
 
 /* API For Assets Table */
 router.get('/api/assets/:id', assets.get);
+router.put('/api/assets/:id', assets.update);
+router.delete('/api/assets/:id', assets.destroy);
 
 /* TODO: move to separate file... but for now its probably fine */
 router.get('/x', function(req, res){

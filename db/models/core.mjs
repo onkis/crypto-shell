@@ -46,4 +46,9 @@ export default class core {
       .update(updatedRecord)
      );
   }
+
+  async destroy(where){
+    return asyncWrap(this.pg(this.tableName).where({...where}).del());
+  }
+  
 }

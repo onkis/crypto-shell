@@ -7,10 +7,10 @@ block content
   #setup
     .mb-3
       label.form-label Donation Address
-      input.form-control(type='text' placeholder='Donation Address')
+      input#donationAddress.form-control(onchange="update()" type='text' placeholder='Donation Address')
     .mb-3
       label.form-label Redirect Url
-      input.form-control(type='text' placeholder='Redirect Url')
+      input#redirectUrl.form-control(onchange="update()" type='text' placeholder='Redirect Url')
     .mb-3
       textarea#script.form-control(rows='6' readOnly='true').
         <script>
@@ -20,10 +20,31 @@ block content
           })(document, 'http://localhost:3000/x?id=1');
         </script>
   script.
+    let id;
+    let config = {};
     async function init(){
       const body = await fetch("/api/assets/3");
-      const json = await body.json();
-      console.log(json);
+      const asset = await body.json();
+      id = asset.id;
+      config = { ...asset.config };
+
+      document.querySelector('input#donationAddress').value = config.address || "";
+      document.querySelector('input#redirectUrl').value = config.redirectUrl || "";
     }
-    
+
+    async function update(){
+      const config = {
+        address: document.querySelector('input#donationAddress').value,
+        redirectUrl: document.querySelector('input#redirectUrl').value,
+      };
+
+      const options = {
+        method: 'PUT',
+        body: JSON.stringify({ config }),
+        headers: { 'Content-Type': 'application/json' }
+      }
+
+      await fetch(`/api/assets/${id}`, options);
+    }
+
     init();
