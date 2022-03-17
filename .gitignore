@@ -6,3 +6,4 @@ dist/*
 app-built.js
 crypto-shell
 frontend/node_modules/*
+.nova/*
