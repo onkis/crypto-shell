@@ -7,6 +7,9 @@ clean:
 	rm app-built.js
 	rm crypo-shell
 
+clean-ui:
+	rm -r ./dist
+
 build-app:
 	./node_modules/.bin/esbuild ./frontend/donate.js  --outfile=./public/dist/js/bundle.js --bundle --define:global=window --minify
 	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
