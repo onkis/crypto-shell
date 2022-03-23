@@ -8,16 +8,12 @@ export default router;
 const script = "";
 //const script = fs.readFileSync('./public/dist/js/bundle.js', { encoding: 'utf8' });
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 
-router.get('/another/route', function(req, res){
-  res.render('index', { title: 'yes another route' });
-});
-
-router.get('/setup', function(req, res){
-  res.render('setup', { title: 'setup page' });
+router.get('/uikit', function(req, res, next){
+  res.render('uikit');
 });
 
 /* API For Assets Table */
