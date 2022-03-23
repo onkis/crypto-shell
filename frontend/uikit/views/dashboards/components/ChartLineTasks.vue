@@ -41,7 +41,7 @@ export default {
           {
             label: "Mobile apps",
             tension: 0,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 5,
             pointBackgroundColor: "rgba(255, 255, 255, .8)",
             pointBorderColor: "transparent",

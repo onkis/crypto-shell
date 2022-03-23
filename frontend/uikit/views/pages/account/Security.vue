@@ -192,7 +192,7 @@
 </template>
 
 <script>
-import * as Choices from "choices.js";
+import Choices from "choices.js";
 import NavPill from "./components/NavPill.vue";
 import VmdInput from "../../../components/VmdInput.vue";
 import VmdSwitch from "../../../components/VmdSwitch.vue";

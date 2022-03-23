@@ -31,7 +31,7 @@ export default {
           {
             label: "Mobile apps",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 0,
             borderColor: "#e91e63",
             // eslint-disable-next-line no-dupe-keys
@@ -44,7 +44,7 @@ export default {
           {
             label: "Websites",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 0,
             borderColor: "#3A416F",
             // eslint-disable-next-line no-dupe-keys

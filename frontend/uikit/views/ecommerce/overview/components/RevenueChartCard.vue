@@ -65,7 +65,7 @@ export default {
           {
             label: "Facebook Ads",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 2,
             pointBackgroundColor: "#cb0c9f",
             borderColor: "#cb0c9f",
@@ -79,7 +79,7 @@ export default {
           {
             label: "Google Ads",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 2,
             pointBackgroundColor: "#3A416F",
             borderColor: "#3A416F",

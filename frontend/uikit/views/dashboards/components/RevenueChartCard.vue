@@ -68,7 +68,7 @@ export default {
           {
             label: "Google Ads",
             tension: 0,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 5,
             pointBackgroundColor: "#3A416F",
             pointBorderColor: "transparent",

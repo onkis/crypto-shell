@@ -29,7 +29,7 @@ export default {
           {
             label: "Organic Search",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 2,
             pointBackgroundColor: "#e91e63",
             borderColor: "#e91e63",
@@ -42,7 +42,7 @@ export default {
           {
             label: "Referral",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 2,
             pointBackgroundColor: "#3A416F",
             borderColor: "#3A416F",
@@ -55,7 +55,7 @@ export default {
           {
             label: "Direct",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 2,
             pointBackgroundColor: "#03A9F4",
             borderColor: "#03A9F4",

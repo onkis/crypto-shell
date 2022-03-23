@@ -566,7 +566,7 @@
 </template>
 
 <script>
-import * as Choices from "choices.js";
+import Choices from "choices.js";
 import VmdButton from "../../../../components/VmdButton.vue";
 import VmdSwitch from "../../../../components/VmdSwitch.vue";
 import VmdBadge from "../../../../components/VmdBadge.vue";

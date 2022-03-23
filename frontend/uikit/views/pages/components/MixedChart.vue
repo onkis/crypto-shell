@@ -38,7 +38,7 @@ export default {
             type: "line",
             label: "Referral",
             tension: 0.4,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 0,
             pointBackgroundColor: "#e91e63",
             borderColor: "#e91e63",

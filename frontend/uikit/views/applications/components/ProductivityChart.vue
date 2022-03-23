@@ -31,7 +31,7 @@ export default {
           {
             label: "Visitors",
             tension: 0.5,
-            borderWidth: 0,
+            //borderWidth: 0,
             pointRadius: 0,
             borderColor: "#fff",
             // eslint-disable-next-line no-dupe-keys
