@@ -20,7 +20,7 @@ router.get('/login', function(req,res){
 })
 
 //TODO: if dev mode...
-router.get('/uikit', function(req, res, next){
+router.get('/uikit', function(req, res){
   res.render('uikit');
 });
 
