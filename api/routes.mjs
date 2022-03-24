@@ -12,6 +12,14 @@ const script = "";
 //   res.render('index', { title: 'Express' });
 // });
 
+router.get('/', function(req, res){
+  res.render('index');
+});
+router.get('/login', function(req,res){
+  res.render('login');
+})
+
+//TODO: if dev mode...
 router.get('/uikit', function(req, res, next){
   res.render('uikit');
 });

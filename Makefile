@@ -25,3 +25,6 @@ migration-create:
 
 build-uikit:
 	node frontend/uikit_build.js
+
+build-uikit-static:
+	node frontend/uikit_static_build.js

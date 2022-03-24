@@ -35,11 +35,6 @@ import SignupCover from "../views/auth/signup/Cover.vue";
 
 const routes = [
   {
-    path: "/",
-    name: "/",
-    redirect: "/dashboards/dashboard-default",
-  },
-  {
     path: "/dashboards/dashboard-default",
     name: "Default",
     component: Default,
