@@ -47,12 +47,12 @@ html(lang="en")
                   h4.font-weight-bolder.text-white.mt-1 Sign In
                   p.mb-1.text-sm.text-white Enter your email to Sign In
               .card-body
-                form.text-start(role="form")
+                form.text-start(role="form", action="/auth/login", method="post")
                   .input-group.input-group-static.mb-4
                     label Email
-                    input.form-control(type="email", placeholder="john@email.com")
+                    input.form-control(name='email', type="email", placeholder="john@email.com")
                   .text-center
-                    button.btn.bg-gradient-dark.w-100.mt-3.mb-0(type="button") Sign in
+                    button.btn.bg-gradient-dark.w-100.mt-3.mb-0(type="submit") Sign in
               .card-footer.text-center.pt-0.px-lg-2.px-1
                 p.mb-4.text-sm.mx-auto
                   | Don&apos;t have an account?

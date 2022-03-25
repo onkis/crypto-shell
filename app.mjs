@@ -1,4 +1,5 @@
 //const debug = require('debug')('crypto-shell:server');
+import 'dotenv/config';
 import dbg from 'debug';
 const debug = dbg('crypto-shell:server')
 import http from 'http';
