@@ -19,8 +19,35 @@ This branch is all about building a "traditional" node/express/knex app shell
 13. Solana Program that provides security/chargeback capability ?
 14. Unit test setup (mocha?)
 
+# Things to install
+1. postgres.app https://postgresapp.com/
 
-# Using the Solana CLI refrence
+2. redis
+```
+  brew install redis
+  #to restart the service
+  brew services restart redis
+```
+
+3. nvm
+https://github.com/nvm-sh/nvm#install--update-script
+
+4. node latest (16) and set to default
+```
+nvm install v16
+nvm alias default v16
+```
+
+5.
+setup a .env file
+```
+GMAIL_USER=""
+GMAIL_PASSWORD=""
+REDIS_CONN="redis://127.0.0.1:6379"
+PG_CONN="postgresql://postgres:password@127.0.0.1:5432/crypto-shell_dev"
+```
+
+# Using the Solana CLI reference
 
 Installation
 ```
