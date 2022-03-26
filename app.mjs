@@ -11,6 +11,7 @@ import  cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import routes from './api/routes.mjs';
 import { handleStaticAssets } from './lib/middleware.mjs';
+import redisClient from "./lib/redis.mjs";
 
 //to replace __dirname
 // import { dirname } from 'path';
