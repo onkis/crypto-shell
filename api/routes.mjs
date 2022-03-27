@@ -6,7 +6,7 @@ const router = express.Router();
 export default router;
 
 const script = "";
-//const script = fs.readFileSync('./public/dist/js/bundle.js', { encoding: 'utf8' });
+// const script = fs.readFileSync('./public/dist/js/donate_script.js', { encoding: 'utf8' });
 
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -55,6 +55,7 @@ router.get('/x', async function(req, res){
   const message = 'Donation ID: 100';
 
   const response = _buildScript(address, label, message);
+
   res.send(response);
 });
 

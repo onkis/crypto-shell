@@ -11,7 +11,7 @@ clean-ui:
 	rm -r ./dist
 
 build-app:
-	./node_modules/.bin/esbuild ./frontend/donate.js  --outfile=./public/dist/js/bundle.js --bundle --define:global=window --minify
+	./node_modules/.bin/esbuild ./frontend/donate.js  --outfile=./public/dist/js/donate_script.js --bundle --define:global=window --minify --inject:frontend/esbuild.inject.js
 	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
 
 build:
