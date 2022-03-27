@@ -20,7 +20,7 @@ s.style.padding = '5px';
 s.style['border-radius'] = '5px';
 s.style.cursor = 'pointer';
 s.style.position = 'relative';
-s.onclick = ;
+s.onclick = handlePaymentHD;
 
 const i = document.createElement('img');
 i.src = "http://localhost:3000/images/sp-black.svg";
