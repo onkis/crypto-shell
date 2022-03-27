@@ -15,18 +15,23 @@ const script = "";
 router.get('/', function(req, res){
   res.render('index');
 });
+
 router.get('/login', function(req,res){
   res.render('login');
-})
+});
 
 router.post('/auth/login', function(req, res){
   console.log("email", req.body.email)
   res.sendStatus(201);
-})
+});
 
 //TODO: if dev mode...
 router.get('/uikit', function(req, res){
   res.render('uikit');
+});
+
+router.get('/setup', function(req, res){
+  res.render('setup');
 });
 
 /* API For Assets Table */
