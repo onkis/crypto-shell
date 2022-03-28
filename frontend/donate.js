@@ -5,6 +5,9 @@ import BigNumber from 'bignumber.js';
 const state = {};
 const sp = document.querySelector('#sol_pay');
 const s = document.createElement('span');
+const head = document.querySelector('head');
+const link = document.createElement('link');
+const meta = document.createElement('meta');
 
 const USE_QR = false;
 const MAIN_NET = false;
@@ -22,6 +25,14 @@ s.style.cursor = 'pointer';
 s.style.position = 'relative';
 s.onclick = handlePaymentHD;
 
+/* App Icon For Phantom Wallet */
+link.href="https://icon-library.com/images/triforce-icon/triforce-icon-19.jpg";
+link.rel="apple-touch-icon";
+
+/* App Title For Phantom Wallet */
+meta.setAttribute('property', 'og:title');
+meta.content = "Triforce Coin";
+
 const i = document.createElement('img');
 i.src = "http://localhost:3000/images/sp-black.svg";
 i.style['margin-top'] = '-4px';
@@ -35,6 +46,9 @@ f.type = 'number';
 f.placeholder = '$5.00';
 f.style.fontSize = '20px';
 f.style.width = '100px';
+
+head.appendChild(link);
+head.appendChild(meta);
 
 sp.appendChild(f);
 sp.appendChild(s);
