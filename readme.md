@@ -18,6 +18,7 @@ This branch is all about building a "traditional" node/express/knex app shell
 12. Donation "Account"
 13. Solana Program that provides security/chargeback capability ?
 14. Unit test setup (mocha?)
+15. need static assets for wallet app icon
 
 # Things to install
 1. postgres.app https://postgresapp.com/
