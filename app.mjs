@@ -12,6 +12,12 @@ import logger from 'morgan';
 import routes from './api/routes.mjs';
 import { handleStaticAssets } from './lib/middleware.mjs';
 import redisClient from "./lib/redis.mjs";
+import expSession from "express-session";
+import ConnectRedis from 'connect-redis';
+import { pg } from './db/db.mjs';
+
+
+const RedisStore = ConnectRedis(expSession);
 
 //to replace __dirname
 // import { dirname } from 'path';
@@ -19,15 +25,26 @@ import redisClient from "./lib/redis.mjs";
 // const __dirname = dirname(fileURLToPath(import.meta.url));
 const __dirname = path.dirname(process.argv[1]);
 
-import { pg } from './db/db.mjs';
 
 const app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+//TODO: find an alt logger?
 app.use(logger('dev'));
+
+app.use(expSession({
+  secret: process.env.COOKIE_SECRET, //TOOD: pass an array and rotate secret
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production' ? true : false //TODO: run ssl in dev? 
+  },
+  store: new RedisStore({ client: redisClient }),
+  resave: false,
+  saveUninitialized: false
+}));
 
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: false }));
