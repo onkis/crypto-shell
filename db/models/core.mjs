@@ -24,7 +24,40 @@ export default class core {
   async findById(id){
     return asyncWrap(this.pg.select("*").where({id}).from(this.tableName).limit(1));
   }
-
+  
+  /**
+   * find a Single record
+   * @param {Object} where - The where clause
+   * @returns {Array}  - [err, ret] tuple
+   */
+  async findOne(where){
+    let [err, res] = await asyncWrap(this.pg.select("*").where(where).from(this.tableName).limit(1));
+    
+    if(res && res?.length >0) res = res[0];
+    
+    return [err, res];
+  }
+  
+  async findOrCreate(where, record){
+    let [err, res] = await this.findOne(where);
+    
+  
+    
+    if(err){
+      return [err, null];
+    }
+    else if(res){//found one
+      return [null, res];
+    }
+    else{//need to create
+      let [createErr, createRec] = await this.create(record);
+      if(createErr){
+        return [createErr, null];
+      }
+      return this.findOne(where);
+    }
+  }
+  
   async create(record){
     const NOW = new Date().toISOString();
     const newRecord = {

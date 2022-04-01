@@ -2,6 +2,8 @@ import { Assets } from '../db/db.mjs';
 import assets from './assets.mjs';
 import fs from 'fs';
 import express from 'express';
+
+import auth from 'auth.mjs';
 const router = express.Router();
 export default router;
 
@@ -16,14 +18,17 @@ router.get('/', function(req, res){
   res.render('index');
 });
 
-router.get('/login', function(req,res){
-  res.render('login');
-});
+router.get('/login', auth.login);
 
-router.post('/auth/login', function(req, res){
-  console.log("email", req.body.email)
-  res.sendStatus(201);
-});
+router.get('/auth/enter-code', auth.enterCode);
+
+//TODO: rate limit this endpoint
+router.post('/auth/login', auth.loginPost);
+router.post('/auth/enter-code', auth.codePost);
+
+
+
+
 
 //TODO: if dev mode...
 router.get('/uikit', function(req, res){
