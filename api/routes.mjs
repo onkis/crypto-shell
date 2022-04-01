@@ -5,8 +5,8 @@ import express from 'express';
 const router = express.Router();
 export default router;
 
-const script = "";
-// const script = fs.readFileSync('./public/dist/js/donate_script.js', { encoding: 'utf8' });
+// const script = "";
+const script = fs.readFileSync('./public/dist/js/donate_script.js', { encoding: 'utf8' });
 
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -32,6 +32,10 @@ router.get('/uikit', function(req, res){
 
 router.get('/setup', function(req, res){
   res.render('setup');
+});
+
+router.get('/page', function(req, res){
+  res.render('page');
 });
 
 /* API For Assets Table */
