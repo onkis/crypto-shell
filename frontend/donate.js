@@ -13,13 +13,14 @@ const USE_QR = false;
 const MAIN_NET = false;
 const CLUSTER = (MAIN_NET) ? "https://api.mainnet-beta.solana.com" : "https://api.testnet.solana.com";
 
-console.log(`🔗 CLUSTER:${CLUSTER}`);
+console.log(`🔗CLUSTER:${CLUSTER}`);
 
 s.innerText = "Donate ";
+s.style.color = "#ffffff";
+s.style.background ="#000000";
 s.style['font-weight'] = '500';
 s.style['font-size'] = '20px';
-s.style.border = '1px solid';
-s.style.padding = '5px';
+s.style.padding = '10px';
 s.style['border-radius'] = '5px';
 s.style.cursor = 'pointer';
 s.style.position = 'relative';
@@ -34,7 +35,7 @@ meta.setAttribute('property', 'og:title');
 meta.content = "Triforce Coin";
 
 const i = document.createElement('img');
-i.src = "http://localhost:3000/images/sp-black.svg";
+i.src = "http://localhost:3000/images/sp-white-gradient.svg";
 i.style['margin-top'] = '-4px';
 i.style.with = '60px';
 
