@@ -20,8 +20,11 @@ export async function loginPost(req, res){
     
     if(err || !user) res.status(400).send();
     else if(user){
+      let [err, ret] = await _sendLoginEmail(user);
       
-      res.redirect('/auth/enter-code');
+      if(err) res.status(400).send();
+      
+      else res.redirect('/auth/enter-code');
     }
   }
   else{
@@ -29,18 +32,18 @@ export async function loginPost(req, res){
   }
 }
 
-function _sendLoginEmail(user){
+async function _sendLoginEmail(user){
   
   let loginCode = randomString(8);
   
   let message = `
     Your Login Code is: ${loginCode}
+    It is valid for 2 minutes.
   `;
+  let [err, r] = await setLoginCode(loginCode, user.id);
   
-  
-  
-  
-  sendTextEmail(user.email, message);
+  if(err) return [err, null];
+  return sendTextEmail(user.email, message);
 
 }
 

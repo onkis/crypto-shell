@@ -22,7 +22,7 @@ router.get('/login', auth.login);
 
 router.get('/auth/enter-code', auth.enterCode);
 
-//TODO: rate limit this endpoint
+//TODO: rate limit these endpoints
 router.post('/auth/login', auth.loginPost);
 router.post('/auth/enter-code', auth.codePost);
 
