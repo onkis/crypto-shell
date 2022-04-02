@@ -35,7 +35,7 @@ router.get('/setup', function(req, res){
 });
 
 router.get('/page', function(req, res){
-  res.render('page');
+  res.render('app');
 });
 
 /* API For Assets Table */
