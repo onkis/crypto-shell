@@ -11,7 +11,7 @@ import  cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import routes from './api/routes.mjs';
 import { handleStaticAssets } from './lib/middleware.mjs';
-import redisClient from "./lib/redis.mjs";
+import { legacyRedisClient } from "./lib/redis.mjs";
 import expSession from "express-session";
 import ConnectRedis from 'connect-redis';
 import { pg } from './db/db.mjs';
@@ -41,7 +41,7 @@ app.use(expSession({
   cookie: { 
     secure: process.env.NODE_ENV === 'production' ? true : false //TODO: run ssl in dev? 
   },
-  store: new RedisStore({ client: redisClient }),
+  store: new RedisStore({ client: legacyRedisClient }),
   resave: false,
   saveUninitialized: false
 }));

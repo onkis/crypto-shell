@@ -2,7 +2,7 @@ import { User } from '../db/db.mjs';
 import {isEmailValid, randomString} from '../lib/core.mjs';
 import {sendTextEmail} from '../lib/email.mjs';
  
-import {setLoginCode} from '../lib/redis.mjs'
+import {setLoginCode, getLoginCode} from '../lib/redis.mjs'
  
 export function login(req, res){
   res.render('login');
@@ -53,14 +53,13 @@ async function _sendLoginEmail(user){
 
 export async function codePost(req, res){
   let code = req.body.code;
-  
   let [err, userId] = await getLoginCode(code);
-  
+  console.log("code post login id", err, userId)
   if(err || !userId) res.status(401).send();
   else{
     //loggedin setup session
     let [err, user] = await User.findById(userId);
-    
+    console.log("code post user", user);
     if(err) res.status(500).send();
     
     req.session.user = user;
