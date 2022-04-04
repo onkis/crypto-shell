@@ -22,7 +22,13 @@ router.post('/auth/enter-code', codePost);
 
 router.get('/app', wwwAuth, function(req, res){
   res.render("app")
-})
+});
+
+router.get('/logout', wwwAuth, function(req, res){
+  req.session.destroy();
+  res.redirect('/login');
+});
+
 
 
 
