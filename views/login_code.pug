@@ -26,15 +26,16 @@ html(lang="en")
                   .icon.icon-shape.icon-xl.border-radius-xl.bg-gradient-warning.shadow.text-center.mx-auto
                     i.material-icons.opacity-10 lock_open
                 .card-body.px-lg-5.py-lg-5.text-center
-                  .text-center.text-muted.mb-4
-                    h2 Enter Login Code
-                  .row.gx-2.gx-sm-3.mb-3
-                    .col
-                      .input-group.input-group-outline
-                        input.form-control.form-control-lg.text-center(type='text', maxlength='9', autocomplete='off', autocapitalize='off')
-                   
-                  .text-center
-                    button.btn.bg-gradient-warning.w-100(type='button') Login
+                  form(role='form', action="/auth/enter-code", method="post")
+                    .text-center.text-muted.mb-4
+                      h2 Enter Login Code
+                    .row.gx-2.gx-sm-3.mb-3
+                      .col
+                        .input-group.input-group-outline
+                          input.form-control.form-control-lg.text-center(type='text', maxlength='9', autocomplete='off', autocapitalize='off', name='code')
+                     
+                    .text-center
+                      button.btn.bg-gradient-warning.w-100(type='button') Login
                     
     script.
       var win = navigator.platform.indexOf('Win') > -1;

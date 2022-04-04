@@ -43,14 +43,27 @@ async function _sendLoginEmail(user){
     Your Login Code is: ${loginCode}
     It is valid for 2 minutes.
   `;
-  console.log("Setting code")
+  
   let [err, r] = await setLoginCode(loginCode, user.id);
-  console.log("sending email...")
+  
   if(err) return [err, null];
   return sendTextEmail(user.email, message, "Your Login Code");
 
 }
 
 export async function codePost(req, res){
+  let code = req.body.code;
   
+  let [err, userId] = await getLoginCode(code);
+  
+  if(err || !userId) res.status(401).send();
+  else{
+    //loggedin setup session
+    let [err, user] = await User.findById(userId);
+    
+    if(err) res.status(500).send();
+    
+    req.session.user = user;
+    res.redirect('/app');
+  }
 };

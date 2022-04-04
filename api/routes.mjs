@@ -2,6 +2,7 @@ import { Assets } from '../db/db.mjs';
 import assets from './assets.mjs';
 import fs from 'fs';
 import express from 'express';
+import {wwwAuth} from "../lib/middleware.mjs";
 
 const router = express.Router();
 export default router;
@@ -10,17 +11,18 @@ router.get('/', function(req, res){
   res.render('index');
 });
 
-
+//TOOD: find a better way to import the routes?
 import {login, enterCode, loginPost, codePost} from './auth.mjs';
-
 router.get('/login', login);
-
 router.get('/auth/enter-code', enterCode);
 
 //TODO: rate limit these endpoints
 router.post('/auth/login', loginPost);
 router.post('/auth/enter-code', codePost);
 
+router.get('/app', wwwAuth, function(req, res){
+  res.render("app")
+})
 
 
 
@@ -53,7 +55,7 @@ router.get('/x', async function(req, res){
     return res.send(500);
   }
 
-  const { address, label } = record[0].config;
+  const { address, label } = record.config;
 
   /* Build Donation Script  */
   const message = 'Donation ID: 100';

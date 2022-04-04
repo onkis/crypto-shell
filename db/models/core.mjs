@@ -22,7 +22,11 @@ export default class core {
    * @returns {Array}  - [err, result] returns a tuple with an error and result
    */
   async findById(id){
-    return asyncWrap(this.pg.select("*").where({id}).from(this.tableName).limit(1));
+    let [err, res] = await asyncWrap(this.pg.select("*").where({id}).from(this.tableName).limit(1));
+    
+    if(res && res?.length >0) res = res[0];
+    
+    return [err, res];
   }
   
   /**

@@ -21,7 +21,7 @@ export async function get(req, res){
     return res.send(500);
   }
 
-  res.json(assets[0]);
+  res.json(assets);
 }
 
 export async function update(req, res){
