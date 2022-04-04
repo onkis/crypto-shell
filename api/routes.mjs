@@ -3,28 +3,23 @@ import assets from './assets.mjs';
 import fs from 'fs';
 import express from 'express';
 
-import auth from 'auth.mjs';
 const router = express.Router();
 export default router;
-
-// const script = "";
-const script = fs.readFileSync('./public/dist/js/donate_script.js', { encoding: 'utf8' });
-
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
 
 router.get('/', function(req, res){
   res.render('index');
 });
 
-router.get('/login', auth.login);
 
-router.get('/auth/enter-code', auth.enterCode);
+import {login, enterCode, loginPost, codePost} from './auth.mjs';
+
+router.get('/login', login);
+
+router.get('/auth/enter-code', enterCode);
 
 //TODO: rate limit these endpoints
-router.post('/auth/login', auth.loginPost);
-router.post('/auth/enter-code', auth.codePost);
+router.post('/auth/login', loginPost);
+router.post('/auth/enter-code', codePost);
 
 
 

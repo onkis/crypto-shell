@@ -2,12 +2,14 @@ import { User } from '../db/db.mjs';
 import {isEmailValid, randomString} from '../lib/core.mjs';
 import {sendTextEmail} from '../lib/email.mjs';
  
+import {setLoginCode} from '../lib/redis.mjs'
+ 
 export function login(req, res){
   res.render('login');
 }
 
 export function enterCode(req, res){
-  res.render('enter_code');
+  res.render('login_code');
 }
 
 
@@ -20,6 +22,7 @@ export async function loginPost(req, res){
     
     if(err || !user) res.status(400).send();
     else if(user){
+      console.log("found user", user, "sending email")
       let [err, ret] = await _sendLoginEmail(user);
       
       if(err) res.status(400).send();
@@ -40,10 +43,11 @@ async function _sendLoginEmail(user){
     Your Login Code is: ${loginCode}
     It is valid for 2 minutes.
   `;
+  console.log("Setting code")
   let [err, r] = await setLoginCode(loginCode, user.id);
-  
+  console.log("sending email...")
   if(err) return [err, null];
-  return sendTextEmail(user.email, message);
+  return sendTextEmail(user.email, message, "Your Login Code");
 
 }
 
