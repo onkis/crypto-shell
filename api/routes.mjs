@@ -29,10 +29,6 @@ router.get('/logout', wwwAuth, function(req, res){
   res.redirect('/login');
 });
 
-
-
-
-
 //TODO: if dev mode...
 router.get('/uikit', function(req, res){
   res.render('uikit');
@@ -40,10 +36,6 @@ router.get('/uikit', function(req, res){
 
 router.get('/setup', function(req, res){
   res.render('setup');
-});
-
-router.get('/page', function(req, res){
-  res.render('app');
 });
 
 /* API For Assets Table */

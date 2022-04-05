@@ -8,10 +8,10 @@ build-app:
 	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
 
 build-uikit:
-	node frontend/uikit_build.js
+	node frontend/es_build_uikit.js
 
 build-uikit-static:
-	node frontend/uikit_static_build.js
+	node frontend/es_build_uikit_static.js
 
 build-vue-app:
 	node frontend/es_build_app.js

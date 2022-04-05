@@ -6,6 +6,10 @@ const routes = [
     path: "/setup",
     name: "setup",
     component: Setup 
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/setup"
   }
 ];
 
