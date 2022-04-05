@@ -8,21 +8,21 @@ hr.horizontal.light.mt-0.mb-2
 #sidenav-collapse-main.collapse.navbar-collapse.w-auto.h-auto
   ul.navbar-nav
     li.nav-item.mb-2.mt-0
-      a.nav-link.text-white(data-bs-toggle='collapse' href='#ProfileNav' aria-controls='ProfileNav' role='button' aria-expanded='false')
+      a.nav-link.text-white(@click="toggleUser()" data-bs-toggle='collapse' aria-controls='ProfileNav' role='button' :aria-expanded="openUser")
         img.avatar(src='https://www.pnamarketing.com/wp-content/uploads/2019/03/27-270956_mario-face-png-super-mario-face-png.jpg')
         span.nav-link-text.ms-2.ps-1 Mario
-      #ProfileNav.collapse.show(style='')
+      #ProfileNav.collapse(v-bind:class="{show:openUser}")
         ul.nav
           li.nav-item
-            a.nav-link.text-white(href='../../../pages/pages/profile/overview.html')
+            a.nav-link.text-white
               span.sidenav-mini-icon  MP 
               span.sidenav-normal.ms-3.ps-1 My Profile 
           li.nav-item
-            a.nav-link.text-white(href='../../../pages/pages/account/settings.html')
+            a.nav-link.text-white
               span.sidenav-mini-icon  S 
               span.sidenav-normal.ms-3.ps-1 Settings 
           li.nav-item
-            a.nav-link.text-white(href='../../../pages/authentication/signin/basic.html')
+            a.nav-link.text-white(href='/logout')
               span.sidenav-mini-icon  L 
               span.sidenav-normal.ms-3.ps-1 Logout 
     hr.horizontal.light.mt-0
@@ -52,9 +52,16 @@ hr.horizontal.light.mt-0.mb-2
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      openUser: false
+    };
   }, 
-  mounted() {}
+  mounted() {},
+  methods: {
+    toggleUser(){
+      this.openUser = !this.openUser;
+    }
+  }
 }
 </script>
 
