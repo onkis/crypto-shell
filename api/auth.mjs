@@ -20,8 +20,15 @@ export async function loginPost(req, res){
   if(isEmailValid(email)){
     let [err, user] = await User.findOrCreate({email}, {email});
     
-    if(err || !user) res.status(400).send();
-    else if(user){
+    if(err){
+      console.log("failure to get user", err);
+      res.send(500);
+    }
+    if(!user){
+      console.log("no user found");
+      res.status(400).send();
+    }
+    else{
       console.log("found user", user, "sending email")
       let [err, ret] = await _sendLoginEmail(user);
       
