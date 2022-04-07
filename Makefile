@@ -1,20 +1,13 @@
 #.PHONY db-migrate migration-create test-site
 
-build:
+build: build-ui
 	./node_modules/.bin/caxa --input "./" --output "crypto-shell" -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/app.mjs"
 
-build-app:
-	./node_modules/.bin/esbuild ./frontend/donate.js  --outfile=./public/dist/js/donate_script.js --bundle --define:global=window --minify --inject:frontend/esbuild.inject.js
+build-app: build-ui
 	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
 
-build-uikit:
-	node frontend/es_build_uikit.js
-
-build-uikit-static:
-	node frontend/es_build_uikit_static.js
-
-build-vue-app:
-	node frontend/es_build_app.js
+build-ui:
+	node ./scripts/build_all_ui.mjs
 
 clean:
 	rm app-built.js
