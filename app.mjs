@@ -15,7 +15,7 @@ import { legacyRedisClient } from "./lib/redis.mjs";
 import expSession from "express-session";
 import ConnectRedis from 'connect-redis';
 import { pg } from './db/db.mjs';
-
+import {banBadActors} from './lib/rate_limit.mjs';
 
 const RedisStore = ConnectRedis(expSession);
 
@@ -50,6 +50,8 @@ app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
+
+app.use(banBadActors);
 
 //all the /public routes..
 app.use(handleStaticAssets)

@@ -31,3 +31,6 @@ migration-create:
 
 test-site:
 	python3 -m http.server --directory ./test_site
+
+del-rate-limits:
+	node scripts/delete_all_rate_limits.mjs

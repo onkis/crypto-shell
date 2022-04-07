@@ -14,11 +14,12 @@ This branch is all about building a "traditional" node/express/knex app shell
 8. deployment
 9. "Merchant/Non Profit" fake page <DONE>
 10. Solana Pay "Button" deployed to merchant page. Hardcoded accounts <DONE>
-11. "Donate" Button
-12. Donation "Account"
+11. "Donate" Button <Done>
+12. Donation "Account" [MY]
 13. Solana Program that provides security/chargeback capability ?
 14. Unit test setup (mocha?)
 15. need static assets for wallet app icon
+16. Admin App + donate script gen [MY]
 
 # Things to install
 1. postgres.app https://postgresapp.com/

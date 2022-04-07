@@ -3,6 +3,7 @@ import assets from './assets.mjs';
 import fs from 'fs';
 import express from 'express';
 import {wwwAuth} from "../lib/middleware.mjs";
+import {rateLimit} from "../lib/rate_limit.mjs";
 
 const router = express.Router();
 export default router;
@@ -16,9 +17,8 @@ import {login, enterCode, loginPost, codePost} from './auth.mjs';
 router.get('/login', login);
 router.get('/auth/enter-code', enterCode);
 
-//TODO: rate limit these endpoints
-router.post('/auth/login', loginPost);
-router.post('/auth/enter-code', codePost);
+router.post('/auth/login', rateLimit, loginPost);
+router.post('/auth/enter-code', rateLimit, codePost);
 
 router.get('/app', wwwAuth, function(req, res){
   res.render("app")
