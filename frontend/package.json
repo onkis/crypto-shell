@@ -28,6 +28,7 @@
     "jsvectormap": "^1.4.4",
     "leaflet": "^1.7.1",
     "photoswipe": "^4.1.3",
+    "process": "^0.11.10",
     "quill": "^1.3.6",
     "round-slider": "^1.6.1",
     "simple-datatables": "^3.2.0",
