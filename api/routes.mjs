@@ -5,7 +5,7 @@ import express from 'express';
 import {wwwAuth} from "../lib/middleware.mjs";
 import {rateLimit} from "../lib/rate_limit.mjs";
 
-const script = fs.readFileSync('./public/dist/js/donate_script.js');
+const script = fs.readFileSync('./public/dist/js/donate_script.js', { encoding: 'utf8' });
 const router = express.Router();
 export default router;
 
