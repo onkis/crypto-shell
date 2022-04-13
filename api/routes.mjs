@@ -56,7 +56,7 @@ router.get('/x', async function(req, res){
 
   const { address, label } = record.config;
 
-  /* Build Donation Script  */
+  /* Build Donation Script */
   const message = 'Donation ID: 100';
 
   const response = _buildScript(address, label, message);
@@ -65,10 +65,14 @@ router.get('/x', async function(req, res){
 });
 
 function _buildScript(address, label, message){
-  const response = script
-    .replace('~~address~~', address)
-    .replace('~~label~~', label)
-    .replace('~~message~~', message);
+  const response = `
+    const DONATION_PROPS = {
+      address: "${address}",
+      label: "${label}",
+      message: "${message}"
+    };
+    ${script}
+  `;
 
   return response;
 }

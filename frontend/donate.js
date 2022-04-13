@@ -2,6 +2,10 @@ import { PublicKey, Keypair, Connection, sendAndConfirmTransaction, Transaction 
 import { encodeURL, createQR, createTransaction, parseURL } from '@solana/pay';
 import BigNumber from 'bignumber.js';
 
+/*
+  DONATION_PROPS will be added at request time
+*/
+
 const state = {};
 const sp = document.querySelector('#sol_pay');
 const s = document.createElement('span');
@@ -24,7 +28,7 @@ s.style.padding = '10px';
 s.style['border-radius'] = '5px';
 s.style.cursor = 'pointer';
 s.style.position = 'relative';
-s.onclick = handlePaymentHD;
+s.onclick = (USE_QR) ? handlePaymentQR : handlePaymentHD;
 
 /* App Icon For Phantom Wallet */
 link.href="https://icon-library.com/images/triforce-icon/triforce-icon-19.jpg";
@@ -74,11 +78,7 @@ const init = async () => {
 async function handlePaymentHD () {
   const value = document.querySelector('#sol_pay input').value;
 
-  const props = {
-    address: '~~address~~',
-    label: '~~label~~',
-    message: '~~message~~'
-  };
+  const props = { ...DONATION_PROPS };
 
   const recipient = new PublicKey(props.address);
   const reference = new Keypair().publicKey;
@@ -111,13 +111,7 @@ async function handlePaymentHD () {
 
 function handlePaymentQR(){
   const value = document.querySelector('#sol_pay input').value;
-  const props = {
-    address: '~~address~~',
-    value: value,
-    label: '~~label~~',
-    message: '~~message~~',
-    memo: 'JC#4098'
-  };
+  const props = { ...DONATION_PROPS, value };
 
   const qrCode = _getQrCode(props);
   const element = document.getElementById('qrCode');
