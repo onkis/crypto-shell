@@ -1,5 +1,6 @@
 import { Assets } from '../db/db.mjs';
 import assets from './assets.mjs';
+import users from './users.mjs';
 import fs from 'fs';
 import express from 'express';
 import {wwwAuth} from "../lib/middleware.mjs";
@@ -43,6 +44,10 @@ router.get('/setup', function(req, res){
 router.get('/api/assets/:id', assets.get);
 router.put('/api/assets/:id', assets.update);
 router.delete('/api/assets/:id', assets.destroy);
+
+/* USERS */
+router.get('/api/user/:id', users.get);
+router.post('/api/user', users.create);
 
 /* TODO: move to separate file... but for now its probably fine */
 router.get('/x', async function(req, res){
