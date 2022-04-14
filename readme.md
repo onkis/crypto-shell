@@ -21,6 +21,7 @@ This branch is all about building a "traditional" node/express/knex app shell
 15. need static assets for wallet app icon
 16. Admin App + donate script gen [MY]
 17. Donation With USDC [MY]
+18. Donation Modal With QR Code
 
 # Things to install
 1. postgres.app https://postgresapp.com/
