@@ -16,11 +16,9 @@ export async function loginPost(req, res){
   let email = req.body.email;
   
   //TODO: deeper email validity
-  if(isEmailValid(email)){
+  if(!isEmailValid(email)) res.status(400).send();
+  else {
     let [err, user] = await User.findOrCreate({email}, {email});
-
-    if(user.__created) console.log("record created!");
-
     if(err){
       console.log("failure to get user", err);
       res.send(500);
@@ -30,16 +28,27 @@ export async function loginPost(req, res){
       res.status(400).send();
     }
     else{
-      console.log("found user", user, "sending email")
+      const org_id = user.id
+      const where = { id: user.id };
+      const update = { org_id }; /* Use User's Id Ads org_id for now */
+
+      if(user.__created){
+        let err;
+
+        [err] = await User.update({where, update});
+        if(err) return res.send(500);
+
+        [err] = await Assets.createDefaultAsset(org_id);
+        if(err) return res.send(500);
+      }
+
+      console.log("found user", user, "sending email");
+
       let [err, ret] = await _sendLoginEmail(user);
       
       if(err) res.status(400).send();
-      
       else res.redirect('/auth/enter-code');
     }
-  }
-  else{
-    res.status(400).send();
   }
 }
 
