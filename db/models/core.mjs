@@ -24,7 +24,8 @@ export default class core {
   async findById(id){
     let [err, res] = await asyncWrap(this.pg.select("*").where({id}).from(this.tableName).limit(1));
     
-    if(res && res?.length >0) res = res[0];
+    if(res?.length > 0) res = res[0];
+    else res = null;
     
     return [err, res];
   }
@@ -37,15 +38,14 @@ export default class core {
   async findOne(where){
     let [err, res] = await asyncWrap(this.pg.select("*").where(where).from(this.tableName).limit(1));
     
-    if(res && res?.length >0) res = res[0];
+    if(res?.length > 0) res = res[0];
+    else res = null;
     
     return [err, res];
   }
   
   async findOrCreate(where, record){
     let [err, res] = await this.findOne(where);
-    
-  
     
     if(err){
       return [err, null];
@@ -58,7 +58,8 @@ export default class core {
       if(createErr){
         return [createErr, null];
       }
-      return this.findOne(where);
+
+      return await this.findOne(where);
     }
   }
   
