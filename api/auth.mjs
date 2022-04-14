@@ -1,7 +1,7 @@
-import { User } from '../db/db.mjs';
+import { User, Assets } from '../db/db.mjs';
 import {isEmailValid, randomString} from '../lib/core.mjs';
 import {sendTextEmail} from '../lib/email.mjs';
- 
+
 import {setLoginCode, getLoginCode} from '../lib/redis.mjs'
  
 export function login(req, res){
@@ -11,7 +11,6 @@ export function login(req, res){
 export function enterCode(req, res){
   res.render('login_code');
 }
-
 
 export async function loginPost(req, res){
   let email = req.body.email;
@@ -26,7 +25,7 @@ export async function loginPost(req, res){
       console.log("failure to get user", err);
       res.send(500);
     }
-    if(!user){
+    else if(!user){
       console.log("no user found");
       res.status(400).send();
     }
@@ -45,7 +44,6 @@ export async function loginPost(req, res){
 }
 
 async function _sendLoginEmail(user){
-  
   let loginCode = randomString(8);
   
   let message = `
@@ -57,7 +55,6 @@ async function _sendLoginEmail(user){
   
   if(err) return [err, null];
   return sendTextEmail(user.email, message, "Your Login Code");
-
 }
 
 export async function codePost(req, res){
