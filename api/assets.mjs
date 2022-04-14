@@ -15,7 +15,9 @@ export async function create(req, res){
 
 export async function get(req, res){
   const { params } = req;
-  const [err, assets] = await Assets.findById(params.id);
+  const { org_id } = req?.session?.user;
+
+  const [err, assets] = await Assets.findOne({ org_id });
   if(err){
     console.error(err);
     return res.send(500);
@@ -26,10 +28,11 @@ export async function get(req, res){
 
 export async function update(req, res){
   const { params, body } = req;
+  const { org_id } = req?.session?.user;
   delete body.id;
   delete body.org_id;
 
-  const where = { id: params.id };
+  const where = { org_id };
   const update = { ...body };
 
   const [err, assets] = await Assets.update({ where, update });
