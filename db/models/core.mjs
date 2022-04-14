@@ -51,6 +51,7 @@ export default class core {
       return [err, null];
     }
     else if(res){//found one
+      res.__found = true;
       return [null, res];
     }
     else{//need to create
@@ -59,7 +60,9 @@ export default class core {
         return [createErr, null];
       }
 
-      return await this.findOne(where);
+      let [err, res] = await this.findOne(where);
+      if(err) return [err];
+      else return [null, {...res, __created: true}];
     }
   }
   
