@@ -22,12 +22,6 @@
               input#redirectUrl.form-control(v-model="config.redirectUrl" @keyup="update()" type='text' placeholder='Redirect Url')
             code#script(rows='6' readOnly='true').form-control.d-sm-flex.align-items-center.bg-gray-100.border-radius-lg.p-2.my-4.is-filled
               pre.
-                &lt;script&gt;
-                  (function(d, src){
-                    var e = d.createElement('script');e.src = src;
-                    d.querySelector('head').appendChild(e);
-                  })(document, 'http://localhost:3000/x?id=3');
-                &lt;/script&gt;
 </template>
 
 <script>
@@ -51,6 +45,7 @@ export default {
       this.id = data.id;
       this.config = { ...data.config };
       console.log(this.config);
+      document.querySelector('pre').innerText = this.getScript(this.id);
     },
     async update(){
       console.log("config", this.config);
@@ -60,6 +55,16 @@ export default {
 
       const response = await this.$http.put("/api/assets/3", update);
       console.log(response);
+    },
+    getScript(id){
+      const script = "<script>\n" +
+      "  (function(d, src){\n" + 
+      "    var e = d.createElement('script');e.src = src;\n" + 
+      "    d.querySelector('head').appendChild(e);\n" +
+      `  })(document, 'http://localhost:3000/x?id='${id});` + 
+      "\n<\/script>;";
+
+      return script;
     }
   }
 }
