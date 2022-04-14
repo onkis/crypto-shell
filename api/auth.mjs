@@ -19,7 +19,9 @@ export async function loginPost(req, res){
   //TODO: deeper email validity
   if(isEmailValid(email)){
     let [err, user] = await User.findOrCreate({email}, {email});
-    
+
+    if(user.__created) console.log("record created!");
+
     if(err){
       console.log("failure to get user", err);
       res.send(500);

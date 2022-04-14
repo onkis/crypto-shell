@@ -51,18 +51,21 @@ export default class core {
       return [err, null];
     }
     else if(res){//found one
-      res.__found = true;
-      return [null, res];
+      return [null, {...res, __found: true}];
     }
     else{//need to create
       let [createErr, createRec] = await this.create(record);
-      if(createErr){
-        return [createErr, null];
-      }
+      if(createErr) return [createErr, null];
 
       let [err, res] = await this.findOne(where);
-      if(err) return [err];
-      else return [null, {...res, __created: true}];
+
+      if(err){
+        console.log(err);
+        return [err];
+      }
+      else{
+        return [null, {...res, __created: true}];
+      }
     }
   }
   
