@@ -1,27 +1,49 @@
 <template lang="pug">
-.page-header.align-items-start.min-height-300.m-3.border-radius-xl(style="background-image: url('https://images.unsplash.com/photo-1491466424936-e304919aada7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1949&q=80');")
-  span.mask.bg-gradient-dark.opacity-6
-.container.mb-4
-  .row.mt-lg-n12.mt-md-n12.mt-n12.justify-content-center
-    .col-xl-8.col-lg-5.col-md-10.mx-auto
-      .card.mt-8
-        .card-header.p-0.position-relative.mt-n4.mx-10.z-index-2
-          .bg-gradient-success.shadow-success.border-radius-lg.py-3.pe-1.text-center.py-4
-            h4.font-weight-bolder.text-white.mt-1 Setup
-            p.mb-1.text-sm.text-white Configure Your Donation Button
-        .card-body
-          form.text-start(role="form", action="/auth/login", method="post")
-            .input-group.input-group-static.mb-2
-              label Donation Address
-              input#donationAddress.form-control(v-model="config.address" @keyup="update()" type='text' placeholder='Donation Address')
-            .input-group.input-group-static.mb-2
-              label Label
-              input#label.form-control(v-model="config.label" @keyup="update()" type='text' placeholder='Label')
-            .input-group.input-group-static.mb-2
-              label Redirect Url
-              input#redirectUrl.form-control(v-model="config.redirectUrl" @keyup="update()" type='text' placeholder='Redirect Url')
-            code#script(rows='6' readOnly='true').form-control.d-sm-flex.align-items-center.bg-gray-100.border-radius-lg.p-2.my-4.is-filled
-              pre.
+#setup-page
+  .container-fluid.py-4
+    .row
+      .col-lg-6
+        h4 Donation Setup
+      .col-lg-6.text-right.d-flex.flex-column.justify-content-center
+        button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(@click="update()" type='button') Save
+    .row.mt-5
+      .col-lg-8.mt-lg-0.mt-4
+        .card
+          .card-body
+            h5.font-weight-bolder Configure Donation
+            hr
+            .row.mt-4
+              .col-12
+                .input-group.input-group-static.mb-2
+                  label Donation Address
+                  input#donationAddress.form-control(v-model="config.address" type='text' placeholder='Donation Address')
+              .col-12
+                .input-group.input-group-static.mb-2
+                  label Label
+                  input#label.form-control(v-model="config.label" type='text' placeholder='Label')
+              .col-12
+                .input-group.input-group-static.mb-2
+                  label Redirect Url
+                  input#redirectUrl.form-control(v-model="config.redirectUrl" type='text' placeholder='Redirect Url')
+              .col-12
+                code#script(rows='6' readOnly='true').form-control.d-sm-flex.align-items-center.bg-gray-100.border-radius-lg.p-2.my-4.is-filled
+                  pre.
+                    &lt;script&gt;
+                      (function(d, src){
+                        var e = d.createElement('script');e.src = src;
+                        d.querySelector('head').appendChild(e);
+                      })(document, 'http://localhost:3000/x?id=3');
+                    &lt;/script&gt;
+      .col-lg-4
+        .card
+          .card-body.text-center
+            p.mt-2
+              span(style="color: rgb(255, 255, 255);background: rgb(0, 0, 0);font-weight: 500;font-size: 25px;padding: 8px 10px;border-radius: 5px;cursor: pointer;position: relative;")
+                | Donate 
+                img(src='http://localhost:3000/images/sp-white-gradient.svg' style='margin-top: -4px;')
+            hr
+            p.mb-0
+              | Preview of your donation button
 </template>
 
 <script>
@@ -57,6 +79,7 @@ export default {
       console.log(response);
     },
     getScript(id){
+      console.log("IM DOWN =>>", id);
       const script = "<script>\n" +
       "  (function(d, src){\n" + 
       "    var e = d.createElement('script');e.src = src;\n" + 
