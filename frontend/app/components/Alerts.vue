@@ -16,6 +16,7 @@ export default {
   components: {},
   data() {
     return {
+      currentAlert: 1, /* Using this for alert ID */
       type: "success",
       message: "Daisy Daisy... give me your answer do",
       showAlert: false,
@@ -39,14 +40,18 @@ export default {
     display(config){
       const { type, message, hideAfter, showCloseButton } = config;
       const that = this;
+      
+      that.currentAlert = that.currentAlert + 1;
+      const id = that.currentAlert;
 
       if(type) that.type = type;
       that.showCloseButton = showCloseButton;
       that.message = message;
       that.showAlert = true;
+      
       if(hideAfter){
         setTimeout(() => {
-          that.closeAlert();
+          if(that.currentAlert === id) that.closeAlert(); /* If current alert is still the same then remove */
         }, hideAfter);
       }
     }

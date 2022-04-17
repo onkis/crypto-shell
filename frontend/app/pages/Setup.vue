@@ -76,7 +76,9 @@ export default {
       };
 
       const response = await this.$http.put("/api/assets/3", update);
-      console.log(response);
+      if(response){
+        window.AlertManager({type: "success", "message": "Setup Saved!", hideAfter: 3000 });
+      }
     },
     getScript(id){
       console.log("IM DOWN =>>", id);
