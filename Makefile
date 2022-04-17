@@ -27,3 +27,6 @@ test-site:
 
 del-rate-limits:
 	node scripts/delete_all_rate_limits.mjs
+
+docker: build-ui
+	docker build -t crypto-shell -f ./infra/Dockerfile .
