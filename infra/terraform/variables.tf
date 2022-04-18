@@ -48,3 +48,8 @@ variable "fargate_memory" {
   description = "Fargate instance memory to provision (in MiB)"
   default     = "2048"
 }
+
+variable "db_port" {
+  description = "postgres db port"
+  default     = 5432
+}

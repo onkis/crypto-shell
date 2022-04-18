@@ -41,3 +41,24 @@ resource "aws_security_group" "ecs_tasks" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+# Traffic to the RDS insance
+resource "aws_security_group" "rds" {
+  name        = "cs-rds-security-group"
+  description = "allow inbound access from the the ecs"
+  vpc_id      = aws_vpc.cs-main.id
+
+  ingress {
+    protocol        = "tcp"
+    from_port       = var.db_port
+    to_port         = var.db_port
+    security_groups = [aws_security_group.ecs_tasks.id]
+  }
+
+  egress {
+    protocol    = "-1"
+    from_port   = var.db_port
+    to_port     = var.db_port
+    security_groups = [aws_security_group.ecs_tasks.id]
+  }
+}
