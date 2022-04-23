@@ -39,7 +39,7 @@
           .card-body.text-center
             p.mt-2
               span(style="color: rgb(255, 255, 255);background: rgb(0, 0, 0);font-weight: 500;font-size: 25px;padding: 8px 10px;border-radius: 5px;cursor: pointer;position: relative;")
-                | Donate 
+                | Donate With  
                 img(src='http://localhost:3000/images/sp-white-gradient.svg' style='margin-top: -4px;')
             hr
             p.mb-0
@@ -81,7 +81,6 @@ export default {
       }
     },
     getScript(id){
-      console.log("IM DOWN =>>", id);
       const script = "<script>\n" +
       "  (function(d, src){\n" + 
       "    var e = d.createElement('script');e.src = src;\n" + 

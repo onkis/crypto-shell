@@ -14,6 +14,10 @@ router.get('/', function(req, res){
   res.render('index');
 });
 
+router.get('/donate_landing_page', function(req, res){
+  res.render('donate_landing_page');
+});
+
 //TOOD: find a better way to import the routes?
 import {login, enterCode, loginPost, codePost} from './auth.mjs';
 router.get('/login', login);
