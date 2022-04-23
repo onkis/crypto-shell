@@ -41,8 +41,8 @@
                                         .choices__item.choices__item--selectable {{config.currency}}
                                     .choices__list.choices__list--dropdown(:class="{'is-active':(openCurrencyDropDown)}" style="z-index:10000000;")
                                       .choices__list(role='listbox')
-                                        .choices__item.choices__item--choice.choices__item--selectable.is-highlighted(:class="{'is-selected':(openCurrencyDropDown === 'SOL')}") SOL
-                                        .choices__item.choices__item--choice.choices__item--selectable(:class="{'is-selected':(openCurrencyDropDown === 'USDC')}") USDC
+                                        .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('SOL')") SOL
+                                        .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('USDC')") USDC
                               .col-6.mb-4
                                 .input-group.input-group-dynamic.is-focused
                                   label.form-label Price
@@ -144,10 +144,19 @@ export default {
   }, 
   mounted() {},
   methods: {
+    setCurrency(currency){
+      const SUPPORTED_CURRENCY = ["SOL", "USDC"];
+      if(SUPPORTED_CURRENCY.includes(currency)){
+        this.config.currency = currency;
+      }
+    }
   }
 };
 </script>
 
 <style scoped>
-  h3 { color: pink }
+  .choices__list--dropdown .choices__item.choices__item--selectable:hover {
+    background: #f0f2f5;
+    color: #344767;
+  }
 </style>
