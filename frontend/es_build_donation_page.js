@@ -5,9 +5,7 @@ require('esbuild').build({
     bundle: true,
     outdir: 'public/dist/donation_page/',
     publicPath: '/dist/',
-    plugins: [vuePlugin({
-      extractCss: true
-    })],
+    plugins: [vuePlugin()],
     define: {
         "process.env.BASE_URL": process.env.BASE_URL,
         "process.env.NODE_ENV": JSON.stringify("development"),
