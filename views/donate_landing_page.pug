@@ -14,6 +14,9 @@ html(lang="en")
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
     link(rel='stylesheet' href='/dist/donation_page/donation_page.css')
   body.bg-gray-200
+    script.
+      const CONFIG_STRING = decodeURI("#{data}");
+      const DONATION_CONFIG = JSON.parse(CONFIG_STRING);
     #DonationApp
     link(rel='stylesheet' href='dist/material-dashboard.css')
     script(type='text/javascript' src='dist/donation_page/donation_page.js')

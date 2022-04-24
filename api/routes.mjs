@@ -14,8 +14,18 @@ router.get('/', function(req, res){
   res.render('index');
 });
 
-router.get('/donate_landing_page', function(req, res){
-  res.render('donate_landing_page');
+router.get('/donate_landing_page', async function(req, res){
+  const { id } = req.query;
+  /* TODO: Get Org Details */
+  const [err, record] = await Assets.findById(id);
+  if(err){
+    console.log(err);
+    return res.send(500);
+  }
+
+  const data = encodeURI(JSON.stringify({ ...record.config }));
+
+  res.render('donate_landing_page', { data });
 });
 
 //TOOD: find a better way to import the routes?
