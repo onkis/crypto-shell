@@ -121,9 +121,7 @@ export default {
       paymentMethod: "QR_CODE"
     };
   },
-  mounted() {
-    this.buildQrCode();
-  },
+  mounted() {},
   methods: {
     buildQrCode(){
       const { address, label } = this.donationConfig;
