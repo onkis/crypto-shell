@@ -46,9 +46,9 @@
                                         .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('SOL')") SOL
                                         .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('USDC')") USDC
                               .col-6.mb-4
-                                .input-group.input-group-dynamic(:class="{'is-focused':(config.price != null)}")
+                                .input-group.input-group-dynamic(:class="{'is-focused':(config.ammount != null)}")
                                   label.form-label Price
-                                  input.form-control.form-control-default(v-model="config.price" type='number')
+                                  input.form-control.form-control-default(v-model="config.ammount" type='number')
                             .d-block.mb-4
                               .input-group.input-group-dynamic(:class="{'is-focused':(config.first_name)}")
                                 label.form-label First Name
@@ -78,7 +78,7 @@
                                   a#tabs-iconpricing-tab-2.nav-link.mb-0.active -
                         .mx-auto.my-4.col-12
                           .row
-                            .col-lg-6.col-md-6.col-6.mx-auto
+                            .col-lg-7.col-md-7.col-7.mx-auto
                               .row
                                 .col-lg-5.col-md-5.col-5.mx-auto
                                   .avatar.position-relative(style="height:auto; width: 100%;")
@@ -88,13 +88,13 @@
                                   h6.text-start NAME: {{config.first_name}} {{config.last_name}}
                                   h6.text-start EMAIL: {{config.email}}
                                   hr
-                                  h4.text-start {{config.price}} - {{config.currency}}
-                            .col-lg-6.col-md-6.col-6.mx-auto(style="background:#ccc; height: 300px;")
-                              img()
+                                  h4.text-start {{config.ammount}} - {{config.currency}}
+                            .text-center.col-lg-5.col-md-5.col-5.mx-auto
+                              #qrCode
                         .mt-4.button-row.d-flex
                           button.mb-0.btn.bg-gradient-light.js-btn-prev(@click="prev()" type='button' title='Prev')  Prev
                           button.mb-0.btn.bg-gradient-dark.ms-auto.js-btn-next(@click="next()" type='button' title='Next')  Next
-                    // STEP - COMPLETED                          
+                    // STEP - COMPLETED
                     .pt-3.bg-white.multisteps-form__panel(:class="{'js-active':(step === 2), 'position-relative':(step === 2)}" data-animation='FadeIn')
                       .text-center.row
                         .mx-auto.col-10
@@ -102,6 +102,10 @@
 </template>
 
 <script>
+import { PublicKey, Keypair, Connection, sendAndConfirmTransaction, Transaction } from '@solana/web3.js';
+import { encodeURL, createQR, createTransaction, parseURL } from '@solana/pay';
+import BigNumber from 'bignumber.js';
+
 export default {
   components: {},
   data() {
@@ -113,16 +117,33 @@ export default {
         currency: "SOL"
       },
       paymentMethods: ["QR_CODE", "HD_WALLET"],
-      paymentMethod: "HD_WALLET"
+      paymentMethod: "QR_CODE"
     };
   },
-  mounted() {},
+  mounted() {
+    this.buildQrCode();
+  },
   methods: {
+    buildQrCode(){
+      const recipient = new PublicKey('wBgDX9D5sn9opVV4EQYDEvsLYT4intU5TttZRi7LqK8');
+      const amount = new BigNumber(this.config.ammount),
+            reference = new Keypair().publicKey,
+            label = 'RGC Church',
+            message = 'Order: #001234',
+            memo = 'JC#4098',
+            qrCodeSize = 250;
+     
+      const url = encodeURL({ recipient, amount, reference, label, message, memo });
+      const qrCode = createQR(url, qrCodeSize);
+      const element = document.getElementById('qrCode');
+      qrCode.append(element);
+    },
     next(){
       const stepIndex = this.steps.indexOf(this.step);
       const nextStep = this.steps[stepIndex + 1];
 
       if(nextStep === "DETAILS" && this.validConfig()){
+        this.buildQrCode();
         this.step++;
       }
       else if(nextStep === "PAY"){
@@ -167,7 +188,7 @@ export default {
       if(!SUPPORTED_CURRENCY.includes(this.config.currency)){
         return false;
       }
-      if(!this.config.price){
+      if(!this.config.ammount){
         return false;
       }
       if(!this.config.first_name){

@@ -7,8 +7,9 @@ require('esbuild').build({
     publicPath: '/dist/',
     plugins: [vuePlugin()],
     define: {
-        "process.env.BASE_URL": process.env.BASE_URL,
-        "process.env.NODE_ENV": JSON.stringify("development"),
+      "global": "window",
+      "process.env.BASE_URL": process.env.BASE_URL,
+      "process.env.NODE_ENV": JSON.stringify("development"),
     },
     loader:{
       '.eot': 'file',
