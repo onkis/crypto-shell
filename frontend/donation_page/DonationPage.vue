@@ -114,7 +114,7 @@ export default {
       donationConfig: {...DONATION_CONFIG},
       openCurrencyDropDown: false,
       steps: ["DETAILS", "PAY", "COMPLETED"],
-      step: 1,
+      step: 0,
       config: {
         currency: "SOL"
       },
