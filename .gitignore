@@ -4,6 +4,7 @@ node_modules/*
 dist/*
 *.DS_Store
 app-built.js
+dump.rdb
 crypto-shell
 frontend/node_modules/*
 .nova/*
