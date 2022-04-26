@@ -6,6 +6,7 @@ require('esbuild').build({
     outdir: 'public/dist/donation_page/',
     publicPath: '/dist/',
     plugins: [vuePlugin()],
+    inject: ['frontend/esbuild.inject.js'],
     define: {
       "global": "window",
       "process.env.BASE_URL": process.env.BASE_URL,

@@ -90,10 +90,11 @@
                                   hr
                                   h4.text-start {{config.ammount}} - {{config.currency}}
                             .text-center.col-lg-5.col-md-5.col-5.mx-auto
-                              #qrCode
+                              #qrCode(v-if="paymentMethod === 'QR_CODE'")
+                              #hdWallet(v-if="paymentMethod === 'HD_WALLET'")
+                                button.btn.mb-0.bg-gradient-info.btn-lg.full-width(@click="complete()" type="button" name="button") COMPLETE
                         .mt-4.button-row.d-flex
                           button.mb-0.btn.bg-gradient-light.js-btn-prev(@click="prev()" type='button' title='Prev')  Prev
-                          button.mb-0.btn.bg-gradient-dark.ms-auto.js-btn-next(@click="next()" type='button' title='Next')  Next
                     // STEP - COMPLETED
                     .pt-3.bg-white.multisteps-form__panel(:class="{'js-active':(step === 2), 'position-relative':(step === 2)}" data-animation='FadeIn')
                       .text-center.row
@@ -113,12 +114,13 @@ export default {
       donationConfig: {...DONATION_CONFIG},
       openCurrencyDropDown: false,
       steps: ["DETAILS", "PAY", "COMPLETED"],
-      step: 0,
+      step: 1,
       config: {
         currency: "SOL"
       },
       paymentMethods: ["QR_CODE", "HD_WALLET"],
-      paymentMethod: "QR_CODE"
+      paymentMethod: "QR_CODE",
+      walletConnected: false
     };
   },
   mounted() {},
@@ -137,6 +139,19 @@ export default {
       const qrCode = createQR(url, qrCodeSize);
       const element = document.getElementById('qrCode');
       qrCode.append(element);
+    },
+    async complete(){
+      if(!this.walletConnected){
+        try{
+          await this.connectWallet();
+        }
+        catch(e){
+          console.error(e);
+          return;
+        }
+      }
+      
+      this.HDhandlePayment();
     },
     next(){
       const stepIndex = this.steps.indexOf(this.step);
@@ -169,7 +184,9 @@ export default {
       this.step--;
     },
     selectPayment(type){
-      if(this.paymentMethods.includes(type)) this.paymentMethod = type;
+      if(!this.paymentMethods.includes(type)) return;
+
+      this.paymentMethod = type;
     },
     setCurrency(currency){
       const SUPPORTED_CURRENCY = ["SOL", "USDC"];
@@ -182,6 +199,51 @@ export default {
       that.openCurrencyDropDown = !that.openCurrencyDropDown;
       if(that.openCurrencyDropDown) document.addEventListener("click", that.offClick);
       else document.removeEventListener("click", that.offClick);
+    },
+    async connectWallet(){
+      const { solana } = window;
+      if (solana.isPhantom) {
+        console.log("👻 Connecting To Phantom");
+        const response = await solana.connect();
+        this.publicKey = response.publicKey;
+        this.provider = response;
+
+        const MAIN_NET = false;
+        const CLUSTER = (MAIN_NET) ? "https://api.mainnet-beta.solana.com" : "https://api.testnet.solana.com";
+        
+        this.connection = new Connection(CLUSTER, 'confirmed');
+        this.walletConnected = true;
+
+        console.log(`👻 Connected with Public Key:`, this.publicKey);
+      }
+    },
+    async HDhandlePayment(){
+      const { address, label } = this.donationConfig;
+
+      const recipient = new PublicKey(address);
+      const reference = new Keypair().publicKey;
+      const amount = new BigNumber(this.config.ammount);
+      const memo = label;
+
+      let tx, recentBH;
+
+      try{
+        tx = await createTransaction(this.connection, this.publicKey, recipient, amount, { reference, memo });
+        recentBH = await this.connection.getRecentBlockhash('finalized');
+      }
+      catch(e){
+        console.error(e);
+      }
+
+      try{
+        tx.recentBlockhash = recentBH.blockhash;
+        tx.feePayer = this.publicKey;
+
+        const signedTransaction = await window.solana.signAndSendTransaction(tx);
+      }
+      catch(err){
+        console.log("failed to signAndSendTransaction", err);
+      }
     },
     validConfig(){
       const SUPPORTED_CURRENCY = ["SOL", "USDC"];
@@ -230,5 +292,9 @@ export default {
   .choices__list--dropdown .choices__item.choices__item--selectable:hover {
     background: #f0f2f5;
     color: #344767;
+  }
+
+  .full-width {
+    width: 100% !important;
   }
 </style>
