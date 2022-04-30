@@ -184,9 +184,19 @@ export default {
       this.step--;
     },
     selectPayment(type){
-      if(!this.paymentMethods.includes(type)) return;
+      const that = this;
+      if(!that.paymentMethods.includes(type)) return;
 
-      this.paymentMethod = type;
+      if(type === "QR_CODE"){
+        if(that.paymentMethod === "QR_CODE") that.paymentMethod = type;
+        else{
+          that.paymentMethod = type;
+          setTimeout(() => {
+            that.buildQrCode();
+          }, 0);
+        }
+      }
+      else that.paymentMethod = type;
     },
     setCurrency(currency){
       const SUPPORTED_CURRENCY = ["SOL", "USDC"];
