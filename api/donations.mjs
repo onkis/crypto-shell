@@ -29,7 +29,7 @@ export async function create(req, res){
     return res.send(500);
   }
 
-  res.json(donation).send();
+  res.json({ transaction_ref_id }).send(); /* only need to pass the reference */
 }
 
 export async function get(req, res){

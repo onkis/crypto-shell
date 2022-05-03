@@ -62,7 +62,7 @@ router.delete('/api/assets/:id', assets.destroy);
 
 /* API For Donation Table */
 router.post('/api/donation', donations.create);
- router.delete('/api/donation/:id', donations.destroy); 
+router.delete('/api/donation/:id', donations.destroy); 
 
 /* USERS */
 router.get('/api/user/:id', users.get);
