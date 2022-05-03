@@ -131,6 +131,11 @@ export default {
   },
   methods: {
     buildQrCode(){
+      if(!this.transaction_ref_id){
+        console.error("no transaction_ref_id");
+        return;
+      }
+
       const oldQrCode = document.querySelector('#qrCode svg');
       if(oldQrCode) oldQrCode.remove();
 
@@ -138,11 +143,11 @@ export default {
 
       const recipient = new PublicKey(address);
       const amount = new BigNumber(this.config.ammount),
-            reference = new Keypair().publicKey,
+            reference = new PublicKey(this.transaction_ref_id),
             message = 'Order: #001234',
             memo = 'JC#4098',
             qrCodeSize = 250;
-     
+
       const url = encodeURL({ recipient, amount, reference, label, message, memo });
       const qrCode = createQR(url, qrCodeSize);
       const element = document.getElementById('qrCode');
@@ -170,12 +175,12 @@ export default {
       this.transaction_ref_id = response.data.transaction_ref_id;
       return this.transaction_ref_id;
     },
-    next(){
+    async next(){
       const stepIndex = this.steps.indexOf(this.step);
       const nextStep = this.steps[stepIndex + 1];
 
       if(nextStep === "DETAILS" && this.validConfig()){
-        this.createDonation();
+        await this.createDonation();
         this.buildQrCode();
         this.step++;
       }
@@ -248,10 +253,10 @@ export default {
     async HDhandlePayment(){
       const { address, label } = this.donationConfig;
 
-      const recipient = new PublicKey(address);
-      const reference = new Keypair().publicKey;
-      const amount = new BigNumber(this.config.ammount);
-      const memo = label;
+      const recipient = new PublicKey(address),
+            reference = new PublicKey(this.transaction_ref_id),
+            amount = new BigNumber(this.config.ammount),
+            memo = label;
 
       let tx, recentBH;
 
