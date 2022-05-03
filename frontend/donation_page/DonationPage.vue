@@ -131,6 +131,7 @@ export default {
   },
   methods: {
     buildQrCode(){
+      const that = this;
       if(!this.transaction_ref_id){
         console.error("no transaction_ref_id");
         return;
@@ -141,8 +142,8 @@ export default {
 
       const { address, label } = this.donationConfig;
 
-      const recipient = new PublicKey(address);
-      const amount = new BigNumber(this.config.ammount),
+      const recipient = new PublicKey(address),
+            amount = new BigNumber(this.config.ammount),
             reference = new PublicKey(this.transaction_ref_id),
             message = 'Order: #001234',
             memo = 'JC#4098',
@@ -152,6 +153,26 @@ export default {
       const qrCode = createQR(url, qrCodeSize);
       const element = document.getElementById('qrCode');
       qrCode.append(element);
+
+
+      let count = 1;
+      that.interval = setInterval(async () => {
+        console.log('Checking for transaction...', count++);
+        try {
+          signatureInfo = await findReference(connection, reference, { finality: 'confirmed' });
+          console.log('🖌  Signature found: ', signatureInfo.signature);
+          clearInterval(that.interval);
+        }
+        catch (error) {
+          if (!error.message.includes("findReference")){
+            console.error(error);
+            clearInterval(that.interval);
+          }
+          else if(count > 5 * 60 * 4){ /* 5 MINUTES */
+            clearInterval(that.interval);
+          }
+        }
+      }, 250);
     },
     async complete(){
       if(!this.walletConnected){
@@ -232,6 +253,9 @@ export default {
       that.openCurrencyDropDown = !that.openCurrencyDropDown;
       if(that.openCurrencyDropDown) document.addEventListener("click", that.offClick);
       else document.removeEventListener("click", that.offClick);
+    },
+    async trasactionComplete(){
+      /* post to server claiming client has paid */
     },
     async connectWallet(){
       const { solana } = window;
