@@ -1,5 +1,6 @@
 import { Assets } from '../db/db.mjs';
 import assets from './assets.mjs';
+import donations from './donations.mjs';
 import users from './users.mjs';
 import fs from 'fs';
 import express from 'express';
@@ -58,6 +59,10 @@ router.get('/setup', function(req, res){
 router.get('/api/assets/:id', assets.get);
 router.put('/api/assets/:id', assets.update);
 router.delete('/api/assets/:id', assets.destroy);
+
+/* API For Donation Table */
+router.post('/api/donation', donations.create);
+ router.delete('/api/donation/:id', donations.destroy); 
 
 /* USERS */
 router.get('/api/user/:id', users.get);

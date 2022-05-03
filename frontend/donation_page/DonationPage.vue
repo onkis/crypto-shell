@@ -111,6 +111,7 @@ export default {
   components: {},
   data() {
     return {
+      assetId: null,
       donationConfig: {...DONATION_CONFIG},
       openCurrencyDropDown: false,
       steps: ["DETAILS", "PAY", "COMPLETED"],
@@ -123,9 +124,15 @@ export default {
       walletConnected: false
     };
   },
-  mounted() {},
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    this.assetId = urlParams.get('id');
+  },
   methods: {
     buildQrCode(){
+      const oldQrCode = document.querySelector('#qrCode svg');
+      if(oldQrCode) oldQrCode.remove();
+
       const { address, label } = this.donationConfig;
 
       const recipient = new PublicKey(address);
@@ -153,11 +160,18 @@ export default {
       
       this.HDhandlePayment();
     },
+    async createDonation(){
+      const amount = new BigNumber(this.config.ammount),
+            asset_id = this.assetId;
+
+      const response = await this.$http.post("/api/donation", {  amount, asset_id, donation_config: { ...this.config } });
+    },
     next(){
       const stepIndex = this.steps.indexOf(this.step);
       const nextStep = this.steps[stepIndex + 1];
 
       if(nextStep === "DETAILS" && this.validConfig()){
+        this.createDonation();
         this.buildQrCode();
         this.step++;
       }
