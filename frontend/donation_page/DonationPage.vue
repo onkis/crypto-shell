@@ -99,12 +99,12 @@
                     .pt-3.bg-white.multisteps-form__panel(:class="{'js-active':(step === 2), 'position-relative':(step === 2)}" data-animation='FadeIn')
                       .text-center.row
                         .mx-auto.col-10
-                          h5.font-weight-normal lol
+                          h2.font-weight-normal Thank You For Donating!
 </template>
 
 <script>
-import { PublicKey, Keypair, Connection, sendAndConfirmTransaction, Transaction } from '@solana/web3.js';
-import { encodeURL, createQR, createTransaction, parseURL } from '@solana/pay';
+import { PublicKey, Keypair, Connection, sendAndConfirmTransaction, Transaction, clusterApiUrl } from '@solana/web3.js';
+import { encodeURL, createQR, createTransfer, parseURL, findReference } from '@solana/pay';
 import BigNumber from 'bignumber.js';
 
 export default {
@@ -127,6 +127,10 @@ export default {
   },
   mounted() {
     const urlParams = new URLSearchParams(window.location.search);
+    const MAIN_NET = false;
+    const CLUSTER = clusterApiUrl((MAIN_NET) ? "mainnet" : "testnet");
+
+    this.connection = new Connection(CLUSTER, 'confirmed');
     this.assetId = urlParams.get('id');
   },
   methods: {
@@ -140,7 +144,7 @@ export default {
       const oldQrCode = document.querySelector('#qrCode svg');
       if(oldQrCode) oldQrCode.remove();
 
-      const { address, label } = this.donationConfig;
+      const { address, label, redirectUrl } = this.donationConfig;
 
       const recipient = new PublicKey(address),
             amount = new BigNumber(this.config.ammount),
@@ -154,25 +158,26 @@ export default {
       const element = document.getElementById('qrCode');
       qrCode.append(element);
 
-
-      let count = 1;
+      let count = 1, found = false;
       that.interval = setInterval(async () => {
-        console.log('Checking for transaction...', count++);
         try {
-          signatureInfo = await findReference(connection, reference, { finality: 'confirmed' });
-          console.log('🖌  Signature found: ', signatureInfo.signature);
+          signatureInfo = await findReference(that.connection, reference, { finality: 'confirmed' });
           clearInterval(that.interval);
+          if(!found){
+            found = true;
+            that.next();
+          }
         }
         catch (error) {
-          if (!error.message.includes("findReference")){
+          if (!error.message.includes("not found")){
             console.error(error);
             clearInterval(that.interval);
           }
-          else if(count > 5 * 60 * 4){ /* 5 MINUTES */
+          else if(count > 5 * 60 ){ /* 5 MINUTES */
             clearInterval(that.interval);
           }
         }
-      }, 250);
+      }, 1000);
     },
     async complete(){
       if(!this.walletConnected){
@@ -197,19 +202,20 @@ export default {
       return this.transaction_ref_id;
     },
     async next(){
-      const stepIndex = this.steps.indexOf(this.step);
+      const { redirectUrl } = this.donationConfig; 
+      const stepIndex = this.step;
       const nextStep = this.steps[stepIndex + 1];
 
-      if(nextStep === "DETAILS" && this.validConfig()){
+      if(nextStep === "PAY" && this.validConfig()){
         await this.createDonation();
         this.buildQrCode();
         this.step++;
       }
-      else if(nextStep === "PAY"){
-        this.step++;
-      }
       else if(nextStep === "COMPLETED"){
         this.step++;
+        setTimeout(() => {
+          window.location = redirectUrl;
+        }, 3500);
       }
     },
     offClick(e){
@@ -264,11 +270,6 @@ export default {
         const response = await solana.connect();
         this.publicKey = response.publicKey;
         this.provider = response;
-
-        const MAIN_NET = false;
-        const CLUSTER = (MAIN_NET) ? "https://api.mainnet-beta.solana.com" : "https://api.testnet.solana.com";
-        
-        this.connection = new Connection(CLUSTER, 'confirmed');
         this.walletConnected = true;
 
         console.log(`👻 Connected with Public Key:`, this.publicKey);
@@ -285,7 +286,7 @@ export default {
       let tx, recentBH;
 
       try{
-        tx = await createTransaction(this.connection, this.publicKey, recipient, amount, { reference, memo });
+        tx = await createTransfer(this.connection, this.publicKey, recipient, amount, { reference, memo });
         recentBH = await this.connection.getRecentBlockhash('finalized');
       }
       catch(e){
