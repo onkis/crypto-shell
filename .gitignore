@@ -9,3 +9,8 @@ crypto-shell
 frontend/node_modules/*
 .nova/*
 .env
+#terraform stuff
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform
+

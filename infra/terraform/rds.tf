@@ -1,62 +1,34 @@
-resource "aws_db_instance" "crypo-shell-main-db" {
-  identifier             = "crypo-shell-main-db"
-  instance_class         = "db.t3.micro"
-  
-  #having both sets up auto scaling
-  allocated_storage      = 5
-  max_allocated_storage  = 100
-  
-  engine                 = "postgres"
-  engine_version         = "14.1"
-  family                 = "postgres14" # DB parameter group
-  major_engine_version   = "14"         # DB option group
+module "db" {
+  source  = "terraform-aws-modules/rds/aws"
 
+  identifier = "crypto-shell-main-db"
 
-  username               = "crypto-shell-main-db"
-  password               = var.db_password
-  
-  
-  port                   = 5432
-  
-  multi_az               = false
-  
-  db_subnet_group_name   = aws_db_subnet_group.cs-private.name
-  
+  engine            = "postgresql"
+  engine_version    = "14.2"
+  instance_class    = "db.t3a.micro"
+  allocated_storage = 5
+
+  db_name  = "crypto-shell_prod"
+  username = "postgres"
+  port     = "5432"
+
+  iam_database_authentication_enabled = true
+
   vpc_security_group_ids = [aws_security_group.rds.id]
   
-  parameter_group_name   = aws_db_parameter_group.education.name
-  publicly_accessible    = false
-  
-  
-  
-  maintenance_window              = "Sun:00:00-Sun:01:00"
-  backup_window                   = "01:00-02:00"
+  maintenance_window = "Sun:00:00-Sun:01:00"
+  backup_window      = "01:00-02:00"
 
+  # Enhanced Monitoring - see example for details on how to create the role
+  # by yourself, in case you don't want to create it automatically
+  monitoring_interval = "30"
+  monitoring_role_name = "TFTestRDSMonitoringRole"
+  create_monitoring_role = true
 
-  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-
-  create_cloudwatch_log_group     = true
+ 
+  major_engine_version = "14"
   
-  backup_retention_period = 30
-  skip_final_snapshot     = false
-  deletion_protection     = true
-  
-  performance_insights_enabled          = true
-  performance_insights_retention_period = 7
-  create_monitoring_role                = true
-  monitoring_interval                   = 60
-  monitoring_role_name                  = "cs-db-monitoring-role-name"
-  monitoring_role_description           = "CryptoShell PG db Monitoring role"
-  
-  parameters = [
-    {
-      name  = "autovacuum"
-      value = 1
-    },
-    {
-      name  = "client_encoding"
-      value = "utf8"
-    }
-  ]
-
+  family = "postgres14"
+  # Database Deletion Protection
+  deletion_protection = true
 }
