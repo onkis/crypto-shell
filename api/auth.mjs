@@ -46,7 +46,10 @@ export async function loginPost(req, res){
 
       let [err, ret] = await _sendLoginEmail(user);
       
-      if(err) res.status(400).send();
+      if(err) {
+        console.error("error in auth.mjs#loginPost", err);
+        res.status(400).send();
+      }
       else res.redirect('/auth/enter-code');
     }
   }

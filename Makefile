@@ -17,10 +17,10 @@ clean-ui:
 	rm -r ./dist
 
 db-migrate:
-	./node_modules/.bin/knex migrate:latest --knexfile=./db/knexfile.js --migrations-directory=./db/migrations
+	./node_modules/.bin/knex migrate:latest --knexfile=./db/knexfile.js
 
 migration-create:
-	./node_modules/.bin/knex migrate:make new_migration --knexfile=./db/knexfile.js --migrations-directory=./db/migrations
+	./node_modules/.bin/knex migrate:make new_migration --knexfile=./db/knexfile.js
 
 test-site:
 	python3 -m http.server --directory ./test_site

@@ -14,7 +14,7 @@ import { handleStaticAssets } from './lib/middleware.mjs';
 import { legacyRedisClient } from "./lib/redis.mjs";
 import expSession from "express-session";
 import ConnectRedis from 'connect-redis';
-import { pg } from './db/db.mjs';
+import { db } from './db/db.mjs';
 import {banBadActors} from './lib/rate_limit.mjs';
 
 const RedisStore = ConnectRedis(expSession);
