@@ -6,6 +6,7 @@ import donations from "./models/donations.mjs";
 export const db = knex({
   client: 'better-sqlite3',
   useNullAsDefault: true,
+  //debug: true,
   connection: {
     filename: process.env.SQLITE_FILE
   }

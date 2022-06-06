@@ -1,7 +1,6 @@
 import 'dotenv/config';
 
-import {User} from './db/db.mjs';
-import {setLoginCode, getLoginCode} from "./lib/redis.mjs";
+import {Assets} from './db/db.mjs';
 // import {sendTextEmail} from "./lib/email.mjs";
 // 
 // async function main(){
@@ -11,20 +10,8 @@ import {setLoginCode, getLoginCode} from "./lib/redis.mjs";
 
 
 async function main(){
-  let [err, ret] = await setLoginCode("123", 2);
-  
-  
-  console.log("ret", err, ret);
-  
-  
-  let [err1, val] = await getLoginCode("123");
-  
-  console.log("val", val)
-  // let rec = {email: "mike.ball3@gmail.com"};
-  // 
-  // let [err, ret] = await User.findOrCreate(rec, rec);
-  // 
-  // console.log("Result", err, ret);
+  let [err, asset] = await Assets.update({where: {id: 1}, update: {config: {"dork": "test", "f": "nurse"}} });
+  console.log(err, asset);
 }
 
 main();
