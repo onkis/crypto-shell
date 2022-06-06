@@ -19,12 +19,18 @@ export default class assets extends core {
     return await this.create({...DEFAULT});
   }
   
+  async findOne(where){
+    let [err, obj] = await super.findOne(where);
+    if(obj && obj.config) obj.config = JSON.parse(obj.config);
+    return [err, obj];
+  }
+  
   async update({where, update}){
     //TODO: I think we can remove this. I added b/c I thought there was a bug in how json columns were handled in sqlite3
     //but I think it might be a front end bug
-    if(update.config){
-      update.config = JSON.stringify(update.config);
-    }
+    // if(update.config){
+    //   update.config = JSON.stringify(update.config);
+    // }
     
     return super.update({where, update});
   }
