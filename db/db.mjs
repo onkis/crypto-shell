@@ -3,10 +3,15 @@ import user from './models/user.mjs';
 import assets from './models/assets.mjs';
 import donations from "./models/donations.mjs";
 
+
+// export const db = knex({
+//   client: 'pg',
+//   connection: process.env.PG_CONN
+// });
 export const db = knex({
   client: 'better-sqlite3',
   useNullAsDefault: true,
-  //debug: true,
+  // debug: true,
   connection: {
     filename: process.env.SQLITE_FILE
   }

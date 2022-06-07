@@ -17,6 +17,25 @@ export default class core {
   }
   
   /**
+   * gives opportunity to massage data
+   * coming out of the db called by all find methods
+   * @param {Object || Array} obj - row or rows of data
+   */
+  onFind(obj){
+    return obj;
+  }
+  /**
+   * gives opportunity to massage object
+   * before it is sent to knex
+   * it is called by all update and insert queries
+   *
+   * @param {Object} obj - The raw object to be saved
+   */
+  onSave(obj){
+    return obj;
+  }
+  
+  /**
    * Finds a record by Id
    * @param {Number} id - The id of the row in postgres
    * @returns {Array}  - [err, result] returns a tuple with an error and result
@@ -27,7 +46,7 @@ export default class core {
     if(res?.length > 0) res = res[0];
     else res = null;
     
-    return [err, res];
+    return [err, this.onFind(res)];
   }
   
   /**
@@ -41,7 +60,7 @@ export default class core {
     if(res?.length > 0) res = res[0];
     else res = null;
     
-    return [err, res];
+    return [err, this.onFind(res)];
   }
   
   async findOrCreate(where, record){
@@ -77,7 +96,7 @@ export default class core {
       updated_at: NOW
     };
 
-    return asyncWrap(this.pg(this.tableName).insert(newRecord));
+    return asyncWrap(this.pg(this.tableName).insert(this.onSave(newRecord)));
   }
 
   async update({where, update}){
@@ -87,7 +106,7 @@ export default class core {
     return asyncWrap(
       this.pg(this.tableName)
       .where(where)
-      .update(updatedRecord)
+      .update(this.onSave(updatedRecord))
      );
   }
 
