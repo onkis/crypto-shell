@@ -17,9 +17,7 @@ export default {
   }, 
   mounted() {},
   methods: {
-    hi(){
-      console.log("hi");
-    }
+
   }
 };
 </script>

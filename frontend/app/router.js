@@ -1,15 +1,25 @@
 import {createWebHashHistory, createRouter} from 'vue-router';
 import Setup from './pages/Setup.vue';
-
+import UserSettings from './pages/UserSettings.vue'
 const routes = [
   {
-    path: "/setup",
-    name: "setup",
+    path: "/user-setttings",
+    name: "UserSettings",
+    component: UserSettings
+  },
+  // {
+  //   path: "/payment-history",
+  //   name: "PaymentHistory",
+  //   component: PaymentHistory
+  // },
+  {
+    path: "/payment-setup",
+    name: "PaymentSetup",
     component: Setup 
   },
   {
     path: "/:pathMatch(.*)*",
-    redirect: "/setup"
+    redirect: "/payment-setup"
   }
 ];
 

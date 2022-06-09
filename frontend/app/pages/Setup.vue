@@ -3,19 +3,19 @@
   .container-fluid.py-4
     .row
       .col-lg-6
-        h4 Donation Setup
+        h4 Payment Setup
       .col-lg-6.text-right.d-flex.flex-column.justify-content-center
         button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(@click="update()" type='button') Save
     .row.mt-5
       .col-lg-8.mt-lg-0.mt-4
         .card
           .card-body
-            h5.font-weight-bolder Configure Donation
+            h5.font-weight-bolder Configuration
             hr
             .row.mt-4
               .col-12
                 .input-group.input-group-static.mb-2
-                  label Donation Address
+                  label Payment Address
                   input#donationAddress.form-control(v-model="config.address" type='text' placeholder='Donation Address')
               .col-12
                 .input-group.input-group-static.mb-2
