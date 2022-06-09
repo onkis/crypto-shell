@@ -12,6 +12,10 @@ hr.horizontal.light.mt-0.mb-2
         span.sidenav-mini-icon  US 
         span.sidenav-normal.ms-3.ps-1 User Settings 
     li.nav-item
+        router-link.nav-link.text-white(:to='{name: "PaymentHistory"}')
+          span.sidenav-mini-icon  PH 
+          span.sidenav-normal.ms-3.ps-1 Payment History
+    li.nav-item
       router-link.nav-link.text-white(:to='{name: "PaymentSetup"}')
         span.sidenav-mini-icon  PS 
         span.sidenav-normal.ms-3.ps-1 Payment Setup
