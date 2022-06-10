@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Default from "../views/dashboards/Default.vue";
 import Sales from "../views/dashboards/Sales.vue";
 import Overview from "../views/pages/profile/Overview.vue";
@@ -202,7 +202,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory("/uikit"),
   routes,
   linkActiveClass: "active",
 });
