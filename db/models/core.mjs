@@ -1,5 +1,7 @@
 import assert from 'assert';
 import { asyncWrap } from '../../lib/core.mjs';
+import Hashids from 'hashids'
+const hashids = new Hashids()
 
 export default class core {
   
@@ -33,6 +35,20 @@ export default class core {
    */
   onSave(obj){
     return obj;
+  }
+  /**
+   * Finds a record by HashId
+   * @param {String} hashId - The hashid of the row in db
+   * @returns {Array}  - [err, result] returns a tuple with an error and result
+   */
+  async findByHashId(hashId){
+    let id = hashids.decode(hashId);
+    let [err, res] = await asyncWrap(this.pg.select("*").where({id}).from(this.tableName).limit(1));
+    
+    if(res?.length > 0) res = res[0];
+    else res = null;
+    
+    return [err, this.onFind(res)];
   }
   
   /**

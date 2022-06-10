@@ -1,4 +1,7 @@
 import core from './core.mjs';
+import Hashids from 'hashids'
+
+const hashids = new Hashids()
 
 export default class paymentpage extends core {
   
@@ -18,9 +21,12 @@ export default class paymentpage extends core {
 
     return await this.create({...DEFAULT});
   }
-  onFind(obj){ //TODO array?
-    if(obj && obj.config){
-      obj.config = JSON.parse(obj.config);
+  onFind(obj){
+    if(Array.isArray(obj)){
+      obj.forEach(_onFindHelper); 
+    }
+    else{
+      obj = _onFindHelper(obj);
     }
     return obj;
   }
@@ -32,4 +38,11 @@ export default class paymentpage extends core {
     return obj;
   }
 
+}
+function _onFindHelper(obj){
+  if(obj && obj.config){
+    obj.config = JSON.parse(obj.config);
+  }
+  if(obj.id) obj.hashId = hashids.encode(obj.id);
+  return obj
 }
