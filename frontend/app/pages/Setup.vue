@@ -55,6 +55,8 @@ export default {
   methods: {
     async init(){
       console.log("init!");
+      //TODO: there should be only one endpoint to get the logged in users
+      //current page
       const response = await this.$http("/api/paymentpage/3");
       
       const { data } = response;
@@ -69,7 +71,7 @@ export default {
       const update = {
         config: { ...this.config }
       };
-
+      //and one to update the logged in user's current page
       const response = await this.$http.put("/api/paymentpage/3", update);
       if(response){
         window.AlertManager({type: "success", "message": "Setup Saved!", hideAfter: 3000 });
