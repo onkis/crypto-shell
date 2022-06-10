@@ -4,6 +4,7 @@
     .row
       .col-lg-6
         h4 Payment History
+        a(href="http://localhost:3000/ecommerce/Orders/order-list") Something like this
 
 </template>
 

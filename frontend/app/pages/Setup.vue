@@ -4,8 +4,7 @@
     .row
       .col-lg-6
         h4 Payment Setup
-      .col-lg-6.text-right.d-flex.flex-column.justify-content-center
-        button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(@click="update()" type='button') Save
+        a(href="http://localhost:3000/ecommerce/products/edit-product") like this
     .row.mt-5
       .col-lg-8.mt-lg-0.mt-4
         .card
@@ -26,14 +25,10 @@
                   label Redirect Url
                   input#redirectUrl.form-control(v-model="config.redirectUrl" type='text' placeholder='Redirect Url')
               .col-12
-                code#script(rows='6' readOnly='true').form-control.d-sm-flex.align-items-center.bg-gray-100.border-radius-lg.p-2.my-4.is-filled
-                  pre.
-                    &lt;script&gt;
-                      (function(d, src){
-                        var e = d.createElement('script');e.src = src;
-                        d.querySelector('head').appendChild(e);
-                      })(document, 'http://localhost:3000/x?id=3');
-                    &lt;/script&gt;
+            .row.mt-4
+              .col-lg-6.text-right.d-flex.flex-column.justify-content-center
+              button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(@click="update()" type='button') Save
+
       .col-lg-4
         .card
           .card-body.text-center
