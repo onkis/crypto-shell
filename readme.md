@@ -27,7 +27,8 @@ This branch is all about building a "traditional" node/express/knex app shell
 21. User Profile information
 
 # Things to install
-1. postgres.app https://postgresapp.com/
+TODO: postgres is no longer required... might remove this
+1. postgres.app https://postgresapp.com/ 
 
 2. redis
 ```
@@ -39,19 +40,19 @@ This branch is all about building a "traditional" node/express/knex app shell
 3. nvm
 https://github.com/nvm-sh/nvm#install--update-script
 
-4. node latest (16) and set to default
+4. node latest (18) and set to default
 ```
-nvm install v16
-nvm alias default v16
+nvm install v18
+nvm alias default v18
 ```
 
 5.
 setup a .env file
 ```
-GMAIL_USER=""
-GMAIL_PASSWORD=""
-REDIS_CONN="redis://127.0.0.1:6379"
-PG_CONN="postgresql://postgres:password@127.0.0.1:5432/crypto-shell_dev"
+HOTMAIL_USER=""
+HOTMAIL_PASS=""
+COOKIE_SECRET=""
+SQLITE_FILE="/some/path/to/crypt-shell/data/cs-dev.sqlite"
 ```
 
 # Using the Solana CLI reference
