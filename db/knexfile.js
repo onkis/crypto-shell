@@ -1,4 +1,5 @@
-require('dotenv').config()
+const path = require('path');
+const result = require('dotenv').config({path: path.resolve(process.cwd()+"/../.env")});
 module.exports = {
   client: 'better-sqlite3',
   useNullAsDefault: true,
@@ -7,5 +8,4 @@ module.exports = {
   }
   
 };
-
 //postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...]
