@@ -1,11 +1,11 @@
 import { Keypair } from '@solana/web3.js';
-import { Donation, Assets } from '../db/db.mjs';
+import { Donation, PaymentPage } from '../db/db.mjs';
 
 export async function create(req, res){
   let err, asset, donation;
   const { amount, asset_id, donation_config } = req.body;
 
-  [err, asset] = await Assets.findOne({ id: asset_id });
+  [err, asset] = await PaymentPage.findOne({ id: asset_id });
   if(err){
     console.error("failed to find asset | api/donations.mjs#create", err);
     return res.send(500);

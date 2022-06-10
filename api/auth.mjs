@@ -1,4 +1,4 @@
-import { User, Assets } from '../db/db.mjs';
+import { User, PaymentPage } from '../db/db.mjs';
 import {isEmailValid, randomString} from '../lib/core.mjs';
 import {sendTextEmail} from '../lib/email.mjs';
 
@@ -38,7 +38,7 @@ export async function loginPost(req, res){
         [err] = await User.update({where, update});
         if(err) return res.send(500);
 
-        [err] = await Assets.createDefaultAsset(org_id);
+        [err] = await PaymentPage.createDefaultPage(org_id);
         if(err) return res.send(500);
       }
 

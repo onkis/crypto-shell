@@ -1,6 +1,6 @@
 import knex  from 'knex';
 import user from './models/user.mjs';
-import assets from './models/assets.mjs';
+import paymentpage from './models/paymentpage.mjs';
 import donations from "./models/donations.mjs";
 
 
@@ -18,7 +18,7 @@ export const db = knex({
 });
 
 export const User = new user(db);
-export const Assets = new assets(db);
+export const PaymentPage = new paymentpage(db);
 export const Donation = new donations(db);
 
 //TODO: Include knex logging in whatever logger we choose

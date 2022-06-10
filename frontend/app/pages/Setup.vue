@@ -55,7 +55,7 @@ export default {
   methods: {
     async init(){
       console.log("init!");
-      const response = await this.$http("/api/assets/3");
+      const response = await this.$http("/api/paymentpage/3");
       
       const { data } = response;
 
@@ -70,7 +70,7 @@ export default {
         config: { ...this.config }
       };
 
-      const response = await this.$http.put("/api/assets/3", update);
+      const response = await this.$http.put("/api/paymentpage/3", update);
       if(response){
         window.AlertManager({type: "success", "message": "Setup Saved!", hideAfter: 3000 });
       }

@@ -1,12 +1,12 @@
 import core from './core.mjs';
 
-export default class assets extends core {
+export default class paymentpage extends core {
   
   constructor(knex){
-    super(knex, "assets");
+    super(knex, "paymentpages");
   }
 
-  async createDefaultAsset(org_id){
+  async createDefaultPage(org_id){
     const DEFAULT = {
       org_id,
       config: {

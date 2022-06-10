@@ -1,5 +1,5 @@
-import { Assets } from '../db/db.mjs';
-import assets from './assets.mjs';
+import { PaymentPage } from '../db/db.mjs';
+import paymentpage from './paymentpage.mjs';
 import donations from './donations.mjs';
 import users from './users.mjs';
 import fs from 'fs';
@@ -18,7 +18,7 @@ router.get('/', function(req, res){
 router.get('/donate_landing_page', async function(req, res){
   const { id } = req.query;
   /* TODO: Get Org Details */
-  const [err, record] = await Assets.findById(id);
+  const [err, record] = await PaymentPage.findById(id);
   if(err){
     console.log(err);
     return res.send(500);
@@ -55,10 +55,10 @@ router.get('/setup', function(req, res){
   res.render('setup');
 });
 
-/* API For Assets Table */
-router.get('/api/assets/:id', assets.get);
-router.put('/api/assets/:id', assets.update);
-router.delete('/api/assets/:id', assets.destroy);
+/* API For PaymentPage Table */
+router.get('/api/paymentpage/:id', paymentpage.get);
+router.put('/api/paymentpage/:id', paymentpage.update);
+router.delete('/api/paymentpage/:id', paymentpage.destroy);
 
 /* API For Donation Table */
 router.post('/api/donation', donations.create);
@@ -72,7 +72,7 @@ router.post('/api/user', users.create);
 router.get('/x', async function(req, res){
   const { id } = req.query;
   /* TODO: Get Org Details */
-  const [err, record] = await Assets.findById(id);
+  const [err, record] = await PaymentPage.findById(id);
   if(err){
     console.log(err);
     return res.send(500);
