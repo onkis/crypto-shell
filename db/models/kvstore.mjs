@@ -36,6 +36,14 @@ export default class kvstore extends core {
     return [err, ret];
   }
   
+  async incr(key){
+    let [err, ret] = await asyncWrap(
+      this.pg.raw('UPDATE kvstore SET value =(value +1) where (key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, Math.ceil(Date.now()/1000),key]));
+    
+    //console.log("increment results", key, err, ret);
+    return [err, ret];
+  }
+  
   /**
    * This is provided for sqlite-session
    * it shouldn't be used by anyone
@@ -73,12 +81,12 @@ export default class kvstore extends core {
       key: key,
       value: value
     };
-    console.log("calling setCB", key, value, options);
+    //console.log("calling setCB", key, value, options);
     if(options.EX){
-      console.log("in the options.ex", (options.EX))
+      //console.log("in the options.ex", (options.EX))
       newRecord.expire_at = Math.ceil(Date.now()/1000) + (options.EX);
     }
-    console.log("new record", newRecord);
+    //console.log("new record", newRecord);
     this.pg(this.tableName).insert(newRecord)
     .then(function(ret){ callback(null, ret); })
     .catch(function(err){ callback(err);});
