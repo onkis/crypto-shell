@@ -2,7 +2,7 @@ import knex  from 'knex';
 import user from './models/user.mjs';
 import paymentpage from './models/paymentpage.mjs';
 import donations from "./models/donations.mjs";
-
+import kvstore from "./models/kvstore.mjs";
 
 // export const db = knex({
 //   client: 'pg',
@@ -20,7 +20,7 @@ export const db = knex({
 export const User = new user(db);
 export const PaymentPage = new paymentpage(db);
 export const Donation = new donations(db);
-
+export const KVStore = new kvstore(db);
 //TODO: Include knex logging in whatever logger we choose
 /*
 const knex = require('knex')({
