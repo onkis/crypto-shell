@@ -24,9 +24,7 @@ export default class kvstore extends core {
     let [err, ret] = await asyncWrap(
                         this.pg.select('*')
                         .from(this.tableName)
-                        .where('key', key)
-                        .andWhere('expire_at', '>', Math.ceil(Date.now()/1000) )); //TOOD: handle if expire_at is NULL!!!
-
+                        .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, Math.ceil(Date.now()/1000),key]));
     if(ret?.length > 0){
       ret = ret[0];
       ret = ret.value;
@@ -47,8 +45,7 @@ export default class kvstore extends core {
   getCB(key, callback){
     this.pg.select('*')
     .from(this.tableName)
-    .where('key', key)
-    .andWhere('expire_at', '>', Math.ceil(Date.now()/1000))
+    .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, Math.ceil(Date.now()/1000),key])
     .then(function(ret){
       
       if(ret?.length > 0) {
