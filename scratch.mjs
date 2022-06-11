@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import {Assets} from './db/db.mjs';
+import {KVStore} from './db/db.mjs';
 // import {sendTextEmail} from "./lib/email.mjs";
 // 
 // async function main(){
@@ -10,20 +10,10 @@ import {Assets} from './db/db.mjs';
 
 
 async function main(){
-  let err, asset;
-  [err, asset] = await Assets.findOrCreate({id: 4}, {org_id: 99, config: {"address": "", "label": "Select a Message"}});
-  // console.error(err)
-  console.log("created/found asset", asset);
   
-  [err, asset] = await Assets.update({where: {org_id: 99}, update: {config: {"dork": "test", "f": "nurse"}} });
-  
-  console.log("updated asset", asset);
-  
-  [err, asset] = await Assets.findById(4);
-  
-  console.log("found asset", asset);
-  
-  process.exit(0);
+  KVStore.delCB("LOGIN_CODE:JTMMLPEQ", function(err, ret){
+    console.log("del", err, ret);
+  })
   
 }
 

@@ -11,13 +11,13 @@ import  cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import routes from './api/routes.mjs';
 import { handleStaticAssets } from './lib/middleware.mjs';
-import { legacyRedisClient } from "./lib/redis.mjs";
 import expSession from "express-session";
-import ConnectRedis from 'connect-redis';
-import { db } from './db/db.mjs';
+//import ConnectRedis from 'connect-redis';
+import {sqliteSession} from './lib/sqlite_session.mjs';
+import { db, KVStore } from './db/db.mjs';
 import {banBadActors} from './lib/rate_limit.mjs';
 
-const RedisStore = ConnectRedis(expSession);
+const SqliteStore = sqliteSession(expSession); //TOOD put this in the sqlite_session.mjs file...
 
 //to replace __dirname
 // import { dirname } from 'path';
@@ -41,7 +41,7 @@ app.use(expSession({
   cookie: { 
     secure: process.env.NODE_ENV === 'production' ? true : false //TODO: run ssl in dev? 
   },
-  store: new RedisStore({ client: legacyRedisClient }),
+  store: new SqliteStore({ client: KVStore }),
   resave: false,
   saveUninitialized: false
 }));
