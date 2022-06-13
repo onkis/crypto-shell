@@ -43,6 +43,27 @@ export default class kvstore extends core {
     //console.log("increment results", key, err, ret);
     return [err, ret];
   }
+  /**
+   * deletes all rows where expire_at < Date.now()
+   * @returns {Tuple}  - [err, ret]
+   */
+  async expireKeys(){
+    let tuple = await asyncWrap(
+      this.pg(this.tableName).whereRaw('expire_at < ?', Date.now()).del()
+    );
+    return tuple;
+  }
+  /**
+   * delete keys that match the pattern
+   * @param {String} likePattern - the pattern to be used
+   * @returns {Tuple}  - [err, ret]
+   */
+  async deleteKeys(likePattern){
+    let tuple = await asyncWrap(
+      this.pg(this.tableName).whereLike('key', likePattern).del()
+    );
+    return tuple;
+  }
   
   /**
    * This is provided for sqlite-session
