@@ -30,6 +30,7 @@ This branch is all about building a "traditional" node/express/knex app shell
 TODO: postgres is no longer required... might remove this
 1. postgres.app https://postgresapp.com/ 
 
+  TODO: redis is no longer required
 2. redis
 ```
   brew install redis
@@ -53,6 +54,9 @@ HOTMAIL_USER=""
 HOTMAIL_PASS=""
 COOKIE_SECRET=""
 SQLITE_FILE="/some/path/to/crypt-shell/data/cs-dev.sqlite"
+S3_BUCKET=""
+S3_ACCESS_KEY=""
+S3_ACCESS_KEY_SECRET=""
 ```
 
 # Using the Solana CLI reference
