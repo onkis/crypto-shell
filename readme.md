@@ -4,27 +4,6 @@ The crypto ecosystem moves very quickly. Being able to adapt rapidly is importan
 
 This branch is all about building a "traditional" node/express/knex app shell
 
-1. express shell <Done>
-2. Simple "pug" views <Done>
-3. Model Layer (knex) <Done>
-4. build for deployment with esbuild/caxa? (single files?) <Done>
-5. login <Done>
-6. Logger?
-7. use .env for secrets <Done>
-8. deployment
-9. "Merchant/Non Profit" fake page <DONE>
-10. Solana Pay "Button" deployed to merchant page. Hardcoded accounts <DONE>
-11. "Donate" Button <Done>
-12. Donation "Account" <DONE>
-13. Solana Program that provides security/chargeback capability ?
-14. Unit test setup (mocha?)
-15. need static assets for wallet app icon
-16. Admin App + donate script gen [MY]
-17. Donation With USDC [MY]
-18. Donation Modal With QR Code
-19. All Settings must be configurable/preview in admin "app"
-20. Save indication
-21. User Profile information
 
 # Things to install
 TODO: postgres is no longer required... might remove this
