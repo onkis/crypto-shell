@@ -14,7 +14,7 @@ export default class kvstore extends core {
     };
     
     if(options.EX){
-      newRecord.expire_at = Math.ceil(Date.now()/1000) + (options.EX);
+      newRecord.expire_at = this._nowSec() + (options.EX);
     }
     
     return asyncWrap(this.pg(this.tableName).insert(newRecord));
@@ -24,7 +24,7 @@ export default class kvstore extends core {
     let [err, ret] = await asyncWrap(
                         this.pg.select('*')
                         .from(this.tableName)
-                        .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, Math.ceil(Date.now()/1000),key]));
+                        .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, this._nowSec(),key]));
     if(ret?.length > 0){
       ret = ret[0];
       ret = ret.value;
@@ -35,10 +35,15 @@ export default class kvstore extends core {
     
     return [err, ret];
   }
+  //Sqlite uses SECONDS since the epic in the date type
+  //https://www.sqlite.org/datatype3.html
+  _nowSec(){
+    return Math.ceil(Date.now()/1000);
+  }
   
   async incr(key){
     let [err, ret] = await asyncWrap(
-      this.pg.raw('UPDATE kvstore SET value =(value +1) where (key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, Math.ceil(Date.now()/1000),key]));
+      this.pg.raw('UPDATE kvstore SET value =(value +1) where (key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, this._nowSec(),key]));
     
     //console.log("increment results", key, err, ret);
     return [err, ret];
@@ -49,7 +54,7 @@ export default class kvstore extends core {
    */
   async expireKeys(){
     let tuple = await asyncWrap(
-      this.pg(this.tableName).whereRaw('expire_at < ?', Date.now()).del()
+      this.pg(this.tableName).whereRaw('expire_at < ?', this._nowSec()).del()
     );
     return tuple;
   }
@@ -74,7 +79,7 @@ export default class kvstore extends core {
   getCB(key, callback){
     this.pg.select('*')
     .from(this.tableName)
-    .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, Math.ceil(Date.now()/1000),key])
+    .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, this._nowSec(),key])
     .then(function(ret){
       
       if(ret?.length > 0) {
@@ -105,7 +110,7 @@ export default class kvstore extends core {
     //console.log("calling setCB", key, value, options);
     if(options.EX){
       //console.log("in the options.ex", (options.EX))
-      newRecord.expire_at = Math.ceil(Date.now()/1000) + (options.EX);
+      newRecord.expire_at = this._nowSec() + (options.EX);
     }
     //console.log("new record", newRecord);
     this.pg(this.tableName).insert(newRecord)
@@ -142,7 +147,7 @@ export default class kvstore extends core {
     //Freaking promises are stuipid
     this.pg(this.tableName)
       .where('key', key)
-      .andWhere('expire_at' < Math.ceil(Date.now()/1000))
+      .andWhere('expire_at' < this._nowSec())
       .del()
       .then(function(ret){
         if(ret === 1) callback(null, 0);
@@ -150,7 +155,7 @@ export default class kvstore extends core {
           //second update the expiredAt
           that.pg(that.tableName)
             .where('key', key)
-            .update('expire_at', Math.ceil(Date.now()/1000)+ttl)
+            .update('expire_at', this._nowSec()+ttl)
             .then(function(){
               callback(null, 1);
             })
