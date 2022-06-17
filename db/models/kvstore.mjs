@@ -142,6 +142,7 @@ export default class kvstore extends core {
     let nowSec = _nowSec();
     let that = this;
     //Freaking promises are stuipid
+    //console.log("expireCB nowSec",nowSec);
     this.pg(this.tableName)
       .where('key', key)
       .andWhere('expire_at' < nowSec)
@@ -149,6 +150,7 @@ export default class kvstore extends core {
       .then(function(ret){
         if(ret === 1) callback(null, 0);
         else{
+          //console.log("callback", key, nowSec, ttl);
           let updatedVal = nowSec+ttl;
           //second update the expiredAt
           that.pg(that.tableName)

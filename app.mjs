@@ -140,6 +140,11 @@ function main(){
       : 'port ' + addr.port;
     debug('Listening on ' + bind);
   }
-  backgroundJobs();
+  
+  /**
+   * Run jobs on setInterval Cadences
+   */
+   backgroundJobs();
+
 }
 main();
