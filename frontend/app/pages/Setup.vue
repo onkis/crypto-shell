@@ -2,9 +2,13 @@
 #setup-page
   .container-fluid.py-4
     .row
-      .col-lg-6
+      .col-lg-4
         h4 Payment Setup
         a(style="display:none;" href="http://localhost:3000/ecommerce/products/edit-product") like this
+    .row
+      .col-lg-4
+      .col-lg-8
+        a(:href="landingPageLink" target='_blank') {{ landingPageLink }}
     .row.mt-5
       .col-lg-4.mt-lg-0.mt-4
         .card
@@ -55,6 +59,7 @@
                 h3.font-weight-normal.mt-4 {{config.title || standard.title}}
                 p.mt-2
                   | {{ config.detail || standard.detail }}
+                hr
                 .control-container
                   .row.mt-2
                     .col-3
@@ -72,7 +77,6 @@
                       .input-group.input-group-dynamic(:class="{'is-focused':(config.ammount != null)}")
                         label.form-label Price
                         input.form-control.form-control-default(v-model="config.ammount" type='number')
-                  .row.mt-2
                     .col-6
                       .mt-2
                         p
@@ -97,6 +101,7 @@ export default {
     return {
       stage: 'donate',
       config: {},
+      landingPageLink: null,
       standard: {
         title: 'JOIN THE CLEANUP',
         img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.wallpapersafari.com%2F49%2F59%2FFBhAsC.jpg',
@@ -122,8 +127,8 @@ export default {
 
       this.id = data.id;
       this.config = { ...data.config };
+      this.landingPageLink = `http://localhost:3000/donate_landing_page?id=${data.id}`;
       console.log(this.config);
-      document.querySelector('pre').innerText = this.getScript(this.id);
     },
     async update(){
       console.log("config", this.config);
@@ -135,16 +140,6 @@ export default {
       if(response){
         window.AlertManager({type: "success", "message": "Setup Saved!", hideAfter: 3000 });
       }
-    },
-    getScript(id){
-      const script = "<script>\n" +
-      "  (function(d, src){\n" + 
-      "    var e = d.createElement('script');e.src = src;\n" + 
-      "    d.querySelector('head').appendChild(e);\n" +
-      `  })(document, 'http://localhost:3000/x?id='${id});` + 
-      "\n<\/script>;";
-
-      return script;
     }
   }
 }
