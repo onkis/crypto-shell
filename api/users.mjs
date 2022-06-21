@@ -24,4 +24,9 @@ export async function get(req, res){
   res.json(user);
 }
 
-export default { create, get };
+export async function currentUser(req, res){
+  const user = req.session.user;
+  res.json(user);
+}
+
+export default { create, get, currentUser };

@@ -2,8 +2,12 @@
 #usersettings-page
   .container-fluid.py-4
     .row
-      .col-lg-6
-        h4 User Settings
+      #delete.card.mt-4
+          .card-header
+            h5 User Settings
+          .card-body.d-sm-flex.pt-0
+            p.text-sm Email Address: {{email}}
+
 
 </template>
 
@@ -12,7 +16,7 @@ export default {
   components: {},
   data() {
     return {
-      config: {}
+      email: null
     };
   }, 
   mounted() {
@@ -20,7 +24,10 @@ export default {
   },
   methods: {
     async init(){
-    
+      const response = await this.$http("/api/user/current");
+      const { data } = response;
+      this.email = data.email;
+      
     }
   }
 }

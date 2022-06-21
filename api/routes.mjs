@@ -71,8 +71,7 @@ router.delete('/api/donation/:id', donations.destroy);
 router.get('/api/transactions', wwwAuth, transactions.list);
 
 /* USERS */
-router.get('/api/user/:id', wwwAuth, users.get);
-router.post('/api/user',wwwAuth, users.create);
+router.get('/api/user/current', wwwAuth, users.currentUser);
 
 /* TODO: move to separate file... but for now its probably fine */
 router.get('/x', async function(req, res){
