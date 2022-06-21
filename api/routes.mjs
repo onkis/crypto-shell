@@ -56,17 +56,19 @@ router.get('/setup', function(req, res){
 });
 
 /* API For PaymentPage Table */
-router.get('/api/paymentpage/:id', paymentpage.get);
-router.put('/api/paymentpage/:id', paymentpage.update);
-router.delete('/api/paymentpage/:id', paymentpage.destroy);
+router.get('/api/paymentpage/:id', wwwAuth, paymentpage.get);
+router.put('/api/paymentpage/:id',wwwAuth, paymentpage.update);
+router.delete('/api/paymentpage/:id',wwwAuth, paymentpage.destroy);
 
 /* API For Donation Table */
+//TODO: This API needs some kind of route security to ensure we don't
+//get spammed by random donation create calls
 router.post('/api/donation', donations.create);
 router.delete('/api/donation/:id', donations.destroy); 
 
 /* USERS */
-router.get('/api/user/:id', users.get);
-router.post('/api/user', users.create);
+router.get('/api/user/:id', wwwAuth, users.get);
+router.post('/api/user',wwwAuth, users.create);
 
 /* TODO: move to separate file... but for now its probably fine */
 router.get('/x', async function(req, res){
