@@ -39,7 +39,8 @@ export default {
       const response = await this.$http("/api/transactions");
       const { data } = response;
       console.log("response", response);
-      
+      //https://github.com/fiduswriter/Simple-DataTables/blob/main/docs/9-fetch-api/index.html
+      //TODO: this Data Table is lgpl...probably needs to be changed...
       const dataTableSearch = new DataTable("#transactions", {
         searchable: true,
         fixedHeight: false,
