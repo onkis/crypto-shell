@@ -66,6 +66,23 @@ export default class core {
   }
   
   /**
+   * find all records
+   * @param {Object} where - knex where clause
+   * @param {Number} limit - limit value, optional
+   * @param {Number} offset - offset value, optional
+   * @returns {Array}  - [err, Data<Array>]
+   */
+  async findAll(where, limit=null, offset=null){
+    
+    let query = this.pg.select("*").where(where).from(this.tableName);
+    if(limit) query.limit(limit);
+    if(offset) query.offset(offset);
+    
+    let [err, res] = await asyncWrap(query)
+    return [err, res];
+  }
+  
+  /**
    * find a Single record
    * @param {Object} where - The where clause
    * @returns {Array}  - [err, ret] tuple

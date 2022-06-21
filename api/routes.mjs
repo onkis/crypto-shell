@@ -7,6 +7,8 @@ import express from 'express';
 import {wwwAuth} from "../lib/middleware.mjs";
 import {rateLimit} from "../lib/rate_limit.mjs";
 
+import transactions from "./transactions.mjs";
+
 const script = fs.readFileSync('./public/dist/js/donate_script.js', { encoding: 'utf8' });
 const router = express.Router();
 export default router;
@@ -65,6 +67,8 @@ router.delete('/api/paymentpage/:id',wwwAuth, paymentpage.destroy);
 //get spammed by random donation create calls
 router.post('/api/donation', donations.create);
 router.delete('/api/donation/:id', donations.destroy); 
+
+router.get('/api/transactions', wwwAuth, transactions.list);
 
 /* USERS */
 router.get('/api/user/:id', wwwAuth, users.get);
