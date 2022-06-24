@@ -62,6 +62,8 @@ router.get('/api/paymentpage/:id', wwwAuth, paymentpage.get);
 router.put('/api/paymentpage/:id',wwwAuth, paymentpage.update);
 router.delete('/api/paymentpage/:id',wwwAuth, paymentpage.destroy);
 
+router.post('/api/file-upload/:page_id', wwwAuth, paymentpage.fileUpload);
+
 /* API For Donation Table */
 //TODO: This API needs some kind of route security to ensure we don't
 //get spammed by random donation create calls

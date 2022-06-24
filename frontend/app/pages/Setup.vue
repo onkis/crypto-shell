@@ -24,9 +24,9 @@
                 .input-group.input-group-static.mb-2
                   label Logo
                   input#label.form-control(v-model="config.logo" type='text' placeholder='Logo Src' v-on:click="changePreview('donate')")
+                button.button.btn.bg-gradient-primary(@click="chooseFiles()") Upload File
                 .input-group.input-group-static.mb-2
-                  label Logo
-                  input.form-control(type="file", @change="uploadLogo")
+                  input.form-control#fileUpload(type="file", @change="uploadImage", hidden)
               .col-12
                 .input-group.input-group-static.mb-2
                   label Title
@@ -142,6 +142,32 @@ export default {
       const response = await this.$http.put("/api/paymentpage/3", update);
       if(response){
         window.AlertManager({type: "success", "message": "Setup Saved!", hideAfter: 3000 });
+      }
+    },
+    chooseFiles(){
+      document.getElementById("fileUpload").click();
+    },
+    uploadImage(event) {
+      let imageFile = event.target.files[0];
+      debugger;
+      if (imageFile) {
+        // check the file type to be image
+        if (!imageFile.type.includes("image")) {
+          alert("Must Upload an Image")
+        }
+        else {
+          let data = new FormData();
+          data.append("file", imageFile);
+          let uploadUrl = "/api/file-upload/"+this.id;
+          
+          this.$http.post(uploadUrl, data)
+            .then((res) => { 
+              
+            })
+            .catch((err) => {
+              console.error("error uploading image", err);
+            });
+        }
       }
     }
   }

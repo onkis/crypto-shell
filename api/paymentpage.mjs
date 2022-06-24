@@ -1,4 +1,5 @@
 import { PaymentPage } from '../db/db.mjs';
+import {uploadFileToS3} from '../lib/upload.mjs';
 
 export async function create(req, res){
   const id = req.params.id;
@@ -56,4 +57,23 @@ export async function destroy(req, res){
   res.send(204)
 }
 
-export default { create, get, update, destroy };
+export async function fileUpload(req, res){
+  
+  const page_id = req.params.page_id;
+  const user_id = req.session.user.id;
+  
+  console.log("file upload", page_id, user_id);
+  
+  let [err, name] = await uploadFileToS3(user_id, page_id, req)
+  
+  if(err) {
+    console.error("paymentpage.mjs#fileUpload file upload error", err);
+    res.send(400);
+  }
+  else{
+    console.log("success", name);
+    res.status(200).send({"filePath": name});
+  }
+}
+
+export default { create, get, update, destroy, fileUpload };
