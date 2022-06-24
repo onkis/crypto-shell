@@ -45,7 +45,7 @@ router.get('/app', wwwAuth, function(req, res){
 
 router.get('/logout', wwwAuth, function(req, res){
   req.session.destroy();
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 //TODO: if dev mode...

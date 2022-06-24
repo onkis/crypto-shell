@@ -24,6 +24,9 @@
                 .input-group.input-group-static.mb-2
                   label Logo
                   input#label.form-control(v-model="config.logo" type='text' placeholder='Logo Src' v-on:click="changePreview('donate')")
+                .input-group.input-group-static.mb-2
+                  label Logo
+                  input.form-control(type="file", @change="uploadLogo")
               .col-12
                 .input-group.input-group-static.mb-2
                   label Title
