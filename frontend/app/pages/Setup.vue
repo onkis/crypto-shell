@@ -149,7 +149,6 @@ export default {
     },
     uploadImage(event) {
       let imageFile = event.target.files[0];
-      debugger;
       if (imageFile) {
         // check the file type to be image
         if (!imageFile.type.includes("image")) {
@@ -162,10 +161,11 @@ export default {
           
           this.$http.post(uploadUrl, data)
             .then((res) => { 
-              
+              this.config.logo = res.data.filePath;
             })
             .catch((err) => {
               console.error("error uploading image", err);
+              alert("Error Uploading Image")
             });
         }
       }

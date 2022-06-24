@@ -61,14 +61,12 @@ export async function fileUpload(req, res){
   
   const page_id = req.params.page_id;
   const user_id = req.session.user.id;
-  
-  console.log("file upload", page_id, user_id);
-  
+    
   let [err, name] = await uploadFileToS3(user_id, page_id, req)
   
   if(err) {
     console.error("paymentpage.mjs#fileUpload file upload error", err);
-    res.send(400);
+    res.sendStatus(400);
   }
   else{
     console.log("success", name);
