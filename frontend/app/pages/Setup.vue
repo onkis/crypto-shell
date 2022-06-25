@@ -4,7 +4,6 @@
     .row
       .col-lg-4
         h4 Payment Setup
-        a(style="display:none;" href="http://localhost:3000/ecommerce/products/edit-product") like this
     .row
       .col-lg-4
       .col-lg-8
@@ -30,7 +29,7 @@
               .col-12
                 .input-group.input-group-static.mb-2
                   label Title
-                  input#label.form-control(v-model="config.title" type='text' placeholder='Enter Title' v-on:click="changePreview('donate')")
+                  input#label.form-control(v-model="config.title" type='text' placeholder='Enter Title' v-on:click="changePreview('donate')" v-on:change="updatePageLink()")
               .col-12
                 .input-group.input-group-static.mb-2
                   label Details
@@ -105,6 +104,7 @@ export default {
       stage: 'donate',
       config: {},
       landingPageLink: null,
+      hashId: null,
       standard: {
         title: 'JOIN THE CLEANUP',
         img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.wallpapersafari.com%2F49%2F59%2FFBhAsC.jpg',
@@ -121,6 +121,12 @@ export default {
     changePreview(newStage){
       this.stage = newStage;
     },
+    
+    updatePageLink(){
+      console.log("here")
+      this.landingPageLink = `http://localhost:3000/p/${this.hashId}/${this.dashify(this.config.title)}`;
+    },
+    
     async init(){
       console.log("init!");
       //TODO: there should be only one endpoint to get the logged in users
@@ -129,12 +135,11 @@ export default {
       const { data } = response;
 
       this.id = data.id;
+      this.hashId = data.hashId;
       this.config = { ...data.config };
-      this.landingPageLink = `http://localhost:3000/donate_landing_page?id=${data.hashId}`;
-      console.log(this.config);
+      this.landingPageLink = `http://localhost:3000/p/${data.hashId}/${this.dashify(data.config.title)}`;
     },
     async update(){
-      console.log("config", this.config);
       const update = {
         config: { ...this.config }
       };
@@ -152,7 +157,7 @@ export default {
       if (imageFile) {
         // check the file type to be image
         if (!imageFile.type.includes("image")) {
-          alert("Must Upload an Image")
+          window.AlertManager({type: "error", "message": "Invalid File Type", hideAfter: 3000 });
         }
         else {
           let data = new FormData();
@@ -165,10 +170,28 @@ export default {
             })
             .catch((err) => {
               console.error("error uploading image", err);
-              alert("Error Uploading Image")
+              window.AlertManager({type: "error", "message": "Error Uploading Image", hideAfter: 3000 });
+
             });
         }
       }
+    },
+    /**
+     * convers a string to dashes
+     * 
+     * https://github.com/jeffreypriebe/dashify
+     * MIT license
+     * @param {String} str - the string to dashify
+     */
+     dashify(str) {
+      if (typeof str !== 'string') {
+        throw new TypeError('expected a string');
+      }
+      str = str.replace(/([a-z])([A-Z])/g, '$1-$2');
+      str = str.replace(/[ \t\W]/g, '-');
+      str = str.replace(/^-+|-+$/g, '');
+      str = str.replace(/-+/g, '-');
+      return encodeURIComponent(str.toLowerCase());
     }
   }
 }

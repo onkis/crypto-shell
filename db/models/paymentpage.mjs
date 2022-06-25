@@ -1,6 +1,5 @@
 import core from './core.mjs';
 import Hashids from 'hashids'
-
 const hashids = new Hashids()
 
 export default class paymentpage extends core {
@@ -44,5 +43,6 @@ function _onFindHelper(obj){
     obj.config = JSON.parse(obj.config);
   }
   if(obj && obj.id) obj.hashId = hashids.encode(obj.id);
+  
   return obj
 }

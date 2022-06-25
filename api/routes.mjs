@@ -17,15 +17,15 @@ router.get('/', function(req, res){
   res.render('index');
 });
 
-router.get('/donate_landing_page', async function(req, res){
-  const { id } = req.query;
+router.get('/p/:id/:key', async function(req, res){
+  const { id } = req.params;
   /* TODO: Get Org Details */
   const [err, record] = await PaymentPage.findByHashId(id);
   if(err){
     console.log(err);
     return res.sendStatus(404);
   }
-
+  console.log("data", record);
   const data = encodeURI(JSON.stringify({ ...record.config }));
 
   res.render('donate_landing_page', { data });

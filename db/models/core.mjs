@@ -43,10 +43,9 @@ export default class core {
    */
   async findByHashId(hashId){
     let id = hashids.decode(hashId);
-    
+
     if(!id) return [new Error("No Id passed")];
     else if(id && id.length > 0) id = id[0];
-
     return this.findById(id);
   }
   
