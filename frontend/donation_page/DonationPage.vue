@@ -113,7 +113,7 @@ export default {
     const CLUSTER = clusterApiUrl((MAIN_NET) ? "mainnet" : "testnet");
 
     this.connection = new Connection(CLUSTER, 'confirmed');
-    this.assetId = urlParams.get('id');
+    this.assetId = document.location.pathname.split("/")[2];
   },
   methods: {
     async buildQrCode(){
@@ -187,6 +187,8 @@ export default {
       const amount = new BigNumber(this.config.ammount),
             asset_id = this.assetId,
             donation_config = { ...this.config };
+
+
 
       const response = await this.$http.post("/api/donation", {  amount, asset_id, donation_config });
       this.transaction_ref_id = response.data.transaction_ref_id;

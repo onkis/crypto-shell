@@ -5,14 +5,14 @@ export async function create(req, res){
   let err, asset, donation;
   const { amount, asset_id, donation_config } = req.body;
 
-  [err, asset] = await PaymentPage.findOne({ id: asset_id });
+  [err, asset] = await PaymentPage.findByHashId(asset_id);
   if(err){
     console.error("failed to find asset | api/donations.mjs#create", err);
     return res.send(500);
   }
+  else if(!asset) return res.send(404);
 
   const { org_id } = asset;
-
   const transaction_ref_id = new Keypair().publicKey.toString();
 
   const newDonation = {
