@@ -12,10 +12,7 @@
             .colored-shadow(style="background-image:url('../../assets/img/products/product-11.jpg');")
           .card-body
             #stage_donate(v-if="stage === 'donate'")
-              .mt-n6.mx-auto
-                button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 
-                button.btn.btn-outline-dark.btn-sm.mb-0(type='button' name='button')  Remove 
-              h3.font-weight-normal.mt-4 {{donationConfig.title || standard.title}}
+              h3.font-weight-normal {{donationConfig.title || standard.title}}
               p.mt-2
                 | {{ donationConfig.detail || standard.detail }}
               hr

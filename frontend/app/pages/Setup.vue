@@ -51,18 +51,29 @@
           .card
             .card-header.p-0.position-relative.mt-n4.mx-3.z-index-2
               a.d-block.blur-shadow-image
-                img.img-fluid.shadow.border-radius-lg(:src='config.logo || standard.logo' alt='img-blur-shadow')
-              .colored-shadow(style="background-image:url('../../assets/img/products/product-11.jpg');")
+                #imageBackground(:style="{backgroundImage:`url(${config.logo})`}" style="background-position: center;background-size: cover;height: 35vh;min-height: 300px;width: 100%;border-radius: 5px;")
             .card-body
               #stage_donate(v-if="stage === 'donate'")
-                .mt-n6.mx-auto
-                  button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 
-                  button.btn.btn-outline-dark.btn-sm.mb-0(type='button' name='button')  Remove 
-                h3.font-weight-normal.mt-4 {{config.title || standard.title}}
+                h3.font-weight-normal {{config.title || standard.title}}
                 p.mt-2
                   | {{ config.detail || standard.detail }}
                 hr
                 .control-container
+                  .row
+                    .col-12.mb-4
+                      .input-group.input-group-dynamic
+                        label.form-label First Name
+                        input.form-control.form-control-default(type='text')
+                    .col-12.mb-4
+                      .d-block
+                        .input-group.input-group-dynamic
+                          label.form-label Last Name
+                          input.form-control.form-control-default(type='text')
+                    .col-12.mb-4
+                      .d-block
+                        .input-group.input-group-dynamic
+                          label.form-label Email Address
+                          input.form-control.form-control-default(type='email')
                   .row.mt-2
                     .col-3
                       .d-block
@@ -79,12 +90,21 @@
                       .input-group.input-group-dynamic(:class="{'is-focused':(config.ammount != null)}")
                         label.form-label Price
                         input.form-control.form-control-default(v-model="config.ammount" type='number')
-                    .col-6
-                      .mt-2
-                        p
-                          span(style="display: inline-block; width: 100%; text-align: center; color: rgb(255, 255, 255); background: rgb(0, 0, 0); font-weight: 500; font-size: 25px; padding: 2px 10px;border-radius: 5px; cursor: pointer; position: relative;")
-                            | Donate With 
-                            img(src='http://localhost:3000/images/sp-white-gradient.svg' style='margin-top: -4px;')
+                    .col-6.mb-4
+                      .mx-auto.col-12
+                        .col-12.col-8.mx-auto
+                          .nav-wrapper.position-relative.z-index-2
+                            ul#tabs-pricing.nav.nav-pills.nav-fill.flex-row.p-1(role='tablist')
+                              li.nav-item.pointer
+                                a#tabs-iconpricing-tab-1.nav-link.mb-0 QR CODE
+                              li.nav-item.pointer
+                                a#tabs-iconpricing-tab-2.nav-link.mb-0 HD WALLET
+                              .moving-tab.position-absolute.nav-link.pointer(style="padding: 0px; padding-left: calc(50% - 8px); padding-right: 8px; width: 100%;")
+                                a#tabs-iconpricing-tab-2.nav-link.mb-0.active -
+                    .col-12
+                      span(style="display: inline-block;width: 100%;text-align: center;color: rgb(255, 255, 255);background: rgb(0, 0, 0);font-weight: 500;font-size: 25px;padding: 2px 10px;border-radius: 5px;cursor: pointer;position: relative;")
+                        | Donate With 
+                        img(src='http://localhost:3000/images/sp-white-gradient.svg' style='margin-top: -4px;')
               #stage_complete(v-if="stage === 'complete'")
                 .mt-n6.mx-auto
                   button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 
@@ -107,7 +127,7 @@ export default {
       hashId: null,
       standard: {
         title: 'JOIN THE CLEANUP',
-        img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.wallpapersafari.com%2F49%2F59%2FFBhAsC.jpg',
+        logo: 'https://assets.theoceancleanup.com/app/uploads/2021/08/Tender-Inspection-Flight-24.08.2021-pre-meetings-3-1280x720.jpg',
         detail: 'Your donation will be made to The Ocean Cleanup North Pacific Foundation, a registered 501(c)(3) foundation',
         completeTitle: 'THANK YOU!',
         completeDetails: 'Thanks for your generous contribution to support #TeamSeas! Every single dollar will help clean one pound of trash from a river, beach or ocean around the world.'
