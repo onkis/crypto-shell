@@ -9,7 +9,6 @@ import {rateLimit} from "../lib/rate_limit.mjs";
 
 import transactions from "./transactions.mjs";
 
-const script = fs.readFileSync('./public/dist/js/donate_script.js', { encoding: 'utf8' });
 const router = express.Router();
 export default router;
 
@@ -74,4 +73,6 @@ router.get('/api/transactions', wwwAuth, transactions.list);
 
 /* USERS */
 router.get('/api/user/current', wwwAuth, users.currentUser);
+
+
 
