@@ -32,7 +32,7 @@ export default class paymentpage extends core {
   }
   
   onSave(obj){
-    if(obj.config){
+    if(obj && obj.config){
       obj.config = JSON.stringify(obj.config);
     }
     return obj;
@@ -43,6 +43,6 @@ function _onFindHelper(obj){
   if(obj && obj.config){
     obj.config = JSON.parse(obj.config);
   }
-  if(obj.id) obj.hashId = hashids.encode(obj.id);
+  if(obj && obj.id) obj.hashId = hashids.encode(obj.id);
   return obj
 }

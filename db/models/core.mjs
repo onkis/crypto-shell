@@ -43,12 +43,11 @@ export default class core {
    */
   async findByHashId(hashId){
     let id = hashids.decode(hashId);
-    let [err, res] = await asyncWrap(this.pg.select("*").where({id}).from(this.tableName).limit(1));
     
-    if(res?.length > 0) res = res[0];
-    else res = null;
-    
-    return [err, this.onFind(res)];
+    if(!id) return [new Error("No Id passed")];
+    else if(id && id.length > 0) id = id[0];
+
+    return this.findById(id);
   }
   
   /**
@@ -57,6 +56,8 @@ export default class core {
    * @returns {Array}  - [err, result] returns a tuple with an error and result
    */
   async findById(id){
+    if(!id) return [new Error("No Id passed")];
+    
     let [err, res] = await asyncWrap(this.pg.select("*").where({id}).from(this.tableName).limit(1));
     
     if(res?.length > 0) res = res[0];

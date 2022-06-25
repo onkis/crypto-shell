@@ -130,7 +130,7 @@ export default {
 
       this.id = data.id;
       this.config = { ...data.config };
-      this.landingPageLink = `http://localhost:3000/donate_landing_page?id=${data.id}`;
+      this.landingPageLink = `http://localhost:3000/donate_landing_page?id=${data.hashId}`;
       console.log(this.config);
     },
     async update(){

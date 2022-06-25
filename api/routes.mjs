@@ -20,10 +20,10 @@ router.get('/', function(req, res){
 router.get('/donate_landing_page', async function(req, res){
   const { id } = req.query;
   /* TODO: Get Org Details */
-  const [err, record] = await PaymentPage.findById(id);
+  const [err, record] = await PaymentPage.findByHashId(id);
   if(err){
     console.log(err);
-    return res.send(500);
+    return res.sendStatus(404);
   }
 
   const data = encodeURI(JSON.stringify({ ...record.config }));
@@ -75,35 +75,3 @@ router.get('/api/transactions', wwwAuth, transactions.list);
 /* USERS */
 router.get('/api/user/current', wwwAuth, users.currentUser);
 
-/* TODO: move to separate file... but for now its probably fine */
-router.get('/x', async function(req, res){
-  const { id } = req.query;
-  /* TODO: Get Org Details */
-  const [err, record] = await PaymentPage.findById(id);
-  if(err){
-    console.log(err);
-    return res.send(500);
-  }
-
-  const { address, label } = record.config;
-
-  /* Build Donation Script */
-  const message = 'Donation ID: 100';
-
-  const response = _buildScript(address, label, message);
-
-  res.send(response);
-});
-
-function _buildScript(address, label, message){
-  const response = `
-    const DONATION_PROPS = {
-      address: "${address}",
-      label: "${label}",
-      message: "${message}"
-    };
-    ${script}
-  `;
-
-  return response;
-}
