@@ -51,7 +51,7 @@
           .card
             .card-header.p-0.position-relative.mt-n4.mx-3.z-index-2
               a.d-block.blur-shadow-image
-                #imageBackground(:style="{backgroundImage:`url(${config.logo})`}" style="background-position: center;background-size: cover;height: 35vh;min-height: 300px;width: 100%;border-radius: 5px;")
+                #imageBackground(:style="{backgroundImage:`url(${logo})`}" style="background-position: center;background-size: cover;height: 35vh;min-height: 300px;width: 100%;border-radius: 5px;")
             .card-body
               #stage_donate(v-if="stage === 'donate'")
                 h3.font-weight-normal {{config.title || standard.title}}
@@ -134,6 +134,12 @@ export default {
       }
     };
   }, 
+  computed: {
+    logo(){
+      if(this.config.logo) return this.config.logo;
+      else return this.standard.logo;
+    }
+  },
   mounted() {
     this.init();
   },
