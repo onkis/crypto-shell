@@ -36,6 +36,7 @@ SQLITE_FILE="/some/path/to/crypt-shell/data/cs-dev.sqlite"
 S3_BUCKET=""
 S3_ACCESS_KEY=""
 S3_ACCESS_KEY_SECRET=""
+BASE_URL="localhost:3000"
 ```
 
 # Using the Solana CLI reference

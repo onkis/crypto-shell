@@ -24,7 +24,6 @@ router.get('/p/:id/:key', async function(req, res){
     console.log(err);
     return res.sendStatus(404);
   }
-  console.log("data", record);
   const data = encodeURI(JSON.stringify({ ...record.config }));
 
   res.render('donate_landing_page', { data });

@@ -62,7 +62,7 @@
                   .col-12(v-if="validConfig && paymentMethod === 'HD_WALLET'")
                     span#buttonSpan(@click="handleClickToPayWithWalletExtension()")
                       | Donate With 
-                      img(src='http://localhost:3000/images/sp-white-gradient.svg' style='margin-top: -4px;')
+                      img(src='/images/sp-white-gradient.svg' style='margin-top: -4px;')
             #stage_complete(v-if="stage === 'complete'")
               .mt-n6.mx-auto
                 button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 

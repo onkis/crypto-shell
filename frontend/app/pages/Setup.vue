@@ -104,7 +104,8 @@
                     .col-12
                       span(style="display: inline-block;width: 100%;text-align: center;color: rgb(255, 255, 255);background: rgb(0, 0, 0);font-weight: 500;font-size: 25px;padding: 2px 10px;border-radius: 5px;cursor: pointer;position: relative;")
                         | Donate With 
-                        img(src='http://localhost:3000/images/sp-white-gradient.svg' style='margin-top: -4px;')
+                        img(src='/images/sp-white-gradient.svg' style='margin-top: -4px;')
+
               #stage_complete(v-if="stage === 'complete'")
                 .mt-n6.mx-auto
                   button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 
@@ -150,7 +151,7 @@ export default {
     
     updatePageLink(){
       console.log("here")
-      this.landingPageLink = `http://localhost:3000/p/${this.hashId}/${this.dashify(this.config.title)}`;
+      this.landingPageLink = `//${process.env.BASE_URL}/p/${this.hashId}/${this.dashify(this.config.title)}`;
     },
     
     async init(){
@@ -163,7 +164,7 @@ export default {
       this.id = data.id;
       this.hashId = data.hashId;
       this.config = { ...data.config };
-      this.landingPageLink = `http://localhost:3000/p/${data.hashId}/${this.dashify(data.config.title)}`;
+      this.landingPageLink = `//${process.env.BASE_URL}/p/${data.hashId}/${this.dashify(data.config.title)}`;
     },
     async update(){
       const update = {

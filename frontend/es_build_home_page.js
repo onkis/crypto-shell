@@ -9,8 +9,8 @@ require('esbuild').build({
     inject: ['frontend/esbuild.inject.js'],
     define: {
       "global": "window",
-      "process.env.BASE_URL": process.env.BASE_URL,
-      "process.env.NODE_ENV": JSON.stringify("development"),
+      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL),
+      "process.env.NODE_ENV": JSON.stringify(process.env.BASE_URL),
     },
     loader:{
       '.eot': 'file',

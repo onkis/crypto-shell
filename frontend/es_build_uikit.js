@@ -11,7 +11,7 @@ require('esbuild').build({
       
     })],
     define: {
-        "process.env.BASE_URL": process.env.BASE_URL,
+        "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL),
         "process.env.NODE_ENV": JSON.stringify("development"),
     },
     loader:{
