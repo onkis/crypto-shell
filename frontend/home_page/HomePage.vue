@@ -1,6 +1,8 @@
 <template lang="pug">
 .container.col-xxl-8.px-4.py-5
   .row.flex-lg-row-reverse.align-items-center.g-5.py-5
+    .col-12
+      wallet-multi-button
     .col-10.col-sm-8.col-lg-6
       img.d-block.mx-lg-auto.img-fluid.no-cursor-events(src="/images/roti-logo.gif", alt="Roti Logo", width="700", height="500", loading="lazy")
     .col-lg-6
@@ -12,8 +14,11 @@
 </template>
 
 <script>
+
+import { WalletMultiButton } from 'solana-wallets-vue'
+
 export default {
-  components: {},
+  components: { WalletMultiButton },
   data() {
     return {};
   },
