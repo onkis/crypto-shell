@@ -11,8 +11,8 @@ require('esbuild').build({
       
     })],
     define: {
-        "process.env.BASE_URL": process.env.BASE_URL,
-        "process.env.NODE_ENV": JSON.stringify("development"),
+        "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL),
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
     },
     loader:{
       '.eot': 'file',
