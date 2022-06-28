@@ -60,9 +60,11 @@
                             .moving-tab.position-absolute.nav-link.pointer(:class="{'show-qr-code':(paymentMethod === 'QR_CODE'), 'show-hd-wallet':(paymentMethod === 'HD_WALLET')}")
                               a#tabs-iconpricing-tab-2.nav-link.mb-0.active -
                   .col-12(v-if="validConfig && paymentMethod === 'HD_WALLET'")
-                    span#buttonSpan(@click="handleClickToPayWithWalletExtension()")
-                      | Donate With 
-                      img(src='/images/sp-white-gradient.svg' style='margin-top: -4px;')
+                    wallet-multi-button
+
+                    //span#buttonSpan(@click="handleClickToPayWithWalletExtension()")
+                     // | Donate With 
+                     // img(src='/images/sp-white-gradient.svg' style='margin-top: -4px;')
             #stage_complete(v-if="stage === 'complete'")
               .mt-n6.mx-auto
                 button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 
@@ -77,6 +79,9 @@
 import { PublicKey, Keypair, Connection, sendAndConfirmTransaction, Transaction, clusterApiUrl } from '@solana/web3.js';
 import { encodeURL, createQR, createTransfer, parseURL, findReference } from '@solana/pay';
 import BigNumber from 'bignumber.js';
+// import { WalletMultiButton } from 'solana-wallets-vue'
+import { useWallet } from 'solana-wallets-vue';
+import { WalletMultiButton } from 'solana-wallets-vue'
 
 export default {
   components: {},
@@ -113,6 +118,11 @@ export default {
     const CLUSTER = clusterApiUrl((MAIN_NET) ? "mainnet" : "testnet");
 
     this.connection = new Connection(CLUSTER, 'confirmed');
+    
+    const {wallets} = useWallet();
+    
+    console.log(wallets)
+    
     this.assetId = document.location.pathname.split("/")[2];
   },
   methods: {
@@ -170,15 +180,15 @@ export default {
       }, 5000);
     },
     async handleClickToPayWithWalletExtension(){
-      if(!this.walletConnected){
-        try{
-          await this.connectToSolanaWalletExtension();
-        }
-        catch(e){
-          console.error("FAILED TO CONNECT WALLET | ./frontend/donation_page/DonationPage.vue", e);
-          return;
-        }
-      }
+      // if(!this.walletConnected){
+      //   try{
+      //     await this.connectToSolanaWalletExtension();
+      //   }
+      //   catch(e){
+      //     console.error("FAILED TO CONNECT WALLET | ./frontend/donation_page/DonationPage.vue", e);
+      //     return;
+      //   }
+      //}
 
       await this.createDonation();
       this.createTransactionAndPromptWalletExtension();
