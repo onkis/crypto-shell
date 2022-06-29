@@ -27,17 +27,12 @@ export default {
   },
   computed: {},
   mounted() {
-    this.init();
+    this._init();
   },
   methods: {
-    async init(){
-      const that = this;
-      const connection = new Connection(clusterApiUrl('testnet'))
-      that.connection = connection;
-    },
     handleClickLoginWithWallet(){
       const that = this;
-      const { publicKey, sendTransaction, connected, select } = useWallet();
+      const { connected, publicKey } = useWallet();
 
       if(!connected.value){
         that._walletAdapterOpenModal();
@@ -45,9 +40,41 @@ export default {
       }
       else{
         console.log("Already Connected!");
+
+        const message = "I Am the Bread of Life";
+
+        that._sign(message);
       }
     },
-    /* HELPER FUNCTIONS | A - Z */
+    /**
+     * 
+     * HELPER FUNCTIONS | A - Z
+     *
+     */
+    async _init(){
+      const that = this;
+      const connection = new Connection(clusterApiUrl('testnet'))
+      that.connection = connection;
+    },
+    async _sign(message){
+      const that = this;
+      try{
+        const { publicKey, wallet } = useWallet();
+        const { signMessage } = wallet?._value?._wallet;
+
+        if (!publicKey) throw new Error('Wallet not connected!');
+        if (!signMessage) throw new Error('Wallet does not support message signing!');
+
+        const message = new TextEncoder().encode();
+        const signature = await signMessage(message);
+
+        console.log("signature =>", signature);
+        return signature;
+      }
+      catch(e){
+        console.error("HomePage.vue#_sign", e);
+      }
+    },
     _walletAdapterCloseModal(){
       try{
         const closeButton = document.querySelector('.swv-modal-container .swv-modal-button-close');
