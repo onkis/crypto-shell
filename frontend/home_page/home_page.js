@@ -3,11 +3,14 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import HomePage from './HomePage.vue';
 
-import SolanaWallets from 'solana-wallets-vue';
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { BraveWalletAdapter } from "@solana/wallet-adapter-brave";
+import { CoinbaseWalletAdapter } from "@solana/wallet-adapter-coinbase";
+import { ExodusWalletAdapter } from "@solana/wallet-adapter-exodus";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 
-import { BraveWalletAdapter } from "@solana/wallet-adapter-brave"
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base"
-import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets';
+import SolanaWallets from 'solana-wallets-vue';
 
 const walletOptions = {
   wallets: [
