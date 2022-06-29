@@ -34,22 +34,8 @@ export default {
       const that = this;
       const connection = new Connection(clusterApiUrl('testnet'))
       that.connection = connection;
-
-      // if (!publicKey.value) return;
-
-      // const transaction = new Transaction().add(
-      //   SystemProgram.transfer({
-      //     fromPubkey: publicKey.value,
-      //     toPubkey: Keypair.generate().publicKey,
-      //     lamports: 1,
-      //   })
-      // );
-
-      // const signature = await sendTransaction(transaction, connection);
-      // await connection.confirmTransaction(signature, 'processed');
     },
     handleClickLoginWithWallet(){
-      console.log("handleClickLoginWithWallet");
       const that = this;
       const { publicKey, sendTransaction, connected, select } = useWallet();
 
@@ -61,15 +47,7 @@ export default {
         console.log("Already Connected!");
       }
     },
-    _walletAdapterOpenModal(){
-      try{
-        const openButton = document.querySelector('#WALLET_ADAPTER button');
-        openButton.click();
-      }
-      catch(e) {
-        console.error("HomePage.vue#_walletAdapterOpenModal", e);
-      }
-    },
+    /* HELPER FUNCTIONS | A - Z */
     _walletAdapterCloseModal(){
       try{
         const closeButton = document.querySelector('.swv-modal-container .swv-modal-button-close');
@@ -77,6 +55,15 @@ export default {
       }
       catch(e){
         console.error("HomePage.vue#_walletAdapterCloseModal", e);
+      }
+    },
+    _walletAdapterOpenModal(){
+      try{
+        const openButton = document.querySelector('#WALLET_ADAPTER button');
+        openButton.click();
+      }
+      catch(e) {
+        console.error("HomePage.vue#_walletAdapterOpenModal", e);
       }
     }
   }
