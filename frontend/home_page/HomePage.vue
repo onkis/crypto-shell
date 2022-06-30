@@ -57,9 +57,13 @@ export default {
       const public_address = publicKey._value.toBase58();
       
       const response = await this.$http.post('/auth/wallet_message', { public_address });
-      console.log(response);
+      const { status, data } = response;
+      if(status !== 200) console.error("Failed to request message to sign | HomePage.vue#_requestMessageToSign");
+      const { msg } = data;
+      
+      const sig = await this._sign(msg);
     },
-    async _sign(message){
+    async _sign(msg){
       const that = this;
       try{
         const { publicKey, wallet } = useWallet();
@@ -68,10 +72,9 @@ export default {
         if (!publicKey) throw new Error('Wallet not connected!');
         if (!signMessage) throw new Error('Wallet does not support message signing!');
 
-        const message = new TextEncoder().encode();
-        const signature = await signMessage(message);
+        const messageToSign = new TextEncoder().encode(msg);
+        const signature = await signMessage(messageToSign);
 
-        console.log("signature =>", signature);
         return signature;
       }
       catch(e){

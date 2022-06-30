@@ -102,7 +102,7 @@ export async function loginWithWalletGetMessage(req, res){
     console.log("Error to check for message | auth.mjs#loginWithWalletGetMessage", err);
     return res.status(500).send();
   }
-  else if(msg) return res.status(200).json({ msg });
+  else if(msg) return res.status(200).json({ msg, exists: true });
   
   /* 3. Create Message To Sign */
   msg = _createMessage(user.id, req.sessionID);
