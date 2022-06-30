@@ -2,7 +2,7 @@ import { User, PaymentPage } from '../db/db.mjs';
 import {isEmailValid, randomString} from '../lib/core.mjs';
 import {sendTextEmail} from '../lib/email.mjs';
 
-import {setLoginCode, getLoginCode} from '../lib/redis.mjs'
+import {setLoginCode, getLoginCode, setLoginMessage, getLoginMessage} from '../lib/redis.mjs'
  
 export function login(req, res){
   res.render('login');
@@ -21,7 +21,7 @@ export async function loginPost(req, res){
     let [err, user] = await User.findOrCreate({email}, {email});
     if(err){
       console.log("failure to get user", err);
-      res.send(500);
+      res.status(500).send();
     }
     else if(!user){
       console.log("no user found");
@@ -36,10 +36,10 @@ export async function loginPost(req, res){
         let err;
 
         [err] = await User.update({where, update});
-        if(err) return res.send(500);
+        if(err) return res.status(500).send();
 
         [err] = await PaymentPage.createDefaultPage(org_id);
-        if(err) return res.send(500);
+        if(err) return res.status(500).send();
       }
 
       console.log("found user", user, "sending email");
@@ -84,3 +84,44 @@ export async function codePost(req, res){
     res.redirect('/app');
   }
 };
+
+export async function loginWithWalletGetMessage(req, res){
+  let err, msg, user;
+  const public_address = req?.body?.public_address;
+
+  /* 1. FindOrCreate User */
+  [err, user] = await User.findOrCreate({ public_address }, { public_address });
+  if(err){
+    console.error("Failed to findOrCreate user | auth.mjs#loginWithWalletGetMessage", err);
+    return res.status(500).send();
+  }
+
+  /* 3. Check if message is already created */
+  [err, msg] = await getLoginMessage(public_address);
+  if(err){
+    console.log("Error to check for message | auth.mjs#loginWithWalletGetMessage", err);
+    return res.status(500).send();
+  }
+  else if(msg) return res.status(200).json({ msg });
+  
+  /* 3. Create Message To Sign */
+  msg = _createMessage(user.id, req.sessionID);
+
+  /* 4. Save Message In KVS */
+  [err] = await setLoginMessage(public_address, msg);
+  if(err) {
+    console.log("Failed to set login message in KVS | auth.mjs#loginWithWalletGetMessage", err);
+    return res.status(500).send();
+  }
+
+  res.status(200).json({ msg });
+}
+
+function _createMessage(userId, sessionId){
+  return `
+    I AM THE BREAD OF LIFE
+    ${sessionId}${userId}
+  `;
+}
+
+

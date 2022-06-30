@@ -84,7 +84,7 @@ import { useWallet } from 'solana-wallets-vue';
 import { WalletMultiButton } from 'solana-wallets-vue'
 
 export default {
-  components: {},
+  components: {WalletMultiButton},
   data() {
     return {
       stage: "donate",

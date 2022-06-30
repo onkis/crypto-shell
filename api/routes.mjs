@@ -30,12 +30,14 @@ router.get('/p/:id/:key', async function(req, res){
 });
 
 //TOOD: find a better way to import the routes?
-import {login, enterCode, loginPost, codePost} from './auth.mjs';
+import {login, enterCode, loginPost, codePost, loginWithWalletGetMessage } from './auth.mjs';
 router.get('/login', login);
 router.get('/auth/enter-code', enterCode);
 
 router.post('/auth/login', rateLimit, loginPost);
 router.post('/auth/enter-code', rateLimit, codePost);
+
+router.post('/auth/wallet_message', rateLimit, loginWithWalletGetMessage);
 
 router.get('/app', wwwAuth, function(req, res){
   res.render("app")

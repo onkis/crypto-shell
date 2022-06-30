@@ -16,7 +16,7 @@
 
 <script>
 
-import { Connection, clusterApiUrl, Keypair, SystemProgram, Transaction } from '@solana/web3.js';
+import { Connection, clusterApiUrl } from '@solana/web3.js';
 import { useWallet } from 'solana-wallets-vue';
 import { WalletMultiButton } from 'solana-wallets-vue'
 
@@ -32,18 +32,14 @@ export default {
   methods: {
     handleClickLoginWithWallet(){
       const that = this;
-      const { connected, publicKey } = useWallet();
+      const { connected } = useWallet();
 
       if(!connected.value){
         that._walletAdapterOpenModal();
         console.log("Need To Connect!");
       }
       else{
-        console.log("Already Connected!");
-
-        const message = "I Am the Bread of Life";
-
-        that._sign(message);
+        that._requestMessageToSign();
       }
     },
     /**
@@ -55,6 +51,13 @@ export default {
       const that = this;
       const connection = new Connection(clusterApiUrl('testnet'))
       that.connection = connection;
+    },
+    async _requestMessageToSign(){
+      const { publicKey } = useWallet();
+      const public_address = publicKey._value.toBase58();
+      
+      const response = await this.$http.post('/auth/wallet_message', { public_address });
+      console.log(response);
     },
     async _sign(message){
       const that = this;
