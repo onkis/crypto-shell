@@ -30,14 +30,15 @@ router.get('/p/:id/:key', async function(req, res){
 });
 
 //TOOD: find a better way to import the routes?
-import {login, enterCode, loginPost, codePost, loginWithWalletGetMessage } from './auth.mjs';
+import {login, enterCode, loginPost, codePost, loginWithWalletGetMessage, validateMessage } from './auth.mjs';
 router.get('/login', login);
 router.get('/auth/enter-code', enterCode);
 
 router.post('/auth/login', rateLimit, loginPost);
 router.post('/auth/enter-code', rateLimit, codePost);
 
-router.post('/auth/wallet_message', rateLimit, loginWithWalletGetMessage);
+router.post('/auth/wallet-message', rateLimit, loginWithWalletGetMessage);
+router.post('/auth/wallet-validate-signature', rateLimit, validateMessage);
 
 router.get('/app', wwwAuth, function(req, res){
   res.render("app")
@@ -59,8 +60,8 @@ router.get('/setup', function(req, res){
 
 /* API For PaymentPage Table */
 router.get('/api/paymentpage/:id', wwwAuth, paymentpage.get);
-router.put('/api/paymentpage/:id',wwwAuth, paymentpage.update);
-router.delete('/api/paymentpage/:id',wwwAuth, paymentpage.destroy);
+router.put('/api/paymentpage/:id', wwwAuth, paymentpage.update);
+router.delete('/api/paymentpage/:id', wwwAuth, paymentpage.destroy);
 
 router.post('/api/file-upload/:page_id', wwwAuth, paymentpage.fileUpload);
 

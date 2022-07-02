@@ -56,12 +56,17 @@ export default {
       const { publicKey } = useWallet();
       const public_address = publicKey._value.toBase58();
       
-      const response = await this.$http.post('/auth/wallet_message', { public_address });
+      const response = await this.$http.post('/auth/wallet-message', { public_address });
       const { status, data } = response;
       if(status !== 200) console.error("Failed to request message to sign | HomePage.vue#_requestMessageToSign");
+
       const { msg } = data;
-      
       const sig = await this._sign(msg);
+
+      const signatureArr = sig.signature.toJSON().data;
+
+      await this._validateSignature(signatureArr);
+
     },
     async _sign(msg){
       const that = this;
@@ -79,6 +84,17 @@ export default {
       }
       catch(e){
         console.error("HomePage.vue#_sign", e);
+      }
+    },
+    async _validateSignature(sig){
+      const { publicKey } = useWallet();
+      const public_address = publicKey._value.toBase58();
+
+      if(!sig.length) return console.error("No signature | HomePage.vue#_validateSignature");
+      else{
+        const response = await this.$http.post('/auth/wallet-validate-signature', { public_address, sig });
+        const { status, data } = response;
+        if(status !== 200) return console.error("Failed to validate signature | HomePage.vue#_validateSignature");
       }
     },
     _walletAdapterCloseModal(){

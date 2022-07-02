@@ -1,3 +1,4 @@
+import bs58 from 'bs58';
 import { User, PaymentPage } from '../db/db.mjs';
 import {isEmailValid, randomString} from '../lib/core.mjs';
 import {sendTextEmail} from '../lib/email.mjs';
@@ -115,6 +116,33 @@ export async function loginWithWalletGetMessage(req, res){
   }
 
   res.status(200).json({ msg });
+}
+
+export async function validateMessage(req, res){
+  let err, user;
+  const { public_address, sig } = req?.body;
+  if(!public_address?.length || !sig.length) return res.status(400).send();
+
+  /* 1. FindOrCreate User */
+  [err, user] = await User.findOne({ public_address });
+  if(err){
+    console.error("Failed to findOne user | auth.mjs#validateMessage", err);
+    return res.status(500).send();
+  }
+  else if(!user?.id){
+    console.error("No User Found | auth.mjs#validateMessage");
+    return res.status(400).send();
+  }
+
+  const msg = _createMessage(user.id, public_address);
+
+  const bytes = Uint8Array.from(sig)
+
+  console.log("sig", sig);
+  console.log("bs58", bs58.encode(bytes));
+  console.log("msg =>>>\n", msg);
+
+  res.redirect('/app');
 }
 
 function _createMessage(userId, sessionId){
