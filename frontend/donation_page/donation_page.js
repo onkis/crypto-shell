@@ -16,9 +16,10 @@ import 'solana-wallets-vue/styles.css';
 const walletOptions = {
   wallets: [
     new PhantomWalletAdapter({ network: WalletAdapterNetwork.Devnet }),
-
-  ],
-  autoConnect: true
+    new BraveWalletAdapter({ network: WalletAdapterNetwork.Devnet }),
+    new CoinbaseWalletAdapter({ network: WalletAdapterNetwork.Devnet }),
+    new SolflareWalletAdapter({ network: WalletAdapterNetwork.Devnet })
+  ]
 };
 
 
