@@ -19,6 +19,7 @@
 import { Connection, clusterApiUrl } from '@solana/web3.js';
 import { useWallet } from 'solana-wallets-vue';
 import { WalletMultiButton } from 'solana-wallets-vue'
+import bs58 from 'bs58';
 
 export default {
   components: { WalletMultiButton },
@@ -63,9 +64,7 @@ export default {
       const { msg } = data;
       const sig = await this._sign(msg);
 
-      const signatureArr = sig.signature.toJSON().data;
-
-      await this._validateSignature(signatureArr);
+      await this._validateSignature(sig);
 
     },
     async _sign(msg){
@@ -78,9 +77,9 @@ export default {
         if (!signMessage) throw new Error('Wallet does not support message signing!');
 
         const messageToSign = new TextEncoder().encode(msg);
-        const signature = await signMessage(messageToSign);
+        const { signature } = await signMessage(messageToSign);
 
-        return signature;
+        return bs58.encode(signature.toJSON().data);
       }
       catch(e){
         console.error("HomePage.vue#_sign", e);

@@ -1,9 +1,13 @@
 import bs58 from 'bs58';
-import { User, PaymentPage } from '../db/db.mjs';
-import {isEmailValid, randomString} from '../lib/core.mjs';
-import {sendTextEmail} from '../lib/email.mjs';
+import pkg from 'tweetnacl';
+import { v4 as uuidv4 } from 'uuid';
 
-import {setLoginCode, getLoginCode, setLoginMessage, getLoginMessage} from '../lib/redis.mjs'
+import { User, PaymentPage } from '../db/db.mjs';
+import { isEmailValid, randomString } from '../lib/core.mjs';
+import { sendTextEmail } from '../lib/email.mjs';
+
+import { setLoginCode, getLoginCode,
+         setLoginMessage, getLoginMessage } from '../lib/redis.mjs'
  
 export function login(req, res){
   res.render('login');
@@ -97,6 +101,8 @@ export async function loginWithWalletGetMessage(req, res){
     return res.status(500).send();
   }
 
+  console.log("user", user);
+
   /* 3. Check if message is already created */
   [err, msg] = await getLoginMessage(public_address);
   if(err){
@@ -106,7 +112,7 @@ export async function loginWithWalletGetMessage(req, res){
   else if(msg) return res.status(200).json({ msg, exists: true });
   
   /* 3. Create Message To Sign */
-  msg = _createMessage(user.id, req.sessionID);
+  msg = _createMessage(user.id);
 
   /* 4. Save Message In KVS */
   [err] = await setLoginMessage(public_address, msg);
@@ -119,11 +125,12 @@ export async function loginWithWalletGetMessage(req, res){
 }
 
 export async function validateMessage(req, res){
-  let err, user;
+  let err, user, validSignature, msg;
   const { public_address, sig } = req?.body;
+
   if(!public_address?.length || !sig.length) return res.status(400).send();
 
-  /* 1. FindOrCreate User */
+  /* 1. Find User */
   [err, user] = await User.findOne({ public_address });
   if(err){
     console.error("Failed to findOne user | auth.mjs#validateMessage", err);
@@ -134,22 +141,57 @@ export async function validateMessage(req, res){
     return res.status(400).send();
   }
 
-  const msg = _createMessage(user.id, public_address);
+  [err, msg] = await getLoginMessage(public_address);
+  if(err){
+    console.error("Error to get message | auth.mjs#validateMessage", err);
+    return res.status(500).send();
+  }
+  else if(msg) return res.status(200).json({ msg, exists: true });
 
-  const bytes = Uint8Array.from(sig)
-
-  console.log("sig", sig);
-  console.log("bs58", bs58.encode(bytes));
-  console.log("msg =>>>\n", msg);
-
-  res.redirect('/app');
+  [err, validSignature] = _validateSignature(msg, sig, public_address);
+  if(err){
+    console.error("Failed to validate signature | auth.mjs#validateMessage", err);
+    return res.status(500).send();
+  }
+  else if(!validSignature){
+    return res.status(401).send();
+  }
+  else{
+    console.log("SET SESSION");
+    res.status(200).send();
+  }
 }
 
-function _createMessage(userId, sessionId){
+function _createMessage(userId){
+  const uuid = uuidv4();
   return `
     I AM THE BREAD OF LIFE
-    ${sessionId}${userId}
+
+    ${uuid} - ${userId}
   `;
+}
+
+/**
+ * Validates signature
+ * @param  {String} message        message encoded as base58 string
+ * @param  {String} signature      signature encoded as base58 string
+ * @param  {String} public_address public_address encoded as base58 string
+ * @return {[Error, Bool]}
+ */
+function _validateSignature(message, signature, public_address){
+  const { sign } = pkg;
+  try{
+    const msg_uint8 = new TextEncoder().encode(message);
+    const sig_unint8 = bs58.decode(signature);
+    const pk_uint8 = bs58.decode(public_address);
+    const isValid = sign.detached.verify(msg_uint8, sig_unint8, pk_uint8);
+
+    return [null, isValid];
+  }
+  catch(e){
+    console.log("Failed validating signature | auth.mjs#_validateSignature", e);
+    return [e];
+  }
 }
 
 
