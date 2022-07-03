@@ -101,8 +101,6 @@ export async function loginWithWalletGetMessage(req, res){
     return res.status(500).send();
   }
 
-  console.log("user", user);
-
   /* 3. Check if message is already created */
   [err, msg] = await getLoginMessage(public_address);
   if(err){
@@ -128,9 +126,10 @@ export async function validateMessage(req, res){
   let err, user, validSignature, msg;
   const { public_address, sig } = req?.body;
 
+  /* Basic request validation */
   if(!public_address?.length || !sig.length) return res.status(400).send();
 
-  /* 1. Find User */
+  /* 1. Find user from public address */
   [err, user] = await User.findOne({ public_address });
   if(err){
     console.error("Failed to findOne user | auth.mjs#validateMessage", err);
@@ -141,13 +140,17 @@ export async function validateMessage(req, res){
     return res.status(400).send();
   }
 
+  /* 2. Get message from KVS */
   [err, msg] = await getLoginMessage(public_address);
   if(err){
     console.error("Error to get message | auth.mjs#validateMessage", err);
     return res.status(500).send();
   }
-  else if(msg) return res.status(200).json({ msg, exists: true });
+  else if(!msg){
+    return res.status(404).send();
+  }
 
+  /* 3. Validate signature */
   [err, validSignature] = _validateSignature(msg, sig, public_address);
   if(err){
     console.error("Failed to validate signature | auth.mjs#validateMessage", err);
@@ -157,7 +160,7 @@ export async function validateMessage(req, res){
     return res.status(401).send();
   }
   else{
-    console.log("SET SESSION");
+    req.session.user = user;
     res.status(200).send();
   }
 }

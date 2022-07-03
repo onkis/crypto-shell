@@ -94,6 +94,7 @@ export default {
         const response = await this.$http.post('/auth/wallet-validate-signature', { public_address, sig });
         const { status, data } = response;
         if(status !== 200) return console.error("Failed to validate signature | HomePage.vue#_validateSignature");
+        else window.location = '/app';
       }
     },
     _walletAdapterCloseModal(){
