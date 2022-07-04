@@ -16,8 +16,13 @@ export default class kvstore extends core {
     if(options.EX){
       newRecord.expire_at = _nowSec() + (options.EX);
     }
-    
-    return asyncWrap(this.pg(this.tableName).insert(newRecord));
+
+    return asyncWrap(
+      this.pg(this.tableName)
+      .insert(newRecord)
+      .onConflict("key")  /* Upserting on "key" */
+      .merge()
+    );
   }
   
   async get(key){
