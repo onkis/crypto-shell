@@ -1,5 +1,6 @@
 import { Keypair } from '@solana/web3.js';
 import { Donation, PaymentPage } from '../db/db.mjs';
+import { setDonation, getDonation } from '../lib/redis.mjs'
 
 export async function create(req, res){
   let err, asset, donation;
@@ -23,7 +24,7 @@ export async function create(req, res){
     transaction_ref_id
   };
 
-  [err, donation] = await Donation.create({ ...newDonation });
+  [err] = await setDonation(transaction_ref_id, { ...newDonation });
   if(err){
     console.error("failed to create donation | api/donations.mjs#create", err);
     return res.send(500);
@@ -55,4 +56,21 @@ export async function destroy(req, res){
   res.send(204)
 }
 
-export default { create, get, destroy };
+export async function donationSuccessful(reference_id){
+  let err, donation;
+  [err, donation] = await getDonation(reference_id);
+  if(err){
+    console.error("failed to get donation from KVS | api/donations.mjs#donationSuccessful", err);
+    return [new Error("failed to get donation from KVS")];
+  }
+
+  [err] = Donation.create({ ...donation });
+  if(err){
+    console.error("failed to create donation in postgres | api/donations.mjs#donationSuccessful", err);
+    return [new Error("failed to create donation record in postgres")];
+  }
+
+  return [];
+}
+
+export default { create, get, destroy, donationSuccessful };

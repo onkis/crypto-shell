@@ -150,7 +150,6 @@ export default {
     },
     
     updatePageLink(){
-      console.log("here")
       this.landingPageLink = `//${process.env.BASE_URL}/p/${this.hashId}/${this.dashify(this.config.title)}`;
     },
     
