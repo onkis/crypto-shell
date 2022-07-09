@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "@solana/pay": "^0.2.0",
     "@solana/web3.js": "^1.41.3",
     "aws-sdk": "^2.1154.0",
     "better-sqlite3": "^7.5.3",
