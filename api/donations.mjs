@@ -1,4 +1,6 @@
-import { Keypair } from '@solana/web3.js';
+import bs58 from 'bs58';
+import { Keypair, Connection, clusterApiUrl, PublicKey } from '@solana/web3.js';
+import { findReference } from '@solana/pay';
 import { Donation, PaymentPage } from '../db/db.mjs';
 import { setDonation, getDonation } from '../lib/redis.mjs'
 
@@ -81,7 +83,7 @@ async function verifyTransaction(req, res){
 }
 
 async function donationSuccessful(reference_id){
-  let err, donation;
+  let err, donation, transaction_info;
   [err, donation] = await getDonation(reference_id);
   if(err){
     console.error("failed to get donation from KVS | api/donations.mjs#donationSuccessful", err);
@@ -92,6 +94,10 @@ async function donationSuccessful(reference_id){
   }
   else donation = JSON.parse(donation);
 
+
+  [err, transaction_info] = await findTransactionOnChain(reference_id);
+  if(err || !transaction_info) return [new Error("failed to find tx")];
+
   [err] = await Donation.create(donation);
   if(err){
     console.error("failed to create donation in postgres | api/donations.mjs#donationSuccessful", err);
@@ -99,6 +105,41 @@ async function donationSuccessful(reference_id){
   }
 
   return [];
+}
+
+async function findTransactionOnChain(reference_id){
+  let signatureInfo;
+  const CLUSTER = clusterApiUrl("testnet");
+  const connection = new Connection(CLUSTER, 'confirmed');
+  const finality = 'confirmed';
+  const reference_id_unint8 = new PublicKey(reference_id);
+
+  /* Wrapping async interval in promise */
+  return new Promise((resolve, reject) => {
+    let count = 1, found = false;
+    const interval = setInterval(async () => {
+      count++;
+      try{
+        signatureInfo = await findReference(connection, reference_id_unint8, { finality });
+        if(signatureInfo && !found){
+          found = true;
+          clearInterval(interval);
+          return resolve([null, signatureInfo]);
+        }
+      }
+      catch(err){
+        if (!err?.message?.includes("not found")){
+          console.error("failed finding transaction | api/donations.mjs#findTransactionOnChain", error);
+          clearInterval(interval);
+          return reject([error]);
+        }
+        else if(count > 10){ /* 10 Seconds */
+          clearInterval(interval);
+          return reject([new Error("cant find reference")]);
+        }
+      }
+    }, 1000);
+  });
 }
 
 export default { create, get, destroy, donationSuccessful, verifyTransaction };
