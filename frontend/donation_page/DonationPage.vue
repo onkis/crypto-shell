@@ -196,7 +196,7 @@ export default {
       }
 
       await this.createDonation();
-      this.createTransactionAndPromptWalletExtension();
+      await this.createTransactionAndPromptWalletExtension();
     },
     async createDonation(){
       const amount = new BigNumber(this.config.ammount),
@@ -277,7 +277,7 @@ export default {
       try{
         const url = `/api/donation/${reference}/verify`;
         response = await that.$http.post(url);
-        console.log("\n\nresponse =>", response, "\n\n");
+        if(response.status === 200) that.setStage("complete");
       }
       catch(err){
         console.error("failed to post donation to server | DonationPage.vue#createTransactionAndPromptWalletExtension", err);
