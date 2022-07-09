@@ -13,6 +13,9 @@ export async function list(req, res){
     console.error("Error in transactions.mjs#list", err);
     return res.send(500);
   }
+  else if(!donations?.length){
+    return res.json([]);
+  }
   
   res.json(donations);
 }
