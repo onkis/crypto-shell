@@ -124,10 +124,10 @@ export async function loginWithWalletGetMessage(req, res){
 
 export async function validateMessage(req, res){
   let err, user, validSignature, msg;
-  const { public_address, sig } = req?.body;
+  const { public_address, signed_message } = req?.body;
 
   /* Basic request validation */
-  if(!public_address?.length || !sig.length) return res.status(400).send();
+  if(!public_address?.length || !signed_message.length) return res.status(400).send();
 
   /* 1. Find user from public address */
   [err, user] = await User.findOne({ public_address });
@@ -151,7 +151,7 @@ export async function validateMessage(req, res){
   }
 
   /* 3. Validate signature */
-  [err, validSignature] = _validateSignature(msg, sig, public_address);
+  [err, validSignature] = _validateSignature(msg, signed_message, public_address);
   if(err){
     console.error("Failed to validate signature | auth.mjs#validateMessage", err);
     return res.status(500).send();
