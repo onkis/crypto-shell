@@ -119,7 +119,7 @@ export default {
 
     this.connection = new Connection(CLUSTER, 'confirmed');
     
-    const {wallets} = useWallet();
+    const { wallets } = useWallet();
     
     console.log(wallets)
     
@@ -182,8 +182,6 @@ export default {
     async handleClickToPayWithWalletExtension(){
       const { wallet, connected } = useWallet();
       const solanaWallet = wallet._value._wallet;
-
-      console.log("solanaWallet ->>>", solanaWallet);
 
       if(!connected.value){
         try{
@@ -249,6 +247,22 @@ export default {
     async createTransactionAndPromptWalletExtension(){
       let tx, signedTransaction, response;
       const that = this;
+
+      /* 1. create tx */
+      [err, tx] = await that._createTransaction();
+      if(err) return console.error(err);
+
+      /* 2. prompt user to sign */
+      [err] = await that._signTransaction(tx);
+      if(err) return console.error(err);
+
+      /* 3. ask the server to verify */
+      [err, response] = await that._askServerToVerifyTransaction(this.transaction_ref_id);
+      if(err) return console.error(err);
+      else if(response.status === 200) that.setStage("complete");
+    },
+    async _createTransaction(){
+      const that = this;
       const { wallet, publicKey } = useWallet();
       const { address, label } = this.donationConfig;
       const public_address = publicKey._value;
@@ -260,27 +274,35 @@ export default {
             memo = label;
 
       try{
-        tx = await createTransfer(this.connection, public_address, { recipient, amount, reference, memo });
+        const tx = await createTransfer(this.connection, public_address, { recipient, amount, reference, memo });
         tx.feePayer = public_address;
+        return [null, tx];
       }
       catch(err){
-        console.error("FAILED HERE TO CREATE TRANSFER", err);
+        console.error("failed to create tx | DonationPage.vue#_createTransaction", err);
+        return [err];
       }
-
+    },
+    async _signTransaction(transaction){
       try{
-        signedTransaction = await window.solana.signAndSendTransaction(tx);
+        const signedTransaction = await window.solana.signAndSendTransaction(transaction);
+        return [null, signedTransaction];
       }
       catch(err){
         console.log("failed to signAndSendTransaction", err);
+        return [err];
       }
-
+    },
+    async _askServerToVerifyTransaction(transaction_ref_id){
+      const that = this;
       try{
-        const url = `/api/donation/${reference}/verify`;
+        const url = `/api/donation/${transaction_ref_id}/verify`;
         response = await that.$http.post(url);
-        if(response.status === 200) that.setStage("complete");
+        return [null, response];
       }
       catch(err){
         console.error("failed to post donation to server | DonationPage.vue#createTransactionAndPromptWalletExtension", err);
+        return [err];
       }
     },
     _offClick(e){
