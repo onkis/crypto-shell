@@ -17,9 +17,9 @@
 <script>
 
 import { Connection, clusterApiUrl } from '@solana/web3.js';
-import { useWallet } from 'solana-wallets-vue';
+//import { useWallet } from 'solana-wallets-vue';
 // import { WalletMultiButton } from 'solana-wallets-vue'
-import bs58 from 'bs58';
+//import bs58 from 'bs58';
 
 import {isPhantomInstalled, connectToPhantom} from '../lib/wallet.js';
 
@@ -35,18 +35,6 @@ export default {
     this._init();
   },
   methods: {
-//     handleClickLoginWithWallet(){
-//       const that = this;
-//       const { connected } = useWallet();
-// 
-//       if(!connected.value){
-//         that._walletAdapterOpenModal();
-//         console.log("Need To Connect!");
-//       }
-//       else{
-//         that._requestMessageToSign();
-//       }
-//     },
     async loginWithPhantom(){
       this.phantomWallet = await connectToPhantom();
       
@@ -71,82 +59,6 @@ export default {
         
       }
      
-    },
-    
-    /**
-     * 
-     * HELPER FUNCTIONS | A - Z
-     *
-     */
-    async _init(){
-      const that = this;
-      const connection = new Connection(clusterApiUrl('testnet'))
-      that.connection = connection;
-      console.log("is phantom installed?", isPhantomInstalled())
-
-      
-    },
-    async _requestMessageToSign(){
-      const { publicKey } = useWallet();
-      const public_address = publicKey._value.toBase58();
-      
-      const response = await this.$http.post('/auth/wallet-message', { public_address });
-      const { status, data } = response;
-      if(status !== 200) console.error("Failed to request message to sign | HomePage.vue#_requestMessageToSign");
-
-      const { msg } = data;
-      const sig = await this._sign(msg);
-
-      await this._validateSignature(sig);
-
-    },
-    async _sign(msg){
-      const that = this;
-      try{
-        const { publicKey, wallet } = useWallet();
-        const { signMessage } = wallet?._value?._wallet;
-
-        if (!publicKey) throw new Error('Wallet not connected!');
-        if (!signMessage) throw new Error('Wallet does not support message signing!');
-
-        const messageToSign = new TextEncoder().encode(msg);
-        const { signature } = await signMessage(messageToSign);
-
-        return bs58.encode(signature.toJSON().data);
-      }
-      catch(e){
-        console.error("HomePage.vue#_sign", e);
-      }
-    },
-    async _validateSignature(sig){
-      const { publicKey } = useWallet();
-      const public_address = publicKey._value.toBase58();
-
-      if(!sig.length) return console.error("No signature | HomePage.vue#_validateSignature");
-      else{
-        const response = await this.$http.post('/auth/wallet-validate-signature', { public_address, sig });
-        const { status, data } = response;
-        if(status !== 200) return console.error("Failed to validate signature | HomePage.vue#_validateSignature");
-        else window.location = '/app';
-      }
-    },
-    _walletAdapterCloseModal(){
-      try{
-        const closeButton = document.querySelector('.swv-modal-container .swv-modal-button-close');
-        closeButton.click();
-      }
-      catch(e){
-        console.error("HomePage.vue#_walletAdapterCloseModal", e);
-      }
-    },
-    _walletAdapterOpenModal(){
-      try{
-        const openButton = document.querySelector('#WALLET_ADAPTER button');
-        openButton.click();
-      }
-      catch(e) {
-        console.error("HomePage.vue#_walletAdapterOpenModal", e);
-      }
     }
   }
 };

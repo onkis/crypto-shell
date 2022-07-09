@@ -28,7 +28,12 @@ export function asyncWrap(promise){
     return [err, null];
   });
 }
-
+/**
+ * if phantom is installed it will init 
+ * a connection with the wallet
+ * 
+ * @returns {Phantom}  - An instance of the Phantom Class
+ */
 export async function connectToPhantom(){
   if(isPhantomInstalled()){
     let phantom = new Phantom();
@@ -40,7 +45,10 @@ export async function connectToPhantom(){
   else return null;
 }
 
-
+/**
+ * This class provides helper methods for accessing
+ * a phantom browser extension wallet
+ */
 class Phantom{
   constructor(){
     //TODO: this seems like it could be made more robust
@@ -51,7 +59,9 @@ class Phantom{
     this.wallet = null;
     this.publicKey = null;
   }
-  
+  /**
+   * Called to init the connection to the wallet
+   */
   async connect(){
     let [err, wallet] = await asyncWrap(this.provider.connect());
     
@@ -64,7 +74,11 @@ class Phantom{
       console.error("user rejected access to wallet", err);
     }
   }
-  
+  /**
+   * Prompts user to sign a message with their private key
+   * @param {String} message - The message to sign (should be from server)
+   * @returns {[err, signed_message]}  - returns a tuple error object and base58 encoded string
+   */
   async sign(message){
     //TODO: Why can't the server encode the message?
     const encodedMessage = new TextEncoder().encode(message);
