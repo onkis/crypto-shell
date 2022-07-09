@@ -4,10 +4,11 @@ import { Donation, PaymentPage } from '../db/db.mjs';
 
 export async function list(req, res){
   const { org_id } = req?.session?.user;
-  const params = req.params;
+  const page = req?.query?.page || 1;
+  const limit = req?.query?.limit || 25;
+  const offset = (page - 1) * limit;
   
-  let [err, donations] = await Donation.findAll({org_id: org_id}, params.limit, params.offset);
-  
+  let [err, donations] = await Donation.findAll({ org_id }, limit, offset);
   if(err){
     console.error("Error in transactions.mjs#list", err);
     return res.send(500);

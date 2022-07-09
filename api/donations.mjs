@@ -2,7 +2,18 @@ import { Keypair } from '@solana/web3.js';
 import { Donation, PaymentPage } from '../db/db.mjs';
 import { setDonation, getDonation } from '../lib/redis.mjs'
 
-export async function create(req, res){
+function list(req, res){
+  const page = req?.query?.page || 1;
+  const limit = req?.query?.limit || 25;
+  const offset = (page - 1) * limit;
+
+  console.log("req", req);
+
+  // Donation.findAll({}, limit=null, offset=null);
+  res.json([]);
+}
+
+async function create(req, res){
   let err, asset, donation;
   const { amount, asset_id, donation_config } = req.body;
 
@@ -33,7 +44,7 @@ export async function create(req, res){
   res.json({ transaction_ref_id }).send(); /* only need to pass the reference */
 }
 
-export async function get(req, res){
+async function get(req, res){
   const { id } = req;
 
   const [err, donation] = await Donation.findOne({ id });
@@ -45,7 +56,7 @@ export async function get(req, res){
   res.json(donation);
 }
 
-export async function destroy(req, res){
+async function destroy(req, res){
   const id = req.params.id;
   const [err] = await Donation.destroy({ id });
   if(err){
@@ -56,15 +67,32 @@ export async function destroy(req, res){
   res.send(204)
 }
 
-export async function donationSuccessful(reference_id){
+async function verifyTransaction(req, res){
+  let err;
+  const { reference_id } = req.params;
+
+  [err] = await donationSuccessful(reference_id);
+  if(err){
+    console.error("failed to find donation | api/donations.mjs#verifyTransaction", err);
+    return res.status(404).send();
+  }
+
+  return res.status(200).send();
+}
+
+async function donationSuccessful(reference_id){
   let err, donation;
   [err, donation] = await getDonation(reference_id);
   if(err){
     console.error("failed to get donation from KVS | api/donations.mjs#donationSuccessful", err);
     return [new Error("failed to get donation from KVS")];
   }
+  else if(!donation?.length){
+    return [new Error("failed to find donation in KVS")]; 
+  }
+  else donation = JSON.parse(donation);
 
-  [err] = Donation.create({ ...donation });
+  [err] = await Donation.create(donation);
   if(err){
     console.error("failed to create donation in postgres | api/donations.mjs#donationSuccessful", err);
     return [new Error("failed to create donation record in postgres")];
@@ -73,4 +101,4 @@ export async function donationSuccessful(reference_id){
   return [];
 }
 
-export default { create, get, destroy, donationSuccessful };
+export default { create, get, destroy, donationSuccessful, verifyTransaction };

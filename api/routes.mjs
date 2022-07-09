@@ -70,6 +70,7 @@ router.post('/api/file-upload/:page_id', wwwAuth, paymentpage.fileUpload);
 //get spammed by random donation create calls
 router.post('/api/donation', donations.create);
 router.delete('/api/donation/:id', donations.destroy); 
+router.post('/api/donation/:reference_id/verify', donations.verifyTransaction);
 
 router.get('/api/transactions', wwwAuth, transactions.list);
 

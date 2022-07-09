@@ -62,9 +62,9 @@
                   .col-12(v-if="validConfig && paymentMethod === 'HD_WALLET'")
                     wallet-multi-button
 
-                    //span#buttonSpan(@click="handleClickToPayWithWalletExtension()")
-                     // | Donate With 
-                     // img(src='/images/sp-white-gradient.svg' style='margin-top: -4px;')
+                    span#buttonSpan(@click="handleClickToPayWithWalletExtension()")
+                      | Donate With 
+                      img(src='/images/sp-white-gradient.svg' style='margin-top: -4px;')
             #stage_complete(v-if="stage === 'complete'")
               .mt-n6.mx-auto
                 button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 
@@ -180,15 +180,20 @@ export default {
       }, 5000);
     },
     async handleClickToPayWithWalletExtension(){
-      // if(!this.walletConnected){
-      //   try{
-      //     await this.connectToSolanaWalletExtension();
-      //   }
-      //   catch(e){
-      //     console.error("FAILED TO CONNECT WALLET | ./frontend/donation_page/DonationPage.vue", e);
-      //     return;
-      //   }
-      //}
+      const { wallet, connected } = useWallet();
+      const solanaWallet = wallet._value._wallet;
+
+      console.log("solanaWallet ->>>", solanaWallet);
+
+      if(!connected.value){
+        try{
+          await this.connectToSolanaWalletExtension();
+        }
+        catch(e){
+          console.error("FAILED TO CONNECT WALLET | ./frontend/donation_page/DonationPage.vue", e);
+          return;
+        }
+      }
 
       await this.createDonation();
       this.createTransactionAndPromptWalletExtension();
@@ -197,8 +202,6 @@ export default {
       const amount = new BigNumber(this.config.ammount),
             asset_id = this.assetId,
             donation_config = { ...this.config };
-
-
 
       const response = await this.$http.post("/api/donation", {  amount, asset_id, donation_config });
       this.transaction_ref_id = response.data.transaction_ref_id;
@@ -244,28 +247,40 @@ export default {
       }
     },
     async createTransactionAndPromptWalletExtension(){
+      let tx, signedTransaction, response;
+      const that = this;
+      const { wallet, publicKey } = useWallet();
       const { address, label } = this.donationConfig;
+      const public_address = publicKey._value;
+
+      const solana = wallet._value._wallet;
       const recipient = new PublicKey(address),
             reference = new PublicKey(this.transaction_ref_id),
             amount = new BigNumber(this.config.ammount),
             memo = label;
 
-      let tx;
+      try{
+        tx = await createTransfer(this.connection, public_address, { recipient, amount, reference, memo });
+        tx.feePayer = public_address;
+      }
+      catch(err){
+        console.error("FAILED HERE TO CREATE TRANSFER", err);
+      }
 
       try{
-        tx = await createTransfer(this.connection, this.publicKey, {recipient, amount, reference, memo });
-      }
-      catch(e){
-        console.error("FAILED HERE TO CREATE TRANSFER", e);
-      }
-
-      try{
-        tx.feePayer = this.publicKey;
-        const signedTransaction = await window.solana.signAndSendTransaction(tx);
-        if(signedTransaction) this.setStage("complete");
+        signedTransaction = await window.solana.signAndSendTransaction(tx);
       }
       catch(err){
         console.log("failed to signAndSendTransaction", err);
+      }
+
+      try{
+        const url = `/api/donation/${reference}/verify`;
+        response = await that.$http.post(url);
+        console.log("\n\nresponse =>", response, "\n\n");
+      }
+      catch(err){
+        console.error("failed to post donation to server | DonationPage.vue#createTransactionAndPromptWalletExtension", err);
       }
     },
     _offClick(e){
