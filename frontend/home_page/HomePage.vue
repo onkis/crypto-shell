@@ -32,7 +32,6 @@ export default {
   },
   computed: {},
   mounted() {
-    this._init();
   },
   methods: {
     async loginWithPhantom(){
