@@ -40,53 +40,35 @@ export default {
   methods: {
     async loginWithPhantom(){
       this.phantomWallet = await connectToPhantom();
-      
-      let public_address = this.phantomWallet.publicKey.toBase58();
-      console.log("phantom public key", this.phantomWallet.publicKey.toBase58());
-
-      const messageResp = await this.$http.post('/auth/wallet-message', { public_address });
-      const { status } = messageResp;
-      
-      if(status !== 200) console.error("Failed to request message to sign | HomePage.vue#_requestMessageToSign");
-      else{
-        const msg = messageResp?.data?.msg;
-        let [err, signed_message] = await this.phantomWallet.sign(msg);
-        
-        console.log("signed message", err, signed_message);
-        const validateResponse = await this.$http.post('/auth/wallet-validate-signature', { public_address, signed_message });
-        
-        let { status } = validateResponse;
-        
-        if(status !== 200) return console.error("Failed to validate signature | HomePage.vue#_validateSignature");
-        else window.location = '/app';
-        
-      }
-     
+      if(!this.phantomWallet) return;
+      else this._loginWithWallet(this.phantomWallet);
     },
     async loginWithBrave(){
       this.braveWallet = await connectToBrave();
+      if(!this.braveWallet) return;
+      else this._loginWithWallet(this.braveWallet);
+    },
+    async _loginWithWallet(wallet){
+      let public_address = wallet.publicKey.toBase58();
+      console.log("wallet public key", wallet.publicKey.toBase58());
       
-      let public_address = this.braveWallet.publicKey.toBase58();
-      console.log("brave public key", this.braveWallet.publicKey.toBase58());
-    
       const messageResp = await this.$http.post('/auth/wallet-message', { public_address });
       const { status } = messageResp;
       
-      if(status !== 200) console.error("Failed to request message to sign | HomePage.vue#_requestMessageToSign");
+      if(status !== 200) console.error("Failed to request message to sign | HomePage.vue#_loginWithWallet");
       else{
         const msg = messageResp?.data?.msg;
-        let [err, signed_message] = await this.braveWallet.sign(msg);
+        let [err, signed_message] = await wallet.sign(msg);
         
         console.log("signed message", err, signed_message);
         const validateResponse = await this.$http.post('/auth/wallet-validate-signature', { public_address, signed_message });
         
         let { status } = validateResponse;
         
-        if(status !== 200) return console.error("Failed to validate signature | HomePage.vue#_validateSignature");
+        if(status !== 200) return console.error("Failed to validate signature | HomePage.vue#_loginWithWallet");
         else window.location = '/app';
         
       }
-     
     }
   }
 };

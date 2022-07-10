@@ -119,6 +119,7 @@ export async function connectToBrave(){
 
 class Brave{
   constructor(){
+    this.braveSolana = window.braveSolana;
     this.wallet = null;
     this.publicKey = null;
   }
@@ -142,7 +143,7 @@ class Brave{
     //TODO: Why can't the server encode the message?
     const encodedMessage = new TextEncoder().encode(message);
     
-    const [err, signedMessage] = await asyncWrap(window.braveWallet.signMessage(encodedMessage, "utf8"));
+    const [err, signedMessage] = await asyncWrap(window.braveSolana.signMessage(encodedMessage, "utf8"));
     let bs58String = bs58.encode(signedMessage.signature);
     console.log("signed message", signedMessage);
     return [err, bs58String];
