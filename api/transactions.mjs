@@ -16,8 +16,13 @@ export async function list(req, res){
   else if(!donations?.length){
     return res.json([]);
   }
-  
-  res.json(donations);
+  else{
+    donations.forEach(d => {
+      d.donation_config = JSON.parse(d.donation_config);
+    });
+
+    res.json(donations);
+  }
 }
 
 //this line seems stupid
