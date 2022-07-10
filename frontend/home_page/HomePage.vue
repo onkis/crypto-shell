@@ -6,12 +6,15 @@
     .col-lg-6
       h1.display-5.fw-bold.lh-1.mb-3 Accept USDC & SOL
       p.lead Easily Accept USDC and SOL for domains or tips
-      .d-grid.gap-2.d-md-flex.justify-content-md-start
-        a.btn.btn-primary.btn-lg.px-4.me-md-2.login-with-button(type="button", @click="loginWithPhantom()") Login With Phantom
-        a.btn.btn-outline-secondary.btn-lg.px-4(type="button", href="/login") Login With Email
-    .col-12
-      #WALLET_ADAPTER
-        //wallet-multi-button
+      //.d-grid.gap-2.d-md-flex.justify-content-md-start
+      div.d-grid.vstack.gap-3.col-md-12.mx-auto
+        div
+          a.btn.btn-primary.btn-lg.px-4.me-md-2.login-with-button(type="button", @click="loginWithPhantom()") Login With Phantom
+        div
+          a.btn.btn-primary.btn-lg.px-4.me-md-2(type="button", @click="loginWithBrave()") Login With Brave
+        div
+          a.btn.btn-outline-secondary.btn-lg.px-4(type="button", href="/login") Login With Email
+        
 </template>
 
 <script>
@@ -21,13 +24,14 @@ import { Connection, clusterApiUrl } from '@solana/web3.js';
 // import { WalletMultiButton } from 'solana-wallets-vue'
 //import bs58 from 'bs58';
 
-import {isPhantomInstalled, connectToPhantom} from '../lib/wallet.js';
+import {isPhantomInstalled, connectToPhantom, connectToBrave} from '../lib/wallet.js';
 
 export default {
   components: {  },
   data() {
     return {
-      phantomWallet: null
+      phantomWallet: null,
+      braveWallet: null
     };
   },
   computed: {},
@@ -58,16 +62,37 @@ export default {
         
       }
      
+    },
+    async loginWithBrave(){
+      this.braveWallet = await connectToBrave();
+      
+      let public_address = this.braveWallet.publicKey.toBase58();
+      console.log("brave public key", this.braveWallet.publicKey.toBase58());
+    
+      const messageResp = await this.$http.post('/auth/wallet-message', { public_address });
+      const { status } = messageResp;
+      
+      if(status !== 200) console.error("Failed to request message to sign | HomePage.vue#_requestMessageToSign");
+      else{
+        const msg = messageResp?.data?.msg;
+        let [err, signed_message] = await this.braveWallet.sign(msg);
+        
+        console.log("signed message", err, signed_message);
+        const validateResponse = await this.$http.post('/auth/wallet-validate-signature', { public_address, signed_message });
+        
+        let { status } = validateResponse;
+        
+        if(status !== 200) return console.error("Failed to validate signature | HomePage.vue#_validateSignature");
+        else window.location = '/app';
+        
+      }
+     
     }
   }
 };
 </script>
 
 <style scoped>
-  #WALLET_ADAPTER{
-    display: none; /* 🥷 🥷 🥷 */
-  }
-
   .login-with-button {
     background-color:#60b764;
     border-color:#60b764

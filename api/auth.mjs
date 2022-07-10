@@ -168,8 +168,7 @@ export async function validateMessage(req, res){
 function _createMessage(userId){
   const uuid = uuidv4();
   return `
-    I AM THE BREAD OF LIFE
-
+    Sign This Message To Login
     ${uuid} - ${userId}
   `;
 }
