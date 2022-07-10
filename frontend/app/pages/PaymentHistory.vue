@@ -18,7 +18,8 @@
               th Signature
           tbody
             tr(v-for="tx in transactions")
-              td {{ tx.transaction_ref_id }}
+              td 
+                a(:href="getExplorerLink(tx.transaction_ref_id)" target="_blank") {{ tx.transaction_ref_id }}
               td {{ tx.created_at }}
               td {{ tx.amount }}
 </template>
@@ -30,6 +31,7 @@ export default {
   components: {},
   data() {
     return {
+      cluster: "testnet",
       config: {},
       transactions: []
     };
@@ -65,7 +67,9 @@ export default {
           data: data
         }
       });
-
+    },
+    getExplorerLink(reference_id){
+      return `https://explorer.solana.com/address/${reference_id}?cluster=${this.cluster}`;
     }
   }
 }
