@@ -8,11 +8,11 @@ export default class paymentpage extends core {
     super(knex, "paymentpages");
   }
 
-  async createDefaultPage(org_id){
+  async createDefaultPage(org_id, address = ""){
     const DEFAULT = {
       org_id,
       config: {
-        "address":"",
+        "address": address,
         "label":"Enter Label", 
         "redirectUrl": ""
        }

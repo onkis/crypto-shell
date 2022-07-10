@@ -60,7 +60,7 @@ async function _initUserAccountAndPaymnetPage(user){
     [err] = await User.update({where, update});
     if(err) return [err, null];
   
-    [err] = await PaymentPage.createDefaultPage(org_id);
+    [err] = await PaymentPage.createDefaultPage(org_id, user.public_address || "");
     if(err) return [err, null]
     
   }
