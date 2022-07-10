@@ -163,7 +163,7 @@ export default {
       this.id = data.id;
       this.hashId = data.hashId;
       this.config = { ...data.config };
-      this.landingPageLink = `//${process.env.BASE_URL}/p/${data.hashId}/${this.dashify(data.config.title)}`;
+      this.landingPageLink = `//${process.env.BASE_URL}/p/${data.hashId}/${this.dashify(data.config.title || "")}`;
     },
     async update(){
       const update = {
