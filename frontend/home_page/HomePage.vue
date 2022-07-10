@@ -8,9 +8,9 @@
       p.lead Easily Accept USDC and SOL for domains or tips
       //.d-grid.gap-2.d-md-flex.justify-content-md-start
       div.d-grid.vstack.gap-3.col-md-12.mx-auto
-        div
+        div(v-if="isPhantomInstalled")
           a.btn.btn-primary.btn-lg.px-4.me-md-2.login-with-button(type="button", @click="loginWithPhantom()") Login With Phantom
-        div
+        div(v-if="isBraveInstalled")
           a.btn.btn-primary.btn-lg.px-4.me-md-2(type="button", @click="loginWithBrave()") Login With Brave
         div
           a.btn.btn-outline-secondary.btn-lg.px-4(type="button", href="/login") Login With Email
@@ -21,14 +21,16 @@
 
 import { Connection, clusterApiUrl } from '@solana/web3.js';
 
-import {isPhantomInstalled, connectToPhantom, connectToBrave} from '../lib/wallet.js';
+import {isPhantomInstalled, connectToPhantom, connectToBrave, isBraveInstalled} from '../lib/wallet.js';
 
 export default {
   components: {  },
   data() {
     return {
       phantomWallet: null,
-      braveWallet: null
+      braveWallet: null,
+      isPhantomInstalled: isPhantomInstalled(),
+      isBraveInstalled: isBraveInstalled()
     };
   },
   computed: {},
