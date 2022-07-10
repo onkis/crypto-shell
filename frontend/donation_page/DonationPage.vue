@@ -165,7 +165,10 @@ export default {
           clearInterval(that.interval);
           if(!found){
             found = true;
-            that.setStage("complete");
+
+            [err, response] = await that._askServerToVerifyTransaction(that.transaction_ref_id);
+            if(err) return console.error(err);
+            else if(response.status === 200) that.setStage("complete");
           }
         }
         catch (error) {
@@ -173,7 +176,7 @@ export default {
             console.error(error);
             clearInterval(that.interval);
           }
-          else if(count > 5 * 60 ){ /* 5 MINUTES */
+          else if(count > 5 * 60){ /* 5 MINUTES */
             clearInterval(that.interval);
           }
         }
