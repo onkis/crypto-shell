@@ -33,19 +33,8 @@ export async function loginPost(req, res){
       res.status(400).send();
     }
     else{
-      const org_id = user.id
-      const where = { id: user.id };
-      const update = { org_id }; /* Use User's Id Ads org_id for now */
-
-      if(user.__created){
-        let err;
-
-        [err] = await User.update({where, update});
-        if(err) return res.status(500).send();
-
-        [err] = await PaymentPage.createDefaultPage(org_id);
-        if(err) return res.status(500).send();
-      }
+      let [initError] = await _initUserAccountAndPaymnetPage(user);
+      if(initError) return res.status(500).send();
 
       console.log("found user", user, "sending email");
 
@@ -59,6 +48,25 @@ export async function loginPost(req, res){
     }
   }
 }
+
+async function _initUserAccountAndPaymnetPage(user){
+  const org_id = user.id
+  const where = { id: user.id };
+  const update = { org_id }; /* Use User's Id Ads org_id for now */
+  
+  if(user.__created){
+    let err;
+  
+    [err] = await User.update({where, update});
+    if(err) return [err, null];
+  
+    [err] = await PaymentPage.createDefaultPage(org_id);
+    if(err) return [err, null]
+    
+  }
+  return [null, null];
+}
+
 
 async function _sendLoginEmail(user){
   let loginCode = randomString(8);
@@ -100,6 +108,9 @@ export async function loginWithWalletGetMessage(req, res){
     console.error("Failed to findOrCreate user | auth.mjs#loginWithWalletGetMessage", err);
     return res.status(500).send();
   }
+  //init the other objects
+  [err] = await _initUserAccountAndPaymnetPage(user);
+  if(err) return res.status(500).send();
 
   /* 3. Check if message is already created */
   [err, msg] = await getLoginMessage(public_address);

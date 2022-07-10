@@ -20,9 +20,6 @@
 <script>
 
 import { Connection, clusterApiUrl } from '@solana/web3.js';
-//import { useWallet } from 'solana-wallets-vue';
-// import { WalletMultiButton } from 'solana-wallets-vue'
-//import bs58 from 'bs58';
 
 import {isPhantomInstalled, connectToPhantom, connectToBrave} from '../lib/wallet.js';
 
