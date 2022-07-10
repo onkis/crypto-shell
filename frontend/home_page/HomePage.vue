@@ -18,9 +18,6 @@
 </template>
 
 <script>
-
-import { Connection, clusterApiUrl } from '@solana/web3.js';
-
 import {isPhantomInstalled, connectToPhantom, connectToBrave, isBraveInstalled} from '../lib/wallet.js';
 
 export default {
