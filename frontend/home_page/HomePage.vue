@@ -5,7 +5,7 @@
       img.d-block.mx-lg-auto.img-fluid.no-cursor-events(src="/images/roti-logo.gif", alt="Roti Logo", width="700", height="500", loading="lazy")
     .col-lg-6
       h1.display-5.fw-bold.lh-1.mb-3 Accept USDC & SOL
-      p.lead Easily Accept USDC and SOL for domains or tips
+      p.lead Easily Accept USDC and SOL for donations or tips
       //.d-grid.gap-2.d-md-flex.justify-content-md-start
       div.d-grid.vstack.gap-3.col-md-12.mx-auto
         div(v-if="isPhantomInstalled")
