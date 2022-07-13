@@ -1,0 +1,25 @@
+extends layout
+block content
+  .container.col-xxl-8.px-4.py-5
+    .row.align-items-center.g-5.py-5
+      .col-4.bounce(style="animation-delay: .1s; text-align:center; font-size: 180px;") 4
+      .col-4.bounce(style="animation-delay: .5s;")
+        img.d-block.mx-lg-auto.img-fluid.no-cursor-events(src="/images/roti-logo.gif", style="width: 100%", alt="Roti Logo", loading="lazy")
+      .col-4.bounce(style="animation-delay: 1s; text-align:center; font-size: 180px;") 4
+  style.
+    @keyframes bounceIn {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      40% {
+        transform: translateY(-30px);
+      }
+      60% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .bounce {
+      animation: bounceIn 2s infinite 1s;
+    }

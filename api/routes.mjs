@@ -25,7 +25,7 @@ router.get('/p/:id/:key', async function(req, res){
     return res.sendStatus(500);
   }
   else if(!record?.is_published){
-    return res.sendStatus(404);
+    return res.status(404).render('404');
   }
 
   const data = encodeURI(JSON.stringify({ ...record.config }));
@@ -82,6 +82,3 @@ router.get('/api/transactions', wwwAuth, transactions.list);
 
 /* USERS */
 router.get('/api/user/current', wwwAuth, users.currentUser);
-
-
-
