@@ -34,8 +34,10 @@ export async function update(req, res){
   delete body.id;
   delete body.org_id;
 
+  const is_published = body?.is_published || false;
+
   const where = { org_id };
-  const update = { ...body };
+  const update = { ...body, is_published };
 
   const [err, assets] = await PaymentPage.update({ where, update });
   if(err){
@@ -57,6 +59,39 @@ export async function destroy(req, res){
   res.send(204)
 }
 
+export async function publish(req, res){
+  const { org_id } = req?.session?.user;
+  const is_published = true;
+
+  const [err, assets] = await _setPublishedState(org_id, is_published);
+  if(err){
+    console.error(err);
+    return res.send(500);
+  }
+
+  res.json(assets[0]).send();
+}
+
+export async function unpublish(req, res){
+  const { org_id } = req?.session?.user;
+  const is_published = false;
+
+  const [err, assets] = await _setPublishedState(org_id, is_published);
+  if(err){
+    console.error(err);
+    return res.send(500);
+  }
+
+  res.json(assets[0]).send();
+}
+
+async function _setPublishedState(org_id, is_published){
+  const where = { org_id };
+  const update = { is_published };
+
+  return await PaymentPage.update({ where, update });
+}
+
 export async function fileUpload(req, res){
   
   const page_id = req.params.page_id;
@@ -74,4 +109,4 @@ export async function fileUpload(req, res){
   }
 }
 
-export default { create, get, update, destroy, fileUpload };
+export default { create, get, update, destroy, publish, unpublish, fileUpload };

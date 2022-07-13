@@ -46,6 +46,10 @@
             .row.mt-4
               .col-lg-6.text-right.d-flex.flex-column.justify-content-center
               button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(@click="update()" type='button') Save
+            .row.mt-4
+              .col-lg-6.text-right.d-flex.flex-column.justify-content-center
+              button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(v-if="!is_published" @click="publish()" type='button') Publish
+              button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(v-if="is_published" @click="unpublish()" type='button') Unpublished
       .col-lg-8
         #preview(style="pointer-events:none;")
           .card
@@ -125,6 +129,7 @@ export default {
       stage: 'donate',
       config: {},
       landingPageLink: null,
+      is_published: null,
       hashId: null,
       standard: {
         title: 'JOIN THE CLEANUP',
@@ -163,7 +168,22 @@ export default {
       this.id = data.id;
       this.hashId = data.hashId;
       this.config = { ...data.config };
+      this.is_published = data.is_published;
       this.landingPageLink = `//${process.env.BASE_URL}/p/${data.hashId}/${this.dashify(data.config.title || "")}`;
+    },
+    async publish(){
+      const response = await this.$http.post("/api/paymentpage/3/publish");
+      if(response){
+        this.is_published = true;
+        window.AlertManager({type: "success", "message": "Page Published!", hideAfter: 3000 });
+      }
+    },
+    async unpublish(){
+      const response = await this.$http.post("/api/paymentpage/3/unpublish");
+      if(response){
+        this.is_published = false;
+        window.AlertManager({type: "success", "message": "Page Unpublished!", hideAfter: 3000 });
+      }
     },
     async update(){
       const update = {

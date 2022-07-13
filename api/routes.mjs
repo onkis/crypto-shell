@@ -22,8 +22,12 @@ router.get('/p/:id/:key', async function(req, res){
   const [err, record] = await PaymentPage.findByHashId(id);
   if(err){
     console.log(err);
+    return res.sendStatus(500);
+  }
+  else if(!record?.is_published){
     return res.sendStatus(404);
   }
+
   const data = encodeURI(JSON.stringify({ ...record.config }));
 
   res.render('donate_landing_page', { data });
@@ -62,6 +66,8 @@ router.get('/setup', function(req, res){
 router.get('/api/paymentpage/:id', wwwAuth, paymentpage.get);
 router.put('/api/paymentpage/:id', wwwAuth, paymentpage.update);
 router.delete('/api/paymentpage/:id', wwwAuth, paymentpage.destroy);
+router.post('/api/paymentpage/:id/publish', wwwAuth, paymentpage.publish);
+router.post('/api/paymentpage/:id/unpublish', wwwAuth, paymentpage.unpublish);
 
 router.post('/api/file-upload/:page_id', wwwAuth, paymentpage.fileUpload);
 
