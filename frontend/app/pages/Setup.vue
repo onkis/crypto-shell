@@ -45,9 +45,6 @@
               .col-12
             .row.mt-4
               .col-lg-6.text-right.d-flex.flex-column.justify-content-center
-              button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(@click="update()" type='button') Save
-            .row.mt-4
-              .col-lg-6.text-right.d-flex.flex-column.justify-content-center
               button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(v-if="!is_published" @click="publish()" type='button') Publish
               button.btn.bg-gradient-warning.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(v-if="is_published" @click="unpublish()" type='button') Unpublished
       .col-lg-8
@@ -122,6 +119,8 @@
 </template>
 
 <script>
+import { debounce } from "lodash";
+
 export default {
   components: {},
   data() {
@@ -146,8 +145,19 @@ export default {
       else return this.standard.logo;
     }
   },
+  watch: {
+    config: {
+      handler(newValue) {
+        this.debounceUpdate();
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.init();
+    this.debounceUpdate = debounce(() => {
+      this.update();
+    }, 500);
   },
   methods: {
     changePreview(newStage){
