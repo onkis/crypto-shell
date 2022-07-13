@@ -5,11 +5,8 @@
       .col-md-7.mt-5
         .card
           .card-header.p-0.position-relative.mt-n4.mx-3.z-index-2
-            .qr-container(v-if="validConfig && paymentMethod === 'QR_CODE'")
-              #qrCode
             a.d-block.blur-shadow-image
               #imageBackground(:style="{backgroundImage:`url(${donationConfig.logo})`}")
-            .colored-shadow(style="background-image:url('../../assets/img/products/product-11.jpg');")
           .card-body
             #stage_donate(v-if="stage === 'donate'")
               h3.font-weight-normal {{donationConfig.title || standard.title}}
@@ -33,38 +30,45 @@
                         label.form-label Email Address
                         input.form-control.form-control-default(v-model="config.email" type='email')
                 .row
-                  .col-3.mb-4
-                    .d-block
-                      #CurrencyDropDown.choices.is-open(@click="toggleCurrencyDropdownElement" role='listbox')
-                        .choices__inner
-                          select#choices-category.form-control.choices__input(v-model="config.currency" name='choices-category' hidden='' tabindex='-1' data-choice='active')
-                          .choices__list.choices__list--single
-                            .choices__item.choices__item--selectable {{config.currency}}
-                        .choices__list.choices__list--dropdown(:class="{'is-active':(openCurrencyDropDown)}" style="z-index:10000000;")
-                          .choices__list(role='listbox')
-                            .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('SOL')") SOL
-                            .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('USDC')") USDC
-                  .col-3.mb-4
-                    .input-group.input-group-dynamic(:class="{'is-focused':(config.ammount != null)}")
-                      label.form-label Price
-                      input.form-control.form-control-default(v-model="config.ammount" min='0' type='number')
-                  .col-6.mb-4(v-if="validConfig")
-                    .mx-auto.col-12
-                      .col-12.col-8.mx-auto
-                        .nav-wrapper.position-relative.z-index-2
-                          ul#tabs-pricing.nav.nav-pills.nav-fill.flex-row.p-1(role='tablist')
-                            li.nav-item.pointer
-                              a#tabs-iconpricing-tab-1.nav-link.mb-0(@click="setPaymentType('QR_CODE')") QR CODE
-                            li.nav-item.pointer
-                              a#tabs-iconpricing-tab-2.nav-link.mb-0(@click="setPaymentType('HD_WALLET')") HD WALLET
-                            .moving-tab.position-absolute.nav-link.pointer(:class="{'show-qr-code':(paymentMethod === 'QR_CODE'), 'show-hd-wallet':(paymentMethod === 'HD_WALLET')}")
-                              a#tabs-iconpricing-tab-2.nav-link.mb-0.active -
-                  .col-12(v-if="validConfig && paymentMethod === 'HD_WALLET'")
-                    wallet-multi-button
-
-                    span#buttonSpan(@click="handleClickToPayWithWalletExtension()")
-                      | Donate With 
+                  .col-lg-12.mb-4
+                    a#buttonSpan()
+                      | Support With 
                       img(src='/images/sp-white-gradient.svg' style='margin-top: -4px;')
+                .row
+                  div.mt-2.col-lg-2.mt-lg-0
+                    label Token
+                    #CurrencyDropDown.choices.is-open(@click="toggleCurrencyDropdownElement" role='listbox')
+                      .choices__inner
+                        select#choices-category.form-control.choices__input(v-model="config.currency" name='choices-category' hidden='' tabindex='-1' data-choice='active')
+                        .choices__list.choices__list--single
+                          .choices__item.choices__item--selectable {{config.currency}}
+                      .choices__list.choices__list--dropdown(:class="{'is-active':(openCurrencyDropDown)}" style="z-index:10000000;")
+                        .choices__list(role='listbox')
+                          .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('SOL')") SOL
+                          .choices__item.choices__item--choice.choices__item--selectable(@click="setCurrency('USDC')") USDC
+                  div.mt-2.col-lg-5.mt-lg-0
+                    label Amount
+                    .input-group.input-group-dynamic(:class="{'is-focused':(config.ammount != null)}")
+                      input.form-control.form-control-default(v-model="config.ammount" min='0' type='number')
+                  div.mt-2.col-lg-3.mt-lg-0
+                    label Payment Method
+                    #paymentdropdown.choices.is-open(@click="togglePaymentDropdownElement" role='listbox')
+                      .choices__inner
+                        select#choices-category.form-control.choices__input(v-model="config.paymentMethod" name='choices-category' hidden='' tabindex='-1' data-choice='active')
+                        .choices__list.choices__list--single
+                          .choices__item.choices__item--selectable {{config.paymentMethod}}
+                      .choices__list.choices__list--dropdown(:class="{'is-active':(openPaymentDropDown)}" style="z-index:10000000;")
+                        .choices__list(role='listbox')
+                          .choices__item.choices__item--choice.choices__item--selectable(@click="setPaymentType('QR_CODE', 'Solana Pay QR Code')") Solana Pay QR Code
+                          .choices__item.choices__item--choice.choices__item--selectable(@click="setPaymentType('PHANTOM', 'Phantom Wallet')") Phantom Wallet
+                          .choices__item.choices__item--choice.choices__item--selectable(@click="setPaymentType('BRAVE', 'Brave Wallet')") Brave Wallet
+
+                    
+                .row
+                  .col-lg-12.mb-4(v-if="validConfig")
+                    .qr-container(v-if="validConfig && paymentMethod === 'QR_CODE'")
+                      #qrCode
+              
             #stage_complete(v-if="stage === 'complete'")
               .mt-n6.mx-auto
                 button.btn.bg-gradient-success.btn-sm.mb-0.me-2(type='button' name='button')  Edit 
@@ -92,10 +96,12 @@ export default {
       donationConfig: {...DONATION_CONFIG},
       donationInstance: null,
       openCurrencyDropDown: false,
+      openPaymentDropDown: false,
       config: {
-        currency: "SOL"
+        currency: "SOL",
+        paymentMethod: "Select..."
       },
-      paymentMethods: ["QR_CODE", "HD_WALLET"],
+      paymentMethods: ["QR_CODE", "BRAVE", "PHANTOM"],
       paymentMethod: "HD_WALLET",
       walletConnected: false
     };
@@ -216,10 +222,10 @@ export default {
       }
       else this.stage = stage;
     },
-    setPaymentType(type){
+    setPaymentType(type, label){
       const that = this;
       if(!that.paymentMethods.includes(type)) return;
-
+      that.config.paymentMethod = label;
       that.paymentMethod = type;
       this.buildQrCode();
     },
@@ -234,6 +240,13 @@ export default {
       that.openCurrencyDropDown = !that.openCurrencyDropDown;
       if(that.openCurrencyDropDown) document.addEventListener("click", that._offClick);
       else document.removeEventListener("click", that._offClick);
+    },
+    togglePaymentDropdownElement(){
+      const that = this;
+      that.openPaymentDropDown = !that.openPaymentDropDown;
+      if(that.openPaymentDropDown) document.addEventListener("click", that._offClickP);
+      else document.removeEventListener("click", that._offClickP);
+
     },
     async connectToSolanaWalletExtension(){
       const { solana } = window;
@@ -308,7 +321,8 @@ export default {
         return [err];
       }
     },
-    _offClick(e){
+    _offClick(e){///What the crap is this mack?
+      //how much vodka was in your red bull at the time?
       const that = this;
       let close = true;
       e.path.forEach(el => {
@@ -318,6 +332,18 @@ export default {
       if(close){
         that.openCurrencyDropDown = false;
         document.removeEventListener("click", that._offClick);
+      }
+    },
+    _offClickP(e){
+      const that = this;
+      let close = true;
+      e.path.forEach(el => {
+        if(el.id === "paymentdropdown") close = false;
+      });
+      
+      if(close){
+        that.openPaymentDropDown = false;
+        document.removeEventListener("click", that._offClickP);
       }
     },
     _removeQrCodeSvg(){
@@ -353,21 +379,17 @@ export default {
   }
 
   .qr-container {
-    width: 100%;
+    /* width: 100%;
     height: 100%;
     position: absolute;
     z-index: 1000000;
     background: rgba(0,0,0,0.5);
-    border-radius: 5px;
+    border-radius: 5px; */
   }
 
   #qrCode{
-    position: absolute;
     width: 275px;
     height: 275px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 15px;
     overflow: hidden;
   }
