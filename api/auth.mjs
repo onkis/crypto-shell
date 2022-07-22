@@ -128,7 +128,8 @@ export async function loginWithWalletGetMessage(req, res){
   else if(msg) return res.status(200).json({ msg, exists: true });
   
   /* 3. Create Message To Sign */
-  msg = _createMessage(user.id);
+  console.log("creating message", user.hasId);
+  msg = _createMessage(user.hashId);
 
   /* 4. Save Message In KVS */
   [err] = await setLoginMessage(public_address, msg);
