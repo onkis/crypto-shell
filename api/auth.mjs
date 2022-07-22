@@ -83,19 +83,26 @@ async function _sendLoginEmail(user){
 }
 
 export async function codePost(req, res){
+  let err, user, userId;
   let code = req.body.code;
-  let [err, userId] = await getLoginCode(code);
+  
+  [err, userId] = await getLoginCode(code);
   console.log("code post login id", err, userId)
-  if(err || !userId) res.status(401).send();
-  else{
-    //loggedin setup session
-    let [err, user] = await User.findById(userId);
-    console.log("code post user", user);
-    if(err) res.status(500).send();
-    
-    req.session.user = user;
-    res.redirect('/app');
-  }
+  if(err || !userId) return res.status(401).send();
+  
+  //loggedin setup session
+  [err, user] = await User.findById(userId);
+  console.log("code post user", user);
+  if(err) return res.status(500).send();
+  req.session.user = user;
+
+
+  await User.update({
+    where: { id: user.id },
+    update: { is_email_validated: true }
+  });
+
+  return res.redirect('/app');
 };
 
 export async function loginWithWalletGetMessage(req, res){
