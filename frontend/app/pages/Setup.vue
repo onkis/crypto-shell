@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { debounce } from "lodash";
+import { debounce, isEmpty } from "lodash";
 
 export default {
   components: {},
@@ -147,8 +147,10 @@ export default {
   },
   watch: {
     config: {
-      handler(newValue) {
-        this.debounceUpdate();
+      handler(newValue, old) {
+        if(!isEmpty){
+          this.debounceUpdate();
+        }
       },
       deep: true
     }
@@ -156,6 +158,7 @@ export default {
   mounted() {
     this.init();
     this.debounceUpdate = debounce(() => {
+      console.log("update");
       this.update();
     }, 500);
   },
