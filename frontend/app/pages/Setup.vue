@@ -148,7 +148,7 @@ export default {
   watch: {
     config: {
       handler(newValue, old) {
-        if(!isEmpty){
+        if(!isEmpty(old)){
           this.debounceUpdate();
         }
       },
@@ -160,7 +160,7 @@ export default {
     this.debounceUpdate = debounce(() => {
       console.log("update");
       this.update();
-    }, 500);
+    }, 1000);
   },
   methods: {
     changePreview(newStage){

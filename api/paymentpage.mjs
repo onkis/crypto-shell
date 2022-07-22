@@ -1,4 +1,4 @@
-import { PaymentPage } from '../db/db.mjs';
+import { PaymentPage, User } from '../db/db.mjs';
 import {uploadFileToS3} from '../lib/upload.mjs';
 
 export async function create(req, res){
@@ -60,16 +60,26 @@ export async function destroy(req, res){
 }
 
 export async function publish(req, res){
+  let err, assets, user;
   const { org_id } = req?.session?.user;
   const is_published = true;
 
-  const [err, assets] = await _setPublishedState(org_id, is_published);
+  [err, user] = await User.findOne({ org_id, is_email_validated: true });
+  if(err){
+    console.error(err);
+    return res.status(500).send();
+  }
+  else if(!user){
+    return res.status(401).json({ VALIDATE_EMAIL: true });
+  }
+
+  [err, assets] = await _setPublishedState(org_id, is_published);
   if(err){
     console.error(err);
     return res.send(500);
   }
 
-  res.json(assets[0]).send();
+  return res.json(assets[0]).send();
 }
 
 export async function unpublish(req, res){
