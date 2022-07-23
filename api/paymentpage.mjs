@@ -70,7 +70,7 @@ export async function publish(req, res){
     return res.status(500).send();
   }
   else if(!user){
-    return res.status(401).json({ VALIDATE_EMAIL: true });
+    return res.status(200).json({ VALIDATE_EMAIL: true });
   }
 
   [err, assets] = await _setPublishedState(org_id, is_published);

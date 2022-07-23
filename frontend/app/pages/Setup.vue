@@ -191,7 +191,10 @@ export default {
     },
     async publish(){
       const response = await this.$http.post("/api/paymentpage/3/publish");
-      if(response){
+      if(response?.data?.VALIDATE_EMAIL){
+        this.openValidateEmailModal = true;
+      }
+      else if(response){
         this.is_published = true;
         window.AlertManager({type: "success", "message": "Page Published!", hideAfter: 3000 });
       }

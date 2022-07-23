@@ -73,7 +73,7 @@ export default {
 }
 
 .modal-backdrop{
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.45);
   z-index: 1000000;
 }
 
