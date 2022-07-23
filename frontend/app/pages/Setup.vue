@@ -115,14 +115,18 @@
                 hr
                 p.mt-2
                   | {{ config.completeDetails || standard.completeDetails }}
-
+  validate-email-modal(
+    :modalActive="openValidateEmailModal"
+    @close="modalClosed"
+  )
 </template>
 
 <script>
+import ValidateEmailModal from '../modals/ValidateEmailModal.vue';
 import { debounce, isEmpty } from "lodash";
 
 export default {
-  components: {},
+  components: { ValidateEmailModal },
   data() {
     return {
       stage: 'donate',
@@ -130,6 +134,7 @@ export default {
       landingPageLink: null,
       is_published: null,
       hashId: null,
+      openValidateEmailModal: false,
       standard: {
         title: 'JOIN THE CLEANUP',
         logo: 'https://assets.theoceancleanup.com/app/uploads/2021/08/Tender-Inspection-Flight-24.08.2021-pre-meetings-3-1280x720.jpg',
@@ -210,6 +215,9 @@ export default {
     },
     chooseFiles(){
       document.getElementById("fileUpload").click();
+    },
+    modalClosed(modalResults){
+      this.openValidateEmailModal = false;
     },
     uploadImage(event) {
       let imageFile = event.target.files[0];
