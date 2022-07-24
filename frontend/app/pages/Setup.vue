@@ -175,7 +175,6 @@ export default {
     updatePageLink(){
       this.landingPageLink = `//${process.env.BASE_URL}/p/${this.hashId}/${this.dashify(this.config.title)}`;
     },
-    
     async init(){
       console.log("init!");
       //TODO: there should be only one endpoint to get the logged in users
@@ -219,8 +218,13 @@ export default {
     chooseFiles(){
       document.getElementById("fileUpload").click();
     },
-    modalClosed(modalResults){
+    async modalClosed(modalResults){
       this.openValidateEmailModal = false;
+      if(modalResults?.eventType !== 'success') return;
+      else if(!modalResults?.email?.length) return console.error("no email");
+      else{
+        await this.$http.post("/api/user/validate_email", { email: modalResults.email });
+      }
     },
     uploadImage(event) {
       let imageFile = event.target.files[0];

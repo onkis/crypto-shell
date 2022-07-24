@@ -6,8 +6,9 @@ transition(name="modal-animation")
         .modal-inner.modal-dialog.modal-dialog-centered(v-show="modalActive" role='document')
           .modal-content
             .modal-header
-              h5 Send Validate Email
+              h5.modal-title.font-weight-normal Send Validate Email
             .modal-body
+              p Must validate email before publishing roti page
               .input-group.input-group-outline.mb-2
                 input#emailAddress.form-control(v-model="email" type='text' placeholder='Email')
             .modal-footer

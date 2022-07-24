@@ -81,4 +81,8 @@ router.post('/api/donation/:reference_id/verify', donations.verifyTransaction);
 router.get('/api/transactions', wwwAuth, transactions.list);
 
 /* USERS */
+router.get('/validate_email/:key', rateLimit, users.validateEmailCode);
 router.get('/api/user/current', wwwAuth, users.currentUser);
+router.post('/api/user/validate_email', wwwAuth, users.sendEmailToValidateUserEmailAddress);
+
+
