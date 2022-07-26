@@ -20,7 +20,12 @@ jobs:
         - run: |
             make build
             tar -czf "rotipay--linux--${{ github.sha }}.tgz" "crypto-shell"
-      
+        - name: 'Upload Build'
+          uses: actions/upload-artifact@v3
+          with:
+            name: rotipay--linux--${{ github.sha }}.tgz
+            path: rotipay--linux--${{ github.sha }}.tgz
+
       # strategy:
       #   matrix:
       #     os: [ubuntu]
