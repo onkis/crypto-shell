@@ -19,7 +19,7 @@ jobs:
             npm ci
         - run: |
             make build
-            tar -czf "rotipay--linux--${{ github.sha }}.tgz" "crytpo-shell"
+            tar -czf "rotipay--linux--${{ github.sha }}.tgz" "crypto-shell"
       
       # strategy:
       #   matrix:
