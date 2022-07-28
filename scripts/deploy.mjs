@@ -10,17 +10,29 @@ const octokit = new Octokit({
 
 
 async function main(){
-  await gitProcess();
-//1. Checkout prod branch
-//2. rebase it upto origin/master
-//3. push it up
-//4. get the sha
-//5. wait for github action to run
-//6. get the artifact
-//7. download the artifact
-//8. upload .env, binary to server
-//9. unzip, change permissions, reload, run migrations?
-  
+  let [err, commit] = await gitProcess();
+  if(err) console.error("git log err", err);
+  else if(commit && commit.refs.match("HEAD -> prod")){
+    let sha = commit.hash;
+    
+    let [err, artifact] = await getArtifact(sha);
+    if(err) return console.error("problem getting artifact");
+    else{
+      let [err, ret] = await downloadArtifact(artifact);
+      console.log("finsihed", err, ret);
+    }
+    
+    
+    //4. get the sha
+    //5. wait for github action to run
+    //6. get the artifact
+    //7. download the artifact
+    //8. upload .env, binary to server
+    //9. unzip, change permissions, reload, run migrations?
+  }
+  else{
+    console.error("you're on the wrong branch");
+  }
 }
 
 await main();
@@ -44,12 +56,29 @@ async function gitProcess(){
   // 
   // console.log("rebased local prod to origin/master", err, ret);
   
-  [err, ret] = await asyncWrap(git.log("prod"));
+  [err, ret] = await asyncWrap(git.log("-n 1"));
+  if(err) return [err, null];
   
-  console.log(ret.all[0]);
-  
-  //console.log("git log", err, ret);
+  console.log("git log", ret.all[0]);
+  return [null, ret.all[0]];
+}
 
+async function downloadArtifact(artifact){
+  let err, ret;
+  try{
+   ret = await octokit.request('GET /repos/onkis/crytpo-shell/actions/artifacts/'+artifact.id+'/zip', {
+      owner: 'onkis',
+      repo: 'crypto-shell',
+      artifact_id: artifact.id,
+      archive_format: 'zip'
+    });
+  }catch(e){
+    err = e;
+  }
+  if(err) return [err, null];
+  else{
+    console.log("ret", ret);
+  }
 }
 
 
