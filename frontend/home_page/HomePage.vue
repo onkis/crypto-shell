@@ -1,11 +1,11 @@
 <template lang="pug">
-.container.col-xxl-8.px-4.py-5
-  .row.flex-lg-row-reverse.align-items-center.g-5.py-5
-    .col-10.col-sm-8.col-lg-6
+.container.col-xxl-10.px-4
+  .full-height.row.flex-lg-row-reverse.align-items-center.g-5.py-5
+    .col-10.col-sm-8.col-lg-5
       img.d-block.mx-lg-auto.img-fluid.no-cursor-events(src="/images/roti-logo.gif", alt="Roti Logo", width="700", height="500", loading="lazy")
-    .col-lg-6
-      h1.display-5.fw-bold.lh-1.mb-3 Accept USDC & SOL
-      p.lead Easily Accept USDC and SOL for donations or tips
+    .col-lg-7
+      h1.display-5.fw-bold.mb-3 CRYPTO TIPS AND DONATIONS MADE EASY
+      p.lead Powered by Solana Pay
       //.d-grid.gap-2.d-md-flex.justify-content-md-start
       div.d-grid.vstack.gap-3.col-md-12.mx-auto
         div(v-if="isPhantomInstalled")
@@ -71,6 +71,14 @@ export default {
 </script>
 
 <style scoped>
+  .full-height {
+    height: 100vh;
+  }
+
+  h1 {
+    line-height: 3.5rem;
+  }
+
   .login-with-button {
     background-color:#60b764;
     border-color:#60b764
