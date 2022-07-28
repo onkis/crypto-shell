@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import { Octokit } from "octokit";
+import { simpleGit, CleanOptions } from 'simple-git';
+import {asyncWrap} from "../lib/core.mjs";
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_AUTH
@@ -8,6 +10,7 @@ const octokit = new Octokit({
 
 
 async function main(){
+  await gitProcess();
 //1. Checkout prod branch
 //2. rebase it upto origin/master
 //3. push it up
@@ -21,6 +24,33 @@ async function main(){
 }
 
 await main();
+
+
+async function gitProcess(){
+  const git = simpleGit({
+    baseDir: process.cwd()
+  });
+  let err, ret;
+  
+  // [err, ret] = await asyncWrap(git.fetch("origin"));
+  // 
+  // console.log("fnished fetch", err, ret);
+  // 
+  // [err, ret] = await asyncWrap(git.checkout("prod"));
+  // 
+  // console.log("checkout prod", err, ret);
+  // 
+  // [err, ret] = await asyncWrap(git.rebase("origin/master"));
+  // 
+  // console.log("rebased local prod to origin/master", err, ret);
+  
+  [err, ret] = await asyncWrap(git.log("prod"));
+  
+  console.log(ret.all[0]);
+  
+  //console.log("git log", err, ret);
+
+}
 
 
 async function getArtifact(sha){
