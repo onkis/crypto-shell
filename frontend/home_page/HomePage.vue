@@ -16,10 +16,10 @@
           a.btn.btn-outline-secondary.btn-lg.px-4(type="button", href="/login") Login With Email
 section.wave-bg
 section(style="background-color: #64b568; color: #fff;")
-  .container.col-xxl-10.px-4
+  .container.col-xxl-10.px-4.pb-5
     .row.justify-content-md-center.pt-5
       .col-12
-        h1.text-center HOW ROTI PAY WORKS
+        h1.fw-bold.text-center HOW ROTI PAY WORKS
     .row.justify-content-md-center
       .col-7.py-4
         .background-block.py-5.px-4.zoom-in
@@ -44,18 +44,38 @@ section(style="background-color: #64b568; color: #fff;")
               img.icon-img(src='/images/icon-3.png')
             .col-10
               span(style="font-size: 32px;") Publish your payment page and you're good to go!
+section
+  .container.col-xxl-10.px-4.pt-5
+    .row.justify-content-md-center.pt-5
+      .col-6
+        h1.fw-bold.text-center ROTI BENEFITS
     .row.justify-content-md-center.py-5
-      .col-12
-        hr
+      .col-10
+        p.text-center(style="font-size: 22px;") Roti is powered by the Solana Pay network and offers a simple way for you to incorporate tips or donations on your website or application.
+    .row.justify-content-md-center.pb-5
+      .col-6
+        h4.fw-bold.text-center With Roti, you get the following benefits: 
     .row.justify-content-md-center.py-5
-      .col-12
-        h1.text-center ROTI BENEFITS
-    .row.justify-content-md-center
-      .col-8.py-4
-        p Roti is powered by the Solana Pay network and offers a simple way for you to incorporate tips or donations on your website or application.
-    .row.justify-content-md-center
-      .col-8.py-4
-        p With Roti, you get the following benefits: 
+      .col-3
+        .card
+          .card-header
+          .p-3.card-body
+            p HELLO
+      .col-3
+        .card
+          .card-header
+          .p-3.card-body
+            p HELLO
+      .col-3
+        .card
+          .card-header
+          .p-3.card-body
+            p HELLO
+      .col-3
+        .card
+          .card-header
+          .p-3.card-body
+            p HELLO
 </template>
 
 <script>
@@ -148,7 +168,13 @@ export default {
     min-height: 80vh;
   }
 
+  .card-header {
+    height: 150px;
+    width: 100%;
+  }
+
   .background-block {
+    user-select: none;
     border-radius: 10px;
     background-color: rgba(33, 37, 41, .5);
   }
