@@ -17,21 +17,33 @@
 section.wave-bg
 section(style="background-color: #64b568; color: #fff;")
   .container.col-xxl-10.px-4
-    .row.justify-content-md-center.py-5
+    .row.justify-content-md-center.pt-5
       .col-12
         h1.text-center HOW ROTI PAY WORKS
     .row.justify-content-md-center
       .col-7.py-4
-        .background-block.p-3
-          span 1. Login
+        .background-block.py-5.px-4.zoom-in
+          .row
+            .col-2(style="line-height: 90px;")
+              img.icon-img(src='/images/icon-1.png')
+            .col-10
+              span(style="font-size: 32px;") Login with either your email or Solana-based wallet (eg. Phantom).
     .row.justify-content-md-center
       .col-7.py-4
-        .background-block.p-3
-          span 2. Add your wallet address and customize your donation or tip page.
+        .background-block.py-5.px-4.zoom-in
+          .row
+            .col-2(style="line-height: 90px;")
+              img.icon-img(src='/images/icon-2.png')
+            .col-10
+              span(style="font-size: 32px;") Add your wallet address and customize your donation or tip page.
     .row.justify-content-md-center
       .col-7.py-4
-        .background-block.p-3
-          span 3. Publish your payment page and you're good to go!
+        .background-block.py-5.px-4.zoom-in
+          .row
+            .col-2(style="line-height: 90px;")
+              img.icon-img(src='/images/icon-3.png')
+            .col-10
+              span(style="font-size: 32px;") Publish your payment page and you're good to go!
     .row.justify-content-md-center.py-5
       .col-12
         hr
@@ -100,6 +112,27 @@ export default {
 </script>
 
 <style scoped>
+  @keyframes slide {
+    0%, 100% {
+      transform: translateX(0px) translateY(0);
+    }
+    50% {
+      transform: translateX(20px) translateY(4px);
+    }
+  }
+
+  .slide-anim:hover {
+    animation: slide 4s infinite;
+  }
+
+  .zoom-in {
+    transition: all .25s ease;
+  }
+
+  .zoom-in:hover {
+    transform: scale(1.03);
+  }
+
   .wave-bg {
     height: 250px;
     background: url(http://localhost:3000/images/wave-bg.svg);
@@ -116,7 +149,13 @@ export default {
   }
 
   .background-block {
+    border-radius: 10px;
     background-color: rgba(33, 37, 41, .5);
+  }
+
+  .background-block img.icon-img {
+    width: auto;
+    height: 70px;
   }
 
   h1 {
