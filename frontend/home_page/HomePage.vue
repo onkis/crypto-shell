@@ -1,6 +1,6 @@
 <template lang="pug">
 .container.col-xxl-10.px-4
-  .full-height.row.flex-lg-row-reverse.align-items-center.g-5.py-5
+  .row.flex-lg-row-reverse.align-items-center.g-5.pt-5
     .col-10.col-sm-8.col-lg-5
       img.d-block.mx-lg-auto.img-fluid.no-cursor-events(src="/images/roti-logo.gif", alt="Roti Logo", width="700", height="500", loading="lazy")
     .col-lg-7
@@ -14,7 +14,36 @@
           a.btn.btn-primary.btn-lg.px-4.me-md-2(type="button", @click="loginWithBrave()") Login With Brave
         div
           a.btn.btn-outline-secondary.btn-lg.px-4(type="button", href="/login") Login With Email
-        
+section.wave-bg
+section(style="background-color: #64b568; color: #fff;")
+  .container.col-xxl-10.px-4
+    .row.justify-content-md-center.py-5
+      .col-12
+        h1.text-center HOW ROTI PAY WORKS
+    .row.justify-content-md-center
+      .col-7.py-4
+        .background-block.p-3
+          span 1. Login
+    .row.justify-content-md-center
+      .col-7.py-4
+        .background-block.p-3
+          span 2. Add your wallet address and customize your donation or tip page.
+    .row.justify-content-md-center
+      .col-7.py-4
+        .background-block.p-3
+          span 3. Publish your payment page and you're good to go!
+    .row.justify-content-md-center.py-5
+      .col-12
+        hr
+    .row.justify-content-md-center.py-5
+      .col-12
+        h1.text-center ROTI BENEFITS
+    .row.justify-content-md-center
+      .col-8.py-4
+        p Roti is powered by the Solana Pay network and offers a simple way for you to incorporate tips or donations on your website or application.
+    .row.justify-content-md-center
+      .col-8.py-4
+        p With Roti, you get the following benefits: 
 </template>
 
 <script>
@@ -71,8 +100,23 @@ export default {
 </script>
 
 <style scoped>
+  .wave-bg {
+    height: 250px;
+    background: url(http://localhost:3000/images/wave-bg.svg);
+    background-size: cover;
+    background-position-y: top;
+  }
+
   .full-height {
-    height: 100vh;
+    min-height: 100vh;
+  }
+
+  .big-height {
+    min-height: 80vh;
+  }
+
+  .background-block {
+    background-color: rgba(33, 37, 41, .5);
   }
 
   h1 {
