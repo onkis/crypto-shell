@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { Octokit } from "octokit";
 import { simpleGit, CleanOptions } from 'simple-git';
 import {asyncWrap} from "../lib/core.mjs";
+import { writeFile } from 'node:fs';
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_AUTH
@@ -12,14 +13,22 @@ const octokit = new Octokit({
 async function main(){
   let [err, commit] = await gitProcess();
   if(err) console.error("git log err", err);
-  else if(commit && commit.refs.match("HEAD -> prod")){
-    let sha = commit.hash;
+  else if(/*commit && commit.refs.match("HEAD -> prod")*/ true){
+    let sha = "03f036b6d4f4b6511e3f0499aa10dbf37d0bee96";//commit.hash;
     
     let [err, artifact] = await getArtifact(sha);
     if(err) return console.error("problem getting artifact");
     else{
+      console.log("downloading...")
       let [err, ret] = await downloadArtifact(artifact);
-      console.log("finsihed", err, ret);
+      writeFile(process.cwd()+"/build/crypto-shell.zip", arrayBufferToBufferCycle(ret.data), function(err){
+        if(err) console.error("trouble writing file", err);
+        else{
+          console.log("finished")
+        }
+      })
+      
+      
     }
     
     
@@ -36,6 +45,16 @@ async function main(){
 }
 
 await main();
+
+
+function arrayBufferToBufferCycle(ab) {
+  var buffer = Buffer.alloc(ab.byteLength);
+  var view = new Uint8Array(ab);
+  for (var i = 0; i < buffer.length; ++i) {
+      buffer[i] = view[i];
+  }
+  return buffer;
+}
 
 
 async function gitProcess(){
@@ -64,22 +83,15 @@ async function gitProcess(){
 }
 
 async function downloadArtifact(artifact){
-  let err, ret;
-  try{
-   ret = await octokit.request('GET /repos/onkis/crytpo-shell/actions/artifacts/'+artifact.id+'/zip', {
+   return await asyncWrap(octokit.request('GET /repos/onkis/crypto-shell/actions/artifacts/'+artifact.id+'/zip', {
       owner: 'onkis',
       repo: 'crypto-shell',
       artifact_id: artifact.id,
       archive_format: 'zip'
-    });
-  }catch(e){
-    err = e;
-  }
-  if(err) return [err, null];
-  else{
-    console.log("ret", ret);
-  }
+    }));
 }
+
+
 
 
 async function getArtifact(sha){

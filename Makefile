@@ -1,7 +1,7 @@
 #.PHONY db-migrate migration-create test-site
 
 build: build-ui
-	./node_modules/.bin/caxa --exclude "frontend/*" "data/*" ".git/*" ".env" --input "./" --output "crypto-shell" -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/app.mjs" 
+	./node_modules/.bin/caxa --exclude "frontend/*" "data/*" ".git/*" ".env" "test_site/*" "infra/*" "build/*" --input "./" --output "crypto-shell" -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/app.mjs" 
 
 build-app: build-ui
 	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
