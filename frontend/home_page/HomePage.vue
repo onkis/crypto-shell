@@ -56,28 +56,28 @@ section
       .col-6
         h4.fw-bold.text-center With Roti, you get the following benefits: 
     .row.justify-content-md-center.py-5
-      .col-md-12.col-lg-3
+      .col-md-12.col-lg-3.floating-anim
         .card
           .card-header.text-center.pt-4
             h3.pt-3 Fast transactions
           .wave.wave-1
           .px-3.py-0.card-body
             p.lead With Solana Pay, you receive your payments instantly
-      .col-md-12.col-lg-3
+      .col-md-12.col-lg-3.floating-anim(style="animation-delay: .5s;")
         .card
           .card-header.text-center.pt-4
             h3.pt-3 Zero credit card fees
           .wave.wave-2
           .px-3.py-0.card-body
             p.lead Free yourself from credit card fees - Solana charges $0.001 per transaction
-      .col-md-12.col-lg-3
+      .col-md-12.col-lg-3.floating-anim(style="animation-delay: .8s;")
         .card
           .card-header.text-center.pt-4
             h3.pt-3 Customizable payment page
           .wave.wave-3
           .px-3.py-0.card-body
             p.lead Create a custom branded payment page to engage your patrons
-      .col-md-12.col-lg-3
+      .col-md-12.col-lg-3.floating-anim(style="animation-delay: 1.2s;")
         .card
           .card-header.text-center.pt-4
             h3.pt-3 No code
@@ -150,8 +150,21 @@ export default {
     }
   }
 
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(20px);
+    }
+  }
+
   .slide-anim:hover {
     animation: slide 4s infinite;
+  }
+
+  .floating-anim {
+    animation: float 5s infinite;
   }
 
   .zoom-in {
