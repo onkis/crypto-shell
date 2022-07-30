@@ -26,16 +26,8 @@ async function main(){
         else{
           console.log("finished")
         }
-      })
-      
-      
+      });
     }
-    
-    
-    //4. get the sha
-    //5. wait for github action to run
-    //6. get the artifact
-    //7. download the artifact
     //8. upload .env, binary to server
     //9. unzip, change permissions, reload, run migrations?
   }
