@@ -21,7 +21,7 @@ section(style="background-color: #64b568; color: #fff;")
       .col-12
         h1.fw-bold.text-center HOW ROTI PAY WORKS
     .row.justify-content-md-center
-      .col-7.py-4
+      .col-sm-12.col-lg-7.py-4
         .background-block.py-5.px-4.zoom-in
           .row
             .col-2(style="line-height: 90px;")
@@ -29,7 +29,7 @@ section(style="background-color: #64b568; color: #fff;")
             .col-10
               span(style="font-size: 32px;") Login with either your email or Solana-based wallet (eg. Phantom).
     .row.justify-content-md-center
-      .col-7.py-4
+      .col-sm-12.col-lg-7.py-4
         .background-block.py-5.px-4.zoom-in
           .row
             .col-2(style="line-height: 90px;")
@@ -37,7 +37,7 @@ section(style="background-color: #64b568; color: #fff;")
             .col-10
               span(style="font-size: 32px;") Add your wallet address and customize your donation or tip page.
     .row.justify-content-md-center
-      .col-7.py-4
+      .col-sm-12.col-lg-7.py-4
         .background-block.py-5.px-4.zoom-in
           .row
             .col-2(style="line-height: 90px;")
@@ -56,26 +56,35 @@ section
       .col-6
         h4.fw-bold.text-center With Roti, you get the following benefits: 
     .row.justify-content-md-center.py-5
-      .col-3
+      .col-md-12.col-lg-3
         .card
-          .card-header
-          .p-3.card-body
-            p HELLO
-      .col-3
+          .card-header.text-center.pt-4
+            h3.pt-3 Fast transactions
+          .wave.wave-1
+          .px-3.py-0.card-body
+            p.lead With Solana Pay, you receive your payments instantly
+      .col-md-12.col-lg-3
         .card
-          .card-header
-          .p-3.card-body
-            p HELLO
-      .col-3
+          .card-header.text-center.pt-4
+            h3.pt-3 Zero credit card fees
+          .wave.wave-2
+          .px-3.py-0.card-body
+            p.lead Free yourself from credit card fees - Solana charges $0.001 per transaction
+      .col-md-12.col-lg-3
         .card
-          .card-header
-          .p-3.card-body
-            p HELLO
-      .col-3
+          .card-header.text-center.pt-4
+            h3.pt-3 Customizable payment page
+          .wave.wave-3
+          .px-3.py-0.card-body
+            p.lead Create a custom branded payment page to engage your patrons
+      .col-md-12.col-lg-3
         .card
-          .card-header
-          .p-3.card-body
-            p HELLO
+          .card-header.text-center.pt-4
+            h3.pt-3 No code
+          .wave.wave-4
+          .px-3.py-0.card-body
+            p.lead No coding experience required
+section.bottom-wave
 </template>
 
 <script>
@@ -160,6 +169,15 @@ export default {
     background-position-y: top;
   }
 
+  .bottom-wave {
+    margin-top: 50px;
+    width: 100%;
+    height: 300px;
+    background-size: contain !important;
+    background: #60b764;
+    background: url(http://localhost:3000/images/bottom-wave.png);
+  }
+
   .full-height {
     min-height: 100vh;
   }
@@ -169,8 +187,52 @@ export default {
   }
 
   .card-header {
-    height: 150px;
+    background-color: #60b764;
+    user-select: none;
+    height: 100px;
     width: 100%;
+  }
+
+  .card-body {
+    min-height: 100px;
+  }
+
+  .card-body p {
+    transform: translateY(-10px);
+  }
+
+  .card-header h3 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    color: #fff;
+  }
+
+  .wave {
+    width: 100%;
+    height: 100px;
+    transform: translateY(-1px);
+  }
+
+  .wave-1 {
+    background: url(http://localhost:3000/images/wave-1.png);
+    background-size: cover;
+  }
+
+  .wave-2 {
+    background: url(http://localhost:3000/images/wave-2.png);
+    background-size: cover;
+  }
+
+  .wave-3 {
+    background: url(http://localhost:3000/images/wave-3.png);
+    background-size: cover;
+  }
+
+  .wave-4 {
+    background: url(http://localhost:3000/images/wave-4.png);
+    background-size: cover;
   }
 
   .background-block {
