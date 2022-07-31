@@ -13,8 +13,8 @@ const octokit = new Octokit({
 async function main(){
   let [err, commit] = await gitProcess();
   if(err) console.error("git log err", err);
-  else if(/*commit && commit.refs.match("HEAD -> prod")*/ true){
-    let sha = "d3a3bc152ede5770632cc94dcced582d3d6ef4d4";//commit.hash;
+  else if(commit && commit.refs.match("HEAD -> prod")){
+    let sha = commit.hash;
     
     let [err, artifact] = await getArtifact(sha);
     if(err) return console.error("problem getting artifact");
