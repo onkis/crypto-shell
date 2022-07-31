@@ -1,0 +1,16 @@
+[Unit]
+Description=Crypto Shell Rotipay
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=ubuntu
+ExecStart=/home/ubuntu/crypto-shell
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=crypto-shell
+
+[Install]
+WantedBy=multi-user.target

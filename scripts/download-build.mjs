@@ -14,7 +14,7 @@ async function main(){
   let [err, commit] = await gitProcess();
   if(err) console.error("git log err", err);
   else if(/*commit && commit.refs.match("HEAD -> prod")*/ true){
-    let sha = "03f036b6d4f4b6511e3f0499aa10dbf37d0bee96";//commit.hash;
+    let sha = "d3a3bc152ede5770632cc94dcced582d3d6ef4d4";//commit.hash;
     
     let [err, artifact] = await getArtifact(sha);
     if(err) return console.error("problem getting artifact");
