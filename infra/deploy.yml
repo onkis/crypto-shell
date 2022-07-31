@@ -14,7 +14,7 @@
         mode: "+x"
         
     - name: copy up secrets
-      copy: src=../../crypto-shell-env-prod dest=/home/ubuntu/crypto-shell-env-prod owner=ubuntu
+      copy: src=../../crypto-shell-env-prod dest=/home/ubuntu/.env owner=ubuntu
    
     - name: restart app
       service: name=crypto-shell state=restarted

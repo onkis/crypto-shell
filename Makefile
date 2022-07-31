@@ -1,4 +1,4 @@
-#.PHONY db-migrate migration-create test-site
+#.PHONY db-migrate migration-create test-site deploy
 
 build: build-ui
 	./node_modules/.bin/caxa --exclude "frontend/*" "data/*" ".git/*" ".env" "test_site/*" "infra/*" "build/*" --input "./" --output "crypto-shell" -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/app.mjs" 
@@ -21,6 +21,10 @@ db-migrate:
 
 migration-create:
 	./node_modules/.bin/knex migrate:make new_migration --knexfile=./db/knexfile.js
+
+deploy:
+	node ./scripts/download-build.mjs
+	ansible-playbook -i ./infra/hosts.yml ./infra/deploy.yml
 
 test-site:
 	python3 -m http.server --directory ./test_site

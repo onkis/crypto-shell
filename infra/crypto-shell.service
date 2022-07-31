@@ -6,6 +6,7 @@ StartLimitIntervalSec=0
 [Service]
 Type=simple
 User=ubuntu
+WorkingDirectory=/home/ubuntu/
 ExecStart=/home/ubuntu/crypto-shell
 Restart=always
 StandardOutput=syslog
