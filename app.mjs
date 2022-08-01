@@ -39,19 +39,25 @@ app.set('view engine', 'pug');
 //TODO: find an alt logger?
 app.use(logger('dev'));
 
+let cookieSettings = {
+  httpOnly: true,
+  secure: false, //TODO: run ssl in dev? 
+  maxAge: (1000*60*60*4), //4 hour cookie
+};
+
+if(process.env.NODE_ENV === 'production'){
+  cookieSettings.secure = true;
+  cookieSettings.domain = process.env.BASE_URL;
+}
+
 app.use(expSession({
   secret: process.env.COOKIE_SECRET, //TOOD: pass an array and rotate secret
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production' ? true : false, //TODO: run ssl in dev? 
-    maxAge: (1000*60*60*4), //4 hour cookie
-    domain: process.env.BASE_URL
-  },
+  cookie: cookieSettings,
   name: 'rotipay.sid',
   proxy: process.env.NODE_ENV === 'production' ? true : false,
   store: new SqliteStore({ client: KVStore }),
-  resave: true,
-  saveUninitialized: true
+  //resave: true,
+  //saveUninitialized: true
 }));
 
 app.use(express.json({ limit: "100kb" }));
