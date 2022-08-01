@@ -7,6 +7,7 @@ require('esbuild').build({
     publicPath: '/dist/',
     plugins: [vuePlugin()],
     inject: ['frontend/esbuild.inject.js'],
+    //external: ['./images/*']
     define: {
       "global": "window",
       "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL),
@@ -16,9 +17,9 @@ require('esbuild').build({
       '.eot': 'file',
       '.woff': 'file',
       '.woff2': 'file',
-      '.svg': 'file',
+      '.svg': 'dataurl',
       '.ttf': 'file',
-      '.png':'file',
+      '.png':'dataurl',
       '.jpg': 'file'
     }
 });
