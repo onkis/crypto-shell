@@ -34,7 +34,10 @@ export async function loginPost(req, res){
     }
     else{
       let [initError] = await _initUserAccountAndPaymnetPage(user);
-      if(initError) return res.status(500).send();
+      if(initError) {
+        log.error("user account init error", initError);
+        return res.status(500).send();
+      }
 
       console.log("found user", user, "sending email");
 
@@ -97,11 +100,15 @@ export async function codePost(req, res){
   req.session.user = user;
 
 
-  await User.update({
+  [err] = await User.update({
     where: { id: user.id },
     update: { is_email_validated: true }
   });
-
+  
+  if(err){
+    console.error("problem updating the user in auth.mjs#codePost", err);
+    return res.status(500).send();
+  }
   return res.redirect('/app');
 };
 
