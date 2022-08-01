@@ -26,10 +26,12 @@ export default class kvstore extends core {
   }
   
   async get(key){
+    console.log("KVSTORE get", key);
     let [err, ret] = await asyncWrap(
                         this.pg.select('*')
                         .from(this.tableName)
                         .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, _nowSec(),key]));
+    console.log("KVSTORE get ret", err, ret);
     if(ret?.length > 0){
       ret = ret[0];
       ret = ret.value;
@@ -54,6 +56,7 @@ export default class kvstore extends core {
    * @returns {Tuple}  - [err, ret]
    */
   async expireKeys(){
+    console.log("expiring keys");
     let tuple = await asyncWrap(
       this.pg(this.tableName).whereRaw('expire_at < ?', _nowSec()).del()
     );
@@ -78,6 +81,7 @@ export default class kvstore extends core {
    * @param {function} callback - the node.js callback
    */
   getCB(key, callback){
+    console.log("KVSTORE getCB", key);
 
     this.pg.select('*')
     .from(this.tableName)
@@ -94,6 +98,8 @@ export default class kvstore extends core {
       callback(null, ret);
     })
     .catch(function(err){
+      console.log("KVSTORE getCB err", err);
+
       callback(err);
     });
   }
