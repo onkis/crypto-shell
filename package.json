@@ -16,7 +16,7 @@
     "debug": "^2.6.9",
     "dotenv": "^16.0.0",
     "express": "^4.16.1",
-    "express-session": "^1.17.2",
+    "express-session": "^1.17.3",
     "formidable": "^2.0.1",
     "hashids": "^2.2.10",
     "http-errors": "^1.6.3",
