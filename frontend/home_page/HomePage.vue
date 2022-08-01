@@ -164,7 +164,7 @@ export default {
 
   .wave-bg {
     height: 250px;
-    background: url(http://localhost:3000/images/wave-bg.svg);
+    background: url(/images/wave-bg.svg);
     background-size: cover;
     background-position-y: top;
   }
@@ -175,7 +175,7 @@ export default {
     height: 300px;
     background-size: contain !important;
     background: #60b764;
-    background: url(http://localhost:3000/images/bottom-wave.png);
+    background: url(/images/bottom-wave.png);
   }
 
   .full-height {
@@ -216,22 +216,22 @@ export default {
   }
 
   .wave-1 {
-    background: url(http://localhost:3000/images/wave-1.png);
+    background: url(/images/wave-1.png);
     background-size: cover;
   }
 
   .wave-2 {
-    background: url(http://localhost:3000/images/wave-2.png);
+    background: url(/images/wave-2.png);
     background-size: cover;
   }
 
   .wave-3 {
-    background: url(http://localhost:3000/images/wave-3.png);
+    background: url(/images/wave-3.png);
     background-size: cover;
   }
 
   .wave-4 {
-    background: url(http://localhost:3000/images/wave-4.png);
+    background: url(/images/wave-4.png);
     background-size: cover;
   }
 
