@@ -30,6 +30,7 @@ const __dirname = path.dirname(process.argv[1]);
 
 const app = express();
 
+app.disable('x-powered-by');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,14 +42,16 @@ app.use(logger('dev'));
 app.use(expSession({
   secret: process.env.COOKIE_SECRET, //TOOD: pass an array and rotate secret
   cookie: {
-    proxy: process.env.NODE_ENV === 'production' ? true : false,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production' ? true : false, //TODO: run ssl in dev? 
-    maxAge: (1000*60*60*4) //4 hour cookie
+    maxAge: (1000*60*60*4), //4 hour cookie
+    domain: process.env.BASE_URL
   },
+  name: 'rotipay.sid',
+  proxy: process.env.NODE_ENV === 'production' ? true : false,
   store: new SqliteStore({ client: KVStore }),
-  resave: false,
-  saveUninitialized: false
+  resave: true,
+  saveUninitialized: true
 }));
 
 app.use(express.json({ limit: "100kb" }));
