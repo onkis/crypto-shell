@@ -54,7 +54,7 @@ app.use(expSession({
   secret: process.env.COOKIE_SECRET, //TOOD: pass an array and rotate secret
   cookie: cookieSettings,
   name: 'rotipay.sid',
-  //proxy: (process.env.NODE_ENV === 'production' ? true : false),
+  proxy: (process.env.NODE_ENV === 'production' ? true : false),
   store: new SqliteStore({ client: KVStore }),
   resave: false,
   saveUninitialized: false
