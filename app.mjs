@@ -40,7 +40,8 @@ app.use(logger('dev'));
 
 app.use(expSession({
   secret: process.env.COOKIE_SECRET, //TOOD: pass an array and rotate secret
-  cookie: { 
+  cookie: {
+    proxy: process.env.NODE_ENV === 'production' ? true : false,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production' ? true : false, //TODO: run ssl in dev? 
     maxAge: (1000*60*60*4) //4 hour cookie
