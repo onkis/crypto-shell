@@ -15,7 +15,7 @@
         div
           a.btn.btn-outline-secondary.btn-lg.px-4(type="button", href="/login") Login With Email
 section.wave-bg
-section(style="background-color: #64b568; color: #fff;")
+section(style="background-color:#9844ff; background-image:linear-gradient(180deg, #9844ff 0%, #dc44ff 100%);color: #fff;")
   .container.col-xxl-10.px-4.pb-5
     .row.justify-content-md-center.pt-5
       .col-12
@@ -47,42 +47,42 @@ section(style="background-color: #64b568; color: #fff;")
 section
   .container.col-xxl-10.px-4.pt-5
     .row.justify-content-md-center.pt-5
-      .col-6
+      .col-sm-12.col-md-6
         h1.fw-bold.text-center ROTI BENEFITS
     .row.justify-content-md-center.py-5
-      .col-10
+      .col-sm-12.col-md-10
         p.text-center(style="font-size: 22px;") Roti is powered by the Solana Pay network and offers a simple way for you to incorporate tips or donations on your website or application.
     .row.justify-content-md-center.pb-5
-      .col-6
+      .col-sm-12.col-md-6
         h4.fw-bold.text-center With Roti, you get the following benefits: 
     .row.justify-content-md-center.py-5
-      .col-md-12.col-lg-3.floating-anim
+      .col-md-12.col-lg-3.floating-anim.pb-3
         .card
           .card-header.text-center.pt-4
             h3.pt-3 Fast transactions
           .wave.wave-1
-          .px-3.py-0.card-body
+          .px-3.py-3.card-body
             p.lead With Solana Pay, you receive your payments instantly
-      .col-md-12.col-lg-3.floating-anim(style="animation-delay: .5s;")
+      .col-md-12.col-lg-3.floating-anim.pb-3(style="animation-delay: .5s;")
         .card
           .card-header.text-center.pt-4
             h3.pt-3 Zero credit card fees
           .wave.wave-2
-          .px-3.py-0.card-body
+          .px-3.py-3.card-body
             p.lead Free yourself from credit card fees - Solana charges $0.001 per transaction
-      .col-md-12.col-lg-3.floating-anim(style="animation-delay: .8s;")
+      .col-md-12.col-lg-3.floating-anim.pb-3(style="animation-delay: .8s;")
         .card
           .card-header.text-center.pt-4
             h3.pt-3 Customizable payment page
           .wave.wave-3
-          .px-3.py-0.card-body
+          .px-3.py-3.card-body
             p.lead Create a custom branded payment page to engage your patrons
-      .col-md-12.col-lg-3.floating-anim(style="animation-delay: 1.2s;")
+      .col-md-12.col-lg-3.floating-anim.pb-3(style="animation-delay: 1.2s;")
         .card
           .card-header.text-center.pt-4
             h3.pt-3 No code
           .wave.wave-4
-          .px-3.py-0.card-body
+          .px-3.py-3.card-body
             p.lead No coding experience required
 section.bottom-wave
 </template>
@@ -176,19 +176,20 @@ export default {
   }
 
   .wave-bg {
-    height: 250px;
-    background: url('../../public/images/wave-bg.svg');
+    height: 220px;
+    background: url('../../public/images/purple-wave-bg.png');
     background-size: cover;
-    background-position-y: top;
+    background-position-y: bottom;
   }
 
   .bottom-wave {
-    margin-top: 50px;
+    margin-top: 100px;
     width: 100%;
-    height: 300px;
-    background-size: contain !important;
+    height: 350px;
+    background-position-y: center !important;
+    background-size: cover !important;
     background: #60b764;
-    background: url('../../public/images/bottom-wave.png');
+    background: url('../../public/images/anime-bg.svg');
   }
 
   .full-height {
@@ -200,14 +201,15 @@ export default {
   }
 
   .card-header {
-    background-color: #60b764;
+    background-color: #fc00ff;
+    background-image: linear-gradient(180deg, #fc00ff 0%, #a256ff 75%, #9844ff 100%);
     user-select: none;
     height: 100px;
     width: 100%;
   }
 
   .card-body {
-    min-height: 100px;
+    min-height: 140px;
   }
 
   .card-body p {
@@ -229,22 +231,22 @@ export default {
   }
 
   .wave-1 {
-    background: url('../../public/images/wave-1.png');
+    background: url('../../public/images/purple-card-bg-1.png');
     background-size: cover;
   }
 
   .wave-2 {
-    background: url('../../public/images/wave-2.png');
+    background: url('../../public/images/purple-card-bg-2.png');
     background-size: cover;
   }
 
   .wave-3 {
-    background: url('../../public/images/wave-3.png');
+    background: url('../../public/images/purple-card-bg-3.png');
     background-size: cover;
   }
 
   .wave-4 {
-    background: url('../../public/images/wave-4.png');
+    background: url('../../public/images/purple-card-bg-4.png');
     background-size: cover;
   }
 
@@ -264,13 +266,14 @@ export default {
   }
 
   .login-with-button {
-    background-color:#60b764;
-    border-color:#60b764
+    background-color: #fab934;
+    background-image: linear-gradient(90deg, #fab934 0%, #fa693c 100%);
+    border-color: #fab934
   }
 
   .login-with-button:hover {
-    background-color:#498c4c;
-    background-color:#498c4c;
+    background-color: #fab934;
+    background-image: linear-gradient(65deg, #fab934 0%, #fa693c 45%);
   }
 
   .no-cursor-events {
