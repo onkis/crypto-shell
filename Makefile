@@ -7,7 +7,7 @@ build-app: build-ui
 	./node_modules/.bin/esbuild app.mjs --bundle --platform=node --external:./node_modules/* --outfile=./app-built.js --format=cjs
 
 build-ui:
-	node ./scripts/build_all_ui.mjs
+	NODE_ENV="production" BASE_URL="rotipay.com" node ./scripts/build_all_ui.mjs
 
 clean:
 	rm app-built.js
