@@ -50,7 +50,7 @@ if(process.env.NODE_ENV === 'production'){
   cookieSettings.domain = process.env.BASE_URL;
 }
 
-app.use(expSession({
+const expSettings = {
   secret: process.env.COOKIE_SECRET, //TOOD: pass an array and rotate secret
   cookie: cookieSettings,
   name: 'rotipay.sid',
@@ -58,7 +58,13 @@ app.use(expSession({
   store: new SqliteStore({ client: KVStore }),
   resave: false,
   saveUninitialized: false
-}));
+};
+
+console.log("AM I CRAZY", process.env);
+console.log("cookie Settings", cookieSettings);
+console.log("exp session settings", expSettings);
+
+app.use(expSession(expSettings));
 
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: false }));
