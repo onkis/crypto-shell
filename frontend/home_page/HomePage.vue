@@ -2,7 +2,7 @@
 .container.col-xxl-10.px-4
   .row.flex-lg-row-reverse.align-items-center.g-5.pt-5
     .col-10.col-sm-8.col-lg-5
-      img.d-block.mx-lg-auto.img-fluid.no-cursor-events(src="/images/roti-logo.gif", alt="Roti Logo", width="700", height="500", loading="lazy")
+      img.d-block.mx-lg-auto.img-fluid.no-cursor-events(src="/images/rotipay-logo-purple.gif", alt="Roti Logo", width="700", height="500", loading="lazy")
     .col-lg-7
       h1.display-5.fw-bold.mb-3 CRYPTO TIPS AND DONATIONS MADE EASY
       p.lead Powered by Solana Pay
