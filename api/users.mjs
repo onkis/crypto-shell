@@ -58,7 +58,7 @@ async function validateEmailCode(req, res){
     return res.status(500).send();
   }
 
-  res.status(200).send();
+  res.redirect('/app');
 }
 
 async function sendEmailToValidateUserEmailAddress(req, res){
