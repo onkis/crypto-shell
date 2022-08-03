@@ -15,6 +15,10 @@
         
     - name: copy up secrets
       copy: src=../../crypto-shell-env-prod dest=/home/ubuntu/.env owner=ubuntu
-   
+    
+    - name: Clear tmp
+      file:
+        state: absent
+        path: /tmp/caxa/
     - name: restart app
       service: name=crypto-shell state=restarted
