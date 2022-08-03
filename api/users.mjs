@@ -41,14 +41,18 @@ async function validateEmailCode(req, res){
   if(err){
     return res.status(500).send();
   }
-  else if(!data?.email || !data?.public_address){
-    return res.status(404);
+  else if(!data){
+    return res.render('404');
   }
 
   const { email, public_address } = JSON.parse(data);
-  const where = { public_address }, update = { email, is_email_validated: true };
 
-  [err] = User.update({ where, update });
+  if(!email || !public_address) return res.status(400).send();
+
+  const where = { public_address },
+        update = { email, is_email_validated: true };
+
+  [err] = await User.update({ where, update });
   if(err){
     console.log("Failed to update user | users.mjs#validateEmailCode", err);
     return res.status(500).send();
@@ -113,7 +117,7 @@ async function _sendValidateEmail(email, validation_url){
   const message = `
     <b>Please verify email to enable publishing!</b>
 
-    Click here to verify : <a href="${validation_url}"> OOF </a>
+    <a href="${validation_url}">Click here to verify </a>
     <p>It is valid for 30 minutes.</p>
   `;
   
