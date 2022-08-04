@@ -60,9 +60,6 @@ const expSettings = {
   saveUninitialized: false
 };
 
-console.log("AM I CRAZY", process.env);
-console.log("cookie Settings", cookieSettings);
-console.log("exp session settings", expSettings);
 
 app.use(expSession(expSettings));
 
