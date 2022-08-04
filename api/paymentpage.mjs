@@ -5,13 +5,13 @@ export async function create(req, res){
   const id = req.params.id;
   const newRecord = req.body;
 
-  const [err, asset] = await PaymentPage.create({...newRecord});
+  const [err, paymentPage] = await PaymentPage.create({...newRecord});
   if(err){
-    console.error(err);
+    console.error(`failed to create paymentPage | ${__filename}#create`, err);
     return res.send(500);
   }
 
-  res.json(asset).send();
+  res.json(paymentPage).send();
 }
 //TODO these should take the current user an id
 //as the main argument
@@ -19,13 +19,13 @@ export async function get(req, res){
   const { params } = req;
   const { org_id } = req?.session?.user;
 
-  const [err, assets] = await PaymentPage.findOne({ org_id });
+  const [err, paymentPage] = await PaymentPage.findOne({ org_id });
   if(err){
-    console.error(err);
+    console.error(`failed to get paymentPage | ${__filename}#get`, err);
     return res.send(500);
   }
 
-  res.json(assets);
+  res.json(paymentPage);
 }
 
 export async function update(req, res){
@@ -41,7 +41,7 @@ export async function update(req, res){
 
   const [err, assets] = await PaymentPage.update({ where, update });
   if(err){
-    console.error(err);
+    console.error(`failed to update paymentPage | ${__filename}#update`, err);
     return res.send(500);
   }
 
@@ -52,7 +52,7 @@ export async function destroy(req, res){
   const id = req.params.id;
   const [err, assets] = await PaymentPage.destroy({ id });
   if(err){
-    console.error(err);
+    console.error(`failed to destroy paymentPage | ${__filename}#destroy`, err);
     return res.send(500);
   }
 
@@ -60,22 +60,31 @@ export async function destroy(req, res){
 }
 
 export async function publish(req, res){
-  let err, assets, user;
+  let err, user, paymentPage, assets;
   const { org_id } = req?.session?.user;
-  const is_published = true;
+  const is_published = true, eula = true;
 
   [err, user] = await User.findOne({ org_id, is_email_validated: true });
   if(err){
-    console.error(err);
+    console.error(`failed to get user | ${__filename}#publish`, err);
     return res.status(500).send();
   }
   else if(!user){
     return res.status(200).json({ VALIDATE_EMAIL: true });
   }
 
+  [err, paymentPage] = await PaymentPage.findOne({ org_id, eula });
+  if(err){
+    console.error(`failed to get paymentPage | ${__filename}#publish`, err);
+    return res.status(500).send();
+  }
+  else if(!paymentPage){
+    return res.status(200).json({ EULA: true });
+  }
+
   [err, assets] = await _setPublishedState(org_id, is_published);
   if(err){
-    console.error(err);
+    console.error(`failed to get assets | ${__filename}#publish`, err);
     return res.send(500);
   }
 
@@ -88,7 +97,7 @@ export async function unpublish(req, res){
 
   const [err, assets] = await _setPublishedState(org_id, is_published);
   if(err){
-    console.error(err);
+    console.error(`failed to unpublish | ${__filename}#unpublish`, err);
     return res.send(500);
   }
 

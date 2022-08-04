@@ -117,16 +117,21 @@
                   | {{ config.completeDetails || standard.completeDetails }}
   validate-email-modal(
     :modalActive="openValidateEmailModal"
-    @close="modalClosed"
+    @close="validateEmailModalClosed"
+  )
+  eula-modal(
+    :modalActive="openEulaModal"
+    @close="eulaModalClosed"
   )
 </template>
 
 <script>
 import ValidateEmailModal from '../modals/ValidateEmailModal.vue';
+import EulaModal from '../modals/EulaModal.vue';
 import { debounce, isEmpty } from "lodash";
 
 export default {
-  components: { ValidateEmailModal },
+  components: { EulaModal, ValidateEmailModal },
   data() {
     return {
       stage: 'donate',
@@ -135,6 +140,7 @@ export default {
       is_published: null,
       hashId: null,
       openValidateEmailModal: false,
+      openEulaModal: false,
       standard: {
         title: 'JOIN THE CLEANUP',
         logo: 'https://assets.theoceancleanup.com/app/uploads/2021/08/Tender-Inspection-Flight-24.08.2021-pre-meetings-3-1280x720.jpg',
@@ -163,7 +169,6 @@ export default {
   mounted() {
     this.init();
     this.debounceUpdate = debounce(() => {
-      console.log("update");
       this.update();
     }, 1000);
   },
@@ -193,6 +198,9 @@ export default {
       if(response?.data?.VALIDATE_EMAIL){
         this.openValidateEmailModal = true;
       }
+      else if(response?.data?.EULA){
+        this.openEulaModal = true;
+      }
       else if(response){
         this.is_published = true;
         window.AlertManager({type: "success", "message": "Page Published!", hideAfter: 3000 });
@@ -205,10 +213,13 @@ export default {
         window.AlertManager({type: "success", "message": "Page Unpublished!", hideAfter: 3000 });
       }
     },
-    async update(){
+    async update(passedEula){
       const update = {
         config: { ...this.config }
       };
+
+      if(passedEula) update.eula = true;
+
       //and one to update the logged in user's current page
       const response = await this.$http.put("/api/paymentpage/3", update);
       if(response){
@@ -218,12 +229,21 @@ export default {
     chooseFiles(){
       document.getElementById("fileUpload").click();
     },
-    async modalClosed(modalResults){
+    async validateEmailModalClosed(modalResults){
       this.openValidateEmailModal = false;
       if(modalResults?.eventType !== 'success') return;
       else if(!modalResults?.email?.length) return console.error("no email");
       else{
         await this.$http.post("/api/user/validate_email", { email: modalResults.email });
+      }
+    },
+    async eulaModalClosed(modalResults){
+      this.openValidateEmailModal = false;
+      if(modalResults?.eventType !== 'agreed') return;
+      else{
+        const passedEula = true;
+        await this.update(passedEula);
+        await this.publish();
       }
     },
     uploadImage(event) {
