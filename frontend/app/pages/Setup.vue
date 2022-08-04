@@ -238,7 +238,7 @@ export default {
       }
     },
     async eulaModalClosed(modalResults){
-      this.openValidateEmailModal = false;
+      this.openEulaModal = false;
       if(modalResults?.eventType !== 'agreed') return;
       else{
         const passedEula = true;
