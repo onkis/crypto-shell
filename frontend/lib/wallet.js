@@ -83,6 +83,13 @@ class Phantom{
       console.error("user rejected access to wallet", err);
     }
   }
+  
+  async signAndSendTransaction(transaction){
+    let [err, sig] = await asyncWrap(this.provider.signAndSendTransaction(transaction));
+    console.log("phantom signAndSend", err, sig);
+    return [err, sig];
+  }
+  
   /**
    * Prompts user to sign a message with their private key
    * @param {String} message - The message to sign (should be from server)
@@ -109,7 +116,7 @@ export async function connectToBrave(){
   if( isBraveInstalled() ){
     let brave = new Brave();
     
-    await brave.connect();//TODO: what permissions to pass...Is this necessary?
+    await brave.connect();
     
     return brave;
   }
@@ -123,7 +130,7 @@ class Brave{
     this.wallet = null;
     this.publicKey = null;
   }
-  async connect(){
+  async connect(){ //AKA may I see your public key
     let [err, wallet] = await asyncWrap(this.braveSolana.connect());
     console.log("got brave", err, wallet);
     
@@ -134,6 +141,20 @@ class Brave{
       console.error("user rejected access to brave wallet", err);
     }
   }
+  /**
+   * this function signs and sends a transaction to the network
+   * TODO: should we follow up with a verification?
+   *  
+   * @param {Object} transaction - solna transaction object https://solana-labs.github.io/solana-web3.js/classes/Transaction.html
+   * @param {Object} sendOptions - Send options https://wallet-docs.brave.com/solana/provider-api/methods#bravesolanasignandsendtransaction
+   * @returns {Tuple}  - [err, result]
+   */
+  async signAndSendTransaction(transaction, sendOptions={}){
+    let [err, result] =  await asyncWrap(window.braveSolana.signAndSendTransaction(transaction, sendOptions));
+    //TODO confirm transaction?
+    return [err, result];
+  }
+  
   /**
    * Prompts user to sign a message with their private key
    * @param {String} message - The message to sign (should be from server)
