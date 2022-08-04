@@ -83,7 +83,7 @@ export default class kvstore extends core {
     .from(this.tableName)
     .whereRaw('(key = ? and expire_at > ?) or (key = ? and expire_at is NULL)', [key, _nowSec(),key])
     .then(function(ret){
-      console.log("KVSTORE getCB success", ret);
+      //console.log("KVSTORE getCB success", ret);
 
       if(ret?.length > 0) {
         ret = ret[0];
