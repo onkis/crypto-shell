@@ -43,6 +43,13 @@
                   label Completed Details
                   input#detail.form-control(v-model="config.completeDetails" type='text' placeholder='Enter Completed Details' v-on:click="changePreview('complete')")
               .col-12
+                .input-group.input-group-static.mb-2
+                label Solana Network
+                select.form-select( v-model="config.network")
+                  option(value= 'mainnet-beta') Mainnet Beta
+                  option(value='devnet') Devnet
+                  option(value='testnet') Testnet
+                
             .row.mt-4
               .col-lg-6.text-right.d-flex.flex-column.justify-content-center
               button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(v-if="!is_published" @click="publish()" type='button') Publish
@@ -246,6 +253,7 @@ export default {
         await this.publish();
       }
     },
+    
     uploadImage(event) {
       let imageFile = event.target.files[0];
       if (imageFile) {
