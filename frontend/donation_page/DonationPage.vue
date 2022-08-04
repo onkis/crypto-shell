@@ -3,14 +3,17 @@ main#donation
   div.container.marketing
     //hr.featurette-divider  
     .row.featurette
-      .col-md-7
+      .col-md-7(v-if="stage ==='complete'")
+        h2.featurette-heading.fw-normal.lh-1 {{donationConfig.completeTitle}}
+        p.lead {{ donationConfig.completeDetails }}
+        hr
+      .col-md-7(v-if="stage === 'donate'")
         h2.featurette-heading.fw-normal.lh-1 {{donationConfig.title || standard.title}}
         p.lead {{ donationConfig.detail || standard.detail }}
         hr
         .row
           .col-md-6
-            //h5 Donate With Solana Pay
-        .row
+        .row(v-if="stage === 'donate'")
           .col-lg-6
             form.row.g-3
               .col-md-12
@@ -67,16 +70,11 @@ export default {
       stage: "donate",
       assetId: null,
       donationConfig: {...DONATION_CONFIG},
-      donationInstance: null,
-      openCurrencyDropDown: false,
-      openPaymentDropDown: false,
       config: {
         currency: "SOL",
         paymentMethod: "Select..."
       },
-      paymentMethods: ["QR_CODE", "BRAVE", "PHANTOM"],
       paymentMethod: "",
-      walletConnected: false,
       clusterApiUrl: "",
       phantomWallet: null,
       braveWallet: null,
@@ -134,6 +132,9 @@ export default {
 
       /* Creating qr-code + appending to DOM */
       const url = encodeURL({ recipient, amount, reference, label, message, memo });
+      
+      console.log("url", url);
+      
       const qrCode = createQR(url, qrCodeSize);
       const element = document.getElementById('qrCode');
       qrCode.append(element);
@@ -175,7 +176,7 @@ export default {
     },
     
     async payWithPhantom(){
-      this.phantomWallet = await connectToPhantom()();
+      this.phantomWallet = await connectToPhantom();
       if(!this.phantomWallet) return;
       else {
         await this._payWithWallet(this.phantomWallet);
