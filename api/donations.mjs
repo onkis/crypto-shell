@@ -83,7 +83,7 @@ async function verifyTransaction(req, res){
 }
 
 async function donationSuccessful(reference_id){
-  let err, donation, transaction_info;
+  let err, donation, tx_info, signature;
   [err, donation] = await getDonation(reference_id);
   if(err){
     console.error("failed to get donation from KVS | api/donations.mjs#donationSuccessful", err);
@@ -94,11 +94,12 @@ async function donationSuccessful(reference_id){
   }
   else donation = JSON.parse(donation);
 
-
-  [err, transaction_info] = await findTransactionOnChain(reference_id);
-  if(err || !transaction_info) return [new Error("failed to find tx")];
-
-  [err] = await Donation.create(donation);
+  [err, tx_info] = await findTransactionOnChain(reference_id);
+  if(err || !tx_info?.signature){
+    return [new Error("failed to find tx")];
+  }
+  
+  [err] = await Donation.create({...donation, signature: tx_info.signature});
   if(err){
     console.error("failed to create donation in postgres | api/donations.mjs#donationSuccessful", err);
     return [new Error("failed to create donation record in postgres")];
