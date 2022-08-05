@@ -42,7 +42,7 @@ app.use(logger('dev'));
 let cookieSettings = {
   httpOnly: true,
   secure: false, //TODO: run ssl in dev? 
-  maxAge: (1000*60*60*4), //4 hour cookie
+  maxAge: (1000*60*60*12), //4 hour cookie
 };
 
 if(process.env.NODE_ENV === 'production'){

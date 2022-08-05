@@ -134,7 +134,9 @@ export default {
       let blob = { recipient, amount, reference, label, message, memo };
       
       //TODO set the SPL token on the blob object if this.config.currency !== SOL
-
+      
+      console.log("blob", blob);
+      
       const url = encodeURL(blob);
       
       
@@ -258,6 +260,7 @@ export default {
       }
     },
     async _askServerToVerifyTransaction(transaction_ref_id){
+      //TODO pass in the net used for the page
       const that = this;
       try{
         const url = `/api/donation/${transaction_ref_id}/verify`;
