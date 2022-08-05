@@ -3,10 +3,48 @@ main#donation
   div.container.marketing
     //hr.featurette-divider  
     .row.featurette
-      .col-md-7(v-if="stage ==='complete'")
-        h2.featurette-heading.fw-normal.lh-1 {{donationConfig.completeTitle}}
-        p.lead {{ donationConfig.completeDetails }}
+      .col-md-7(v-if="stage ==='verifying'")
+        h2.featurette-heading.fw-normal.lh-1 Verifying Transaction...
+        p.lead Please Wait
         hr
+        svg(xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', style='margin:auto;background:#fff;display:block;', width='254px', height='254px', viewBox='0 0 100 100', preserveAspectRatio='xMidYMid')
+            g(transform='rotate(0 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.9166666666666666s', repeatCount='indefinite')
+            g(transform='rotate(30 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.8333333333333334s', repeatCount='indefinite')
+            g(transform='rotate(60 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.75s', repeatCount='indefinite')
+            g(transform='rotate(90 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.6666666666666666s', repeatCount='indefinite')
+            g(transform='rotate(120 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.5833333333333334s', repeatCount='indefinite')
+            g(transform='rotate(150 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.5s', repeatCount='indefinite')
+            g(transform='rotate(180 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.4166666666666667s', repeatCount='indefinite')
+            g(transform='rotate(210 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.3333333333333333s', repeatCount='indefinite')
+            g(transform='rotate(240 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.25s', repeatCount='indefinite')
+            g(transform='rotate(270 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.16666666666666666s', repeatCount='indefinite')
+            g(transform='rotate(300 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='-0.08333333333333333s', repeatCount='indefinite')
+            g(transform='rotate(330 50 50)')
+              rect(x='48.5', y='24', rx='1.32', ry='1.32', width='3', height='12', fill='#9844ff')
+                animate(attributeName='opacity', values='1;0', keyTimes='0;1', dur='1s', begin='0s', repeatCount='indefinite')
+
       .col-md-7(v-if="stage === 'donate'")
         h2.featurette-heading.fw-normal.lh-1 {{donationConfig.title || standard.title}}
         p.lead {{ donationConfig.detail || standard.detail }}
@@ -201,7 +239,7 @@ export default {
       
       [err] = await wallet.signAndSendTransaction(tx)
       if(err) return console.error(err);
-      
+      that.setStage("verifying");
       [err, response] = await that._askServerToVerifyTransaction(this.transaction_ref_id);
       if(err) return console.error(err);
       else if(response.status === 200) that.setStage("complete");
@@ -219,7 +257,7 @@ export default {
     },
     
     setStage(stage){
-      const validStage = { donate: true, complete: true};
+      const validStage = { donate: true, complete: true, verifying: true};
       if(!validStage[stage]){
         console.error("invalid stage | ./frontend/donation_page/DonationPage.vue");
         return;
@@ -351,4 +389,5 @@ export default {
   .full-width {
     width: 100% !important;
   }
+
 </style>
