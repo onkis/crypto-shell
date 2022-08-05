@@ -131,9 +131,12 @@ export default {
             qrCodeSize = 275;
 
       /* Creating qr-code + appending to DOM */
-      const url = encodeURL({ recipient, amount, reference, label, message, memo });
+      let blob = { recipient, amount, reference, label, message, memo };
       
-      console.log("url", url);
+      //TODO set the SPL token on the blob object if this.config.currency !== SOL
+
+      const url = encodeURL(blob);
+      
       
       const qrCode = createQR(url, qrCodeSize);
       const element = document.getElementById('qrCode');
