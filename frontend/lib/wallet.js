@@ -149,7 +149,7 @@ class Brave{
    * @param {Object} sendOptions - Send options https://wallet-docs.brave.com/solana/provider-api/methods#bravesolanasignandsendtransaction
    * @returns {Tuple}  - [err, result]
    */
-  async signAndSendTransaction(transaction, sendOptions={}){
+  async signAndSendTransaction(transaction, sendOptions={maxRetries: 5, preflightCommitment: 'finalized', skipPreflight: false}){
     let [err, result] =  await asyncWrap(window.braveSolana.signAndSendTransaction(transaction, sendOptions));
     //TODO confirm transaction?
     return [err, result];

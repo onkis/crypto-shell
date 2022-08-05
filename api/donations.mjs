@@ -72,8 +72,10 @@ async function destroy(req, res){
 async function verifyTransaction(req, res){
   let err;
   const { reference_id } = req.params;
-
-  [err] = await donationSuccessful(reference_id);
+  
+  const network = req.query.network || "testnet";
+  
+  [err] = await donationSuccessful(reference_id, network);
   if(err){
     console.error("failed to find donation | api/donations.mjs#verifyTransaction", err);
     return res.status(404).send();
@@ -82,7 +84,7 @@ async function verifyTransaction(req, res){
   return res.status(200).send();
 }
 
-async function donationSuccessful(reference_id){
+async function donationSuccessful(reference_id, network){
   let err, donation, tx_info, signature;
   [err, donation] = await getDonation(reference_id);
   if(err){
@@ -94,7 +96,7 @@ async function donationSuccessful(reference_id){
   }
   else donation = JSON.parse(donation);
 
-  [err, tx_info] = await findTransactionOnChain(reference_id);
+  [err, tx_info] = await findTransactionOnChain(reference_id, network);
   if(err || !tx_info?.signature){
     return [new Error("failed to find tx")];
   }
@@ -108,10 +110,11 @@ async function donationSuccessful(reference_id){
   return [];
 }
 
-async function findTransactionOnChain(reference_id){
+async function findTransactionOnChain(reference_id, network){
   let signatureInfo;
-  const CLUSTER = clusterApiUrl("testnet");
+  const CLUSTER = clusterApiUrl(network || "testnet");
   const connection = new Connection(CLUSTER, 'confirmed');
+  console.log("checking transaction with ", CLUSTER)
   const finality = 'confirmed';
   const reference_id_unint8 = new PublicKey(reference_id);
 

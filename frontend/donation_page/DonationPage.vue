@@ -79,7 +79,8 @@ export default {
       phantomWallet: null,
       braveWallet: null,
       isPhantomInstalled: isPhantomInstalled(),
-      isBraveInstalled: isBraveInstalled()
+      isBraveInstalled: isBraveInstalled(),
+      network: ""
     };
   },
   computed: {
@@ -95,9 +96,11 @@ export default {
     }
   },
   async mounted() {
+    this.network = this.donationConfig.network || "testnet";
+    
     const urlParams = new URLSearchParams(window.location.search);
     
-    const CLUSTER_API_URL = clusterApiUrl(this.donationConfig.network || "testnet");
+    const CLUSTER_API_URL = clusterApiUrl(this.network);
     
     this.clusterApiUrl = CLUSTER_API_URL;
     
@@ -135,7 +138,7 @@ export default {
       
       //TODO set the SPL token on the blob object if this.config.currency !== SOL
       
-      console.log("blob", blob);
+      //console.log("blob", blob);
       
       const url = encodeURL(blob);
       
@@ -196,7 +199,7 @@ export default {
       [err, tx] = await that._createTransaction(wallet.publicKey);
       if(err) return console.error(err);
       
-      [err] = await wallet.signAndSendTransaction(tx,{})
+      [err] = await wallet.signAndSendTransaction(tx)
       if(err) return console.error(err);
       
       [err, response] = await that._askServerToVerifyTransaction(this.transaction_ref_id);
@@ -263,7 +266,8 @@ export default {
       //TODO pass in the net used for the page
       const that = this;
       try{
-        const url = `/api/donation/${transaction_ref_id}/verify`;
+        let params = new URLSearchParams({network: that.network});
+        const url = `/api/donation/${transaction_ref_id}/verify?`+params.toString();
         response = await that.$http.post(url);
         return [null, response];
       }
