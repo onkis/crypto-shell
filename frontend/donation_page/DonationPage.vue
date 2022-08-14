@@ -80,12 +80,12 @@ main#donation
           .col-lg-6
             div.row(v-if="validConfig && paymentMethod !== 'QR_CODE'")
               div.d-grid.vstack.gap-3.col-md-12.mx-auto(style="margin-top:16px;")
-                div(v-if="isPhantomInstalled")
-                  a.btn.btn-primary.btn-lg.px-4.me-md-2.login-with-button(type="button", @click="payWithPhantom()") Donate With Phantom
+                div(v-if="isPhantomInstalled && config.currency !=='USDC'")
+                  a.btn.btn-primary.btn-lg.px-4.me-md-2.login-with-button(type="button", @click="payWithPhantom()") Pay With Phantom
                 // div(v-if="isBraveInstalled")
-                //   a.btn.btn-primary.btn-lg.px-4.me-md-2(type="button", @click="payWithBrave()") Donate With Brave
+                //   a.btn.btn-primary.btn-lg.px-4.me-md-2(type="button", @click="payWithBrave()") Pay With Brave
                 div
-                  a.btn.btn-outline-secondary.btn-lg.px-4(type="button", @click="buildQrCode") QR Code
+                  a.btn.btn-outline-secondary.btn-lg.px-4(type="button", @click="buildQrCode") Pay With SolanaPay
       
             div.row(v-if="validConfig && paymentMethod === 'QR_CODE'")
               .qr-container
