@@ -171,7 +171,7 @@ export default {
             amount = new BigNumber(this.config.ammount),
             reference = new PublicKey(this.transaction_ref_id),
             //message = 'Order: #001234',
-            //memo = 'JC#4098',
+            memo = 'Rotipay -- '+window.location.toString(),
             qrCodeSize = 275;
 
       /* Creating qr-code + appending to DOM */
