@@ -3,6 +3,9 @@ main#donation
   div.container.marketing
     //hr.featurette-divider  
     .row.featurette
+      .col-md-7(v-if="stage ==='complete'")
+        h2.featurette-heading.fw-normal.lh-1 {{donationConfig.completeTitle}}
+        p.lead {{ donationConfig.completeDetails }}
       .col-md-7(v-if="stage ==='verifying'")
         h2.featurette-heading.fw-normal.lh-1 Verifying Transaction...
         p.lead Please Wait
@@ -167,8 +170,8 @@ export default {
       const recipient = new PublicKey(address),
             amount = new BigNumber(this.config.ammount),
             reference = new PublicKey(this.transaction_ref_id),
-            message = 'Order: #001234',
-            memo = 'JC#4098',
+            //message = 'Order: #001234',
+            //memo = 'JC#4098',
             qrCodeSize = 275;
 
       /* Creating qr-code + appending to DOM */
