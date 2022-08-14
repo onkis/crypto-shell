@@ -100,7 +100,7 @@ import { PublicKey, Keypair, Connection, sendAndConfirmTransaction, Transaction,
 import { encodeURL, createQR, createTransfer, parseURL, findReference } from '@solana/pay';
 import BigNumber from 'bignumber.js';
 import {isPhantomInstalled, connectToPhantom, connectToBrave, isBraveInstalled} from '../lib/wallet.js';
-
+import { SPL_ADDR } from '../../lib/solana_spl.mjs';
 export default {
   components: {},
   data() {
@@ -172,11 +172,19 @@ export default {
             qrCodeSize = 275;
 
       /* Creating qr-code + appending to DOM */
-      let blob = { recipient, amount, reference, label, message, memo };
+      let blob = { recipient, amount, reference /*, label, message, memo*/ };
       
       //TODO set the SPL token on the blob object if this.config.currency !== SOL
+      if(this.config.currency !== 'SOL'){
+        //TS is shit. you literally have to create a public key object
+        //just so this splToken can convert it BACK TO A FUCKING STRING
+        //You know accepting multiple types as function arguments actually makes
+        //programming BETTER
+        const SPLMintAddress = new PublicKey(SPL_ADDR[this.network][this.config.currency].address);
+        blob.splToken = SPLMintAddress;
+      }
       
-      //console.log("blob", blob);
+      console.log("blob", blob);
       
       const url = encodeURL(blob);
       
