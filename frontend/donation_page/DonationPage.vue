@@ -82,8 +82,8 @@ main#donation
               div.d-grid.vstack.gap-3.col-md-12.mx-auto(style="margin-top:16px;")
                 div(v-if="isPhantomInstalled")
                   a.btn.btn-primary.btn-lg.px-4.me-md-2.login-with-button(type="button", @click="payWithPhantom()") Donate With Phantom
-                // div(v-if="isBraveInstalled")
-                //   a.btn.btn-primary.btn-lg.px-4.me-md-2(type="button", @click="payWithBrave()") Donate With Brave
+                //div(v-if="isBraveInstalled")
+                  //a.btn.btn-primary.btn-lg.px-4.me-md-2(type="button", @click="payWithBrave()") Donate With Brave
                 div
                   a.btn.btn-outline-secondary.btn-lg.px-4(type="button", @click="buildQrCode") QR Code
       
@@ -101,6 +101,9 @@ main#donation
 <script>
 import { PublicKey, Keypair, Connection, sendAndConfirmTransaction, Transaction, clusterApiUrl } from '@solana/web3.js';
 import { encodeURL, createQR, createTransfer, parseURL, findReference } from '@solana/pay';
+import {getOrCreateAssociatedTokenAccount, transfer} from "@solana/spl-token";
+
+
 import BigNumber from 'bignumber.js';
 import {isPhantomInstalled, connectToPhantom, connectToBrave, isBraveInstalled} from '../lib/wallet.js';
 import { SPL_ADDR } from '../../lib/solana_spl.mjs';
@@ -260,9 +263,10 @@ export default {
     async _createDonation(){
       const amount = new BigNumber(this.config.ammount),
             asset_id = this.assetId,
-            donation_config = { ...this.config };
+            donation_config = { ...this.config },
+            currency = this.config.currency;
 
-      const response = await this.$http.post("/api/donation", {  amount, asset_id, donation_config });
+      const response = await this.$http.post("/api/donation", {  amount, asset_id, donation_config, currency});
       this.transaction_ref_id = response.data.transaction_ref_id;
       return this.transaction_ref_id;
     },
@@ -294,22 +298,63 @@ export default {
     async _createTransaction(senderPublicKey){
       const that = this;
       const { address, label } = this.donationConfig;
+      const currency = this.config.currency;
       
       const recipient = new PublicKey(address),
             reference = new PublicKey(this.transaction_ref_id),
             amount = new BigNumber(this.config.ammount),
             memo = label;
-      try{
-        const tx = await createTransfer(this.connection, senderPublicKey, { recipient, amount, reference, memo });
-        tx.feePayer = senderPublicKey;
-        return [null, tx];
+      
+      if(currency === "SOL"){
+        try{
+          const tx = await createTransfer(this.connection, senderPublicKey, { recipient, amount, reference, memo });
+          tx.feePayer = senderPublicKey;
+          return [null, tx];
+        }
+        catch(err){
+          console.error("failed to create tx | DonationPage.vue#_createTransaction", err);
+          
+          alert(err);
+          return [err];
+        }
       }
-      catch(err){
-        console.error("failed to create tx | DonationPage.vue#_createTransaction", err);
-        
-        alert(err);
-        return [err];
+      else{
+        const SPLMintAddress = new PublicKey(SPL_ADDR[this.network][this.config.currency].address);
+
+        try{
+          const associatedTokenAccountSender = await getOrCreateAssociatedTokenAccount(
+            this.connection,
+            senderPublicKey,
+            SPLMintAddress,
+            senderPublicKey
+          );
+          
+        const associatedTokenAccountRecipient = await getOrCreateAssociatedTokenAccount(
+          this.connection,
+          senderPublicKey,
+          SPLMintAddress,
+          recipient
+        );
+          
+          await transfer(
+            this.connection,
+            senderPublicKey,
+            associatedTokenAccountSender,
+            associatedTokenAccountSender.address, //WTF SOLANA who came up with these args? A typescript dev?
+            associatedTokenAccount,
+            amount,
+            SPLMintAddress
+          )
+          
+          
+        } catch(err){
+          console.error("failed to create SPL tx | DonationPage.vue#_createTransaction", err);
+          alert(err);
+          return [err];
+        }
+
       }
+
     },
     async _askServerToVerifyTransaction(transaction_ref_id){
       //TODO pass in the net used for the page
