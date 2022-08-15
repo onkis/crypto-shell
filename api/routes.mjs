@@ -71,6 +71,9 @@ router.post('/api/paymentpage/:id/unpublish', wwwAuth, paymentpage.unpublish);
 
 router.post('/api/file-upload/:page_id', wwwAuth, paymentpage.fileUpload);
 
+router.get('/api/paymentpage/:id/preview', wwwAuth, paymentpage.render);
+
+
 /* API For Donation Table */
 //TODO: This API needs some kind of route security to ensure we don't
 //get spammed by random donation create calls

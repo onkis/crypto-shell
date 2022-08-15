@@ -128,4 +128,22 @@ export async function fileUpload(req, res){
   }
 }
 
-export default { create, get, update, destroy, publish, unpublish, fileUpload };
+
+export async function render(req, res){
+  const id = req.params.id;
+  
+  let [err, page] = await PaymentPage.findByHashId(id);
+  
+  if(err){
+    console.log("render error", err);
+    return res.sendStatus(500);
+  }
+  console.log(page)
+  
+  const data = encodeURI(JSON.stringify({ ...page.config }));
+  
+  res.render('donate_page_preview', { data });
+}
+
+
+export default { create, get, update, destroy, publish, unpublish, fileUpload, render };
