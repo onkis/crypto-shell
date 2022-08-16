@@ -4,29 +4,19 @@ The crypto ecosystem moves very quickly. Being able to adapt rapidly is importan
 
 This branch is all about building a "traditional" node/express/knex app shell
 
+Try the production build at rotipay.com https://rotipay.com/
 
-# Things to install
-TODO: postgres is no longer required... might remove this
-1. postgres.app https://postgresapp.com/ 
 
-  TODO: redis is no longer required
-2. redis
-```
-  brew install redis
-  #to restart the service
-  brew services restart redis
-```
-
-3. nvm
+1. nvm
 https://github.com/nvm-sh/nvm#install--update-script
 
-4. node latest (18) and set to default
+2. node latest (18) and set to default
 ```
 nvm install v18
 nvm alias default v18
 ```
 
-5.
+3.
 setup a .env file
 ```
 HOTMAIL_USER=""
