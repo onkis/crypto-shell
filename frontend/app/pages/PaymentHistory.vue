@@ -11,16 +11,14 @@
           thead.thead-light
             tr
               th Signature
-              th Created
               th Amount
-              th Label
-              th Memo
+              th Date
           tbody
             tr(v-for="tx in transactions")
               td 
                 a(:href="getExplorerLink(tx.signature)" target="_blank") {{ tx.transaction_ref_id }}
-              td {{ tx.created_at }}
               td {{ tx.amount }}
+              td {{ tx.created_at }}
 </template>
 
 <script>
@@ -73,4 +71,7 @@ export default {
 </script>
 
 <style scoped>
+  #transactions td {
+    padding: .3rem 1.5rem;
+  }
 </style>
