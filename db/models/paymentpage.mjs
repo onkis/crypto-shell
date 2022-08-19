@@ -13,8 +13,14 @@ export default class paymentpage extends core {
       org_id,
       config: {
         "address": address,
-        "label":"Enter Label", 
-        "redirectUrl": ""
+        "label":"Enter Label",
+        "logo": "https://s3.amazonaws.com/crypto-shell-prod/images/rE/rE/e28cb4e4055c4ec947e0b3307",
+        "network": "mainnet-beta",
+        "redirectUrl": "",
+        "title": "Enter Title",
+        "detail": "Enter Details",
+        "completeTitle": "Thank You",
+        "completeDetails": "Every Donation Helps!"
        }
     };
 

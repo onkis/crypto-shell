@@ -120,7 +120,7 @@ export default {
     },
     
     updatePageLink(){
-      this.landingPageLink = `//${process.env.BASE_URL}/p/${this.hashId}/${this.dashify(this.config.title)}`;
+      this.landingPageLink = `//${process.env.BASE_URL}/p/${this.hashId}/${this.dashify(this.config?.title) || ''}`;
     },
     async init(){
       console.log("init!");
@@ -134,7 +134,7 @@ export default {
       this.config = { ...data.config };
       this.is_published = data.is_published;
       this.previewLink = "/api/paymentpage/"+data.hashId+"/preview";
-      this.landingPageLink = `//${process.env.BASE_URL}/p/${data.hashId}/${this.dashify(data.config.title || "")}`;
+      this.landingPageLink = `//${process.env.BASE_URL}/p/${data.hashId}/${this.dashify(data?.config?.title || "")}`;
     },
     async publish(){
       const response = await this.$http.post("/api/paymentpage/3/publish");
