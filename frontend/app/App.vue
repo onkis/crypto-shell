@@ -29,7 +29,7 @@ div
         .flex.items-center.flex-shrink-0.px-4
           img.h-8.w-auto(src='https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600', alt='Workflow')
         nav.mt-5.flex-1.px-2.bg-white.space-y-1
-          a(v-for='item in navigation', :key='item.name', :href='item.href', :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']")
+          a(v-for='item in navigation', :key='item.name', :href='item.href', :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']", @click="navChange(item)")
             component(:is='item.icon', :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']", aria-hidden='true')
             | {{ item.name }}
 
@@ -77,6 +77,11 @@ export default {
   }, 
   mounted() {},
   methods: {
+    navChange: function(navItem){
+      
+      this.navigation.forEach(function(n){ n.current= false;});
+      navItem.current = true;
+    },
     openSidebar: function(){
       this.sidebarOpen = true;
     }
