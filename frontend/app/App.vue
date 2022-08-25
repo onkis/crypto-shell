@@ -70,8 +70,7 @@ import {
 export default {
   components: { 
     Dialog, DialogPanel, TransitionChild, 
-    TransitionRoot, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon,
-    InboxIcon, MenuIcon, UsersIcon, XIcon },
+    TransitionRoot },
   data() {
     return {
       navigation: [
