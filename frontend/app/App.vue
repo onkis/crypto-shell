@@ -39,30 +39,21 @@ div
         span.sr-only Open sidebar
         MenuIcon.h-6.w-6(aria-hidden='true')
     main.flex-1
-      .py-6
-        .max-w-7xl.mx-auto.px-4(class='sm:px-6 md:px-8')
-          h1.text-2xl.font-semibold.text-gray-900 Dashboard
-        .max-w-7xl.mx-auto.px-4(class='sm:px-6 md:px-8')
-          // Replace with your content
-          .py-4
-            .border-4.border-dashed.border-gray-200.rounded-lg.h-96
-            // /End replace
+      router-view
 
-  router-view
+  
 </template>
 
 <script>
 //import {ref} from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
+  UserIcon,
   MenuIcon,
-  UsersIcon,
-  XIcon
+  ChartSquareBarIcon,
+  XIcon,
+  PencilAltIcon,
+  LogoutIcon
 } from '@heroicons/vue/outline'
 
 
@@ -74,12 +65,12 @@ export default {
   data() {
     return {
       navigation: [
-        { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-        { name: 'Team', href: '#', icon: UsersIcon, current: false },
-        { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-        { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-        { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-        { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+        { name: 'Page Setup', href: '/app#/page-setup', icon: PencilAltIcon, current: true },
+
+        { name: 'User Settings', href: '/app#/user-settings', icon: UserIcon, current: false },
+        { name: 'Payment History', href: '/app#/payment-history', icon: ChartSquareBarIcon, current: false },
+        { name: 'Logout', href: '/logout', icon: LogoutIcon, current: false }
+        
       ],
       sidebarOpen: false
     };
@@ -87,7 +78,6 @@ export default {
   mounted() {},
   methods: {
     openSidebar: function(){
-      console.log("DORKS")
       this.sidebarOpen = true;
     }
   }
