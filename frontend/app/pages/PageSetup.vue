@@ -5,10 +5,6 @@
       .col-lg-4
         h4.font-semibold.text-lg Payment Setup
     .row
-      .col-lg-4
-      .col-lg-8
-        a(:href="landingPageLink" target='_blank') {{ landingPageLink }}
-    .row
       .grid.grid-cols-6.grid-flow-col.gap-4.mt-6
         .col-span-2
           div(style="min-height: 350px;").rounded-lg.shadow-lg.bg-white.max-w-sm.p-4
@@ -110,6 +106,9 @@
               ).inline-block.px-6.bg-yellow-500.text-white.font-medium.text-xs.leading-tight.uppercase.rounded.shadow-md.transition.duration-150.ease-in-out Warning
         .col-span-4
           div.rounded-lg.shadow-lg.bg-white.p-4.h-full
+            div
+              a(:href="landingPageLink" target='_blank') {{ landingPageLink }}
+            hr.my-2
             iframe#preview(v-bind:src="previewLink" style='width:140%; height:140%; transform: scale(0.7); transform-origin: 0; margin-top:-20%')
 </template>
 
