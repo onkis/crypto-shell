@@ -94,27 +94,23 @@
                   option(value= 'mainnet-beta') Mainnet Beta
                   option(value='devnet') Devnet
                   option(value='testnet') Testnet
-
-
-          div
-        .col-span-4
-          div(style="min-height: 350px;").rounded-lg.shadow-lg.bg-white.p-4
-    //- .row.mt-5
-              .col-12
-                .input-group.input-group-static.mb-2
-                label Solana Network
-                select.form-select( v-model="config.network")
-                  option(value= 'mainnet-beta') Mainnet Beta
-                  option(value='devnet') Devnet
-                  option(value='testnet') Testnet
-                
-            .row.mt-4
+            .pt-4
               .col-lg-6.text-right.d-flex.flex-column.justify-content-center
-              button.btn.bg-gradient-primary.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(v-if="!is_published" @click="publish()" type='button') Publish
-              button.btn.bg-gradient-warning.mb-0.ms-lg-auto.me-lg-0.me-auto.mt-lg-0.mt-2(v-if="is_published" @click="unpublish()" type='button') Unpublished
-      .col-lg-8
-        iframe#preview(v-bind:src="previewLink" style='width:140%; height:140%; transform: scale(0.7); transform-origin: 0; margin-top:-20%')
-
+              button(
+                v-if="!is_published"
+                @click="publish()"
+                type='button'
+                class='py-2.5 hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg'
+              ).w-full.inline-block.items-center.px-6.bg-green-500.text-white.font-medium.text-xs.leading-tight.uppercase.rounded.shadow-md.transition.duration-150.ease-in-out Publish
+              button(
+                v-if="is_published"
+                @click="unpublish()"
+                type='button'
+                class='py-2.5 hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg'
+              ).inline-block.px-6.bg-yellow-500.text-white.font-medium.text-xs.leading-tight.uppercase.rounded.shadow-md.transition.duration-150.ease-in-out Warning
+        .col-span-4
+          div.rounded-lg.shadow-lg.bg-white.p-4.h-full
+            iframe#preview(v-bind:src="previewLink" style='width:140%; height:140%; transform: scale(0.7); transform-origin: 0; margin-top:-20%')
 </template>
 
 <script>
