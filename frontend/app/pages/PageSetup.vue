@@ -1,47 +1,105 @@
 <template lang="pug">
-#setup-page
+#setup-page.px-8
   .container-fluid.py-4
     .row
       .col-lg-4
-        h4 Payment Setup
+        h4.font-semibold.text-lg Payment Setup
     .row
       .col-lg-4
       .col-lg-8
         a(:href="landingPageLink" target='_blank') {{ landingPageLink }}
-    .row.mt-5
-      .col-lg-4.mt-lg-0.mt-4
-        .card
-          .card-body
-            h5.font-weight-bolder Configuration
-            hr
-            .row.mt-4
-              .col-12
-                .input-group.input-group-static.mb-2
-                  label Payment Address
-                  input#donationAddress.form-control(v-model="config.address" type='text' placeholder='Donation Address' v-on:click="changePreview('donate')")
-              .col-12
-                .input-group.input-group-static.mb-2
-                  label Logo
-                  input#label.form-control(v-model="config.logo" type='text' placeholder='Logo Src' v-on:click="changePreview('donate')")
-                button.button.btn.bg-gradient-primary(@click="chooseFiles()") Upload File
-                .input-group.input-group-static.mb-2
-                  input.form-control#fileUpload(type="file", @change="uploadImage", hidden)
-              .col-12
-                .input-group.input-group-static.mb-2
-                  label Title
-                  input#label.form-control(v-model="config.title" type='text' placeholder='Enter Title' v-on:click="changePreview('donate')" v-on:change="updatePageLink()")
-              .col-12
-                .input-group.input-group-static.mb-2
-                  label Details
-                  input#detail.form-control(v-model="config.detail" type='text' placeholder='Enter Details' v-on:click="changePreview('donate')")
-              .col-12
-                .input-group.input-group-static.mb-2
-                  label Completed Title
-                  input#detail.form-control(v-model="config.completeTitle" type='text' placeholder='Enter Completed Title' v-on:click="changePreview('complete')")
-              .col-12
-                .input-group.input-group-static.mb-2
-                  label Completed Details
-                  input#detail.form-control(v-model="config.completeDetails" type='text' placeholder='Enter Completed Details' v-on:click="changePreview('complete')")
+    .row
+      .grid.grid-cols-6.grid-flow-col.gap-4.mt-6
+        .col-span-2
+          div(style="min-height: 350px;").rounded-lg.shadow-lg.bg-white.max-w-sm.p-4
+            h5.pb-2.font-weight-bolder Configuration
+            hr.my-2
+            div
+              label.block.text-sm.font-medium.text-gray-700 Donation Address
+              .mt-1
+                input(
+                  v-model="config.address"
+                  v-on:click="changePreview('donate')"
+                  type='text'
+                  placeholder='Donation Address'
+                  class='focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                )#donationAddress.shadow-sm.block.w-full.border-gray-300.rounded-md
+            .pt-4
+              label.block.text-sm.font-medium.text-gray-700 Image
+              .mt-1
+                input(
+                  v-model="config.logo"
+                  v-on:click="changePreview('donate')"
+                  type='text'
+                  placeholder='Donation Address'
+                  class='focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                )#image.shadow-sm.block.w-full.border-gray-300.rounded-md
+            .pt-4
+              button(
+                @click="chooseFiles()"
+                type='button'
+                class='hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+              ).inline-flex.items-center.px-3.py-2.border.border-transparent.text-sm.leading-4.font-medium.rounded-md.text-indigo-700.bg-indigo-100
+                | Upload Image
+                input.form-control#fileUpload(type="file", @change="uploadImage", hidden)
+            .pt-4
+              label.block.text-sm.font-medium.text-gray-700 Title
+              .mt-1
+                input(
+                  v-model="config.title"
+                  v-on:click="changePreview('donate')"
+                  v-on:change="updatePageLink()"
+                  type='text'
+                  placeholder='Enter Title'
+                  class='focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                )#image.shadow-sm.block.w-full.border-gray-300.rounded-md
+            .pt-4
+              label.block.text-sm.font-medium.text-gray-700 Details
+              .mt-1
+                input(
+                  v-model="config.details"
+                  v-on:click="changePreview('donate')"
+                  v-on:change="updatePageLink()"
+                  type='text'
+                  placeholder='Enter Details'
+                  class='focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                )#image.shadow-sm.block.w-full.border-gray-300.rounded-md
+            hr.my-4
+            div
+              label.block.text-sm.font-medium.text-gray-700 Completed Title
+              .mt-1
+                input(
+                  v-model="config.completeTitle"
+                  v-on:click="changePreview('complete')"
+                  type='text'
+                  placeholder='Enter Completed Title'
+                  class='focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                ).shadow-sm.block.w-full.border-gray-300.rounded-md
+            .pt-4
+              label.block.text-sm.font-medium.text-gray-700 Completed Details
+              .mt-1
+                input(
+                  v-model="config.completeDetails"
+                  v-on:click="changePreview('complete')"
+                  type='text'
+                  placeholder='Enter Completed Details'
+                  class='focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                ).shadow-sm.block.w-full.border-gray-300.rounded-md
+            .pt-4
+              label.block.text-sm.font-medium.text-gray-700 Location
+                select(
+                  v-model="config.network"
+                  class='focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                ).mt-1.block.w-full.pl-3.pr-10.py-2.text-base.border-gray-300.rounded-md
+                  option(value= 'mainnet-beta') Mainnet Beta
+                  option(value='devnet') Devnet
+                  option(value='testnet') Testnet
+
+
+          div
+        .col-span-4
+          div(style="min-height: 350px;").rounded-lg.shadow-lg.bg-white.p-4
+    //- .row.mt-5
               .col-12
                 .input-group.input-group-static.mb-2
                 label Solana Network
