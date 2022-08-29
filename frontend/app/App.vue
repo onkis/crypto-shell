@@ -42,7 +42,20 @@ div
       router-view
 
 
- 
+  // Global notification live region, render this permanently at the end of the document
+  .pointer-events-none.fixed.inset-0.flex.items-end.px-4.py-6(aria-live='assertive', class='sm:items-start sm:p-6')
+   .flex.w-full.flex-col.items-center.space-y-4(class='sm:items-end')
+     // Notification panel, dynamically insert this into the live region when it needs to be displayed
+     transition(enter-active-class='transform ease-out duration-300 transition', enter-from-class='translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2', enter-to-class='translate-y-0 opacity-100 sm:translate-x-0', leave-active-class='transition ease-in duration-100', leave-from-class='opacity-100', leave-to-class='opacity-0')
+       .pointer-events-auto.w-full.max-w-sm.overflow-hidden.rounded-lg.bg-white.shadow-lg.ring-1.ring-black.ring-opacity-5(v-if='alertIsVisible')
+         .p-4
+           .flex.items-center
+             .flex.w-0.flex-1.justify-between
+               p.w-0.flex-1.text-sm.font-medium.text-gray-900 {{alertMessage}}
+             .ml-4.flex.flex-shrink-0
+               button.inline-flex.rounded-md.bg-white.text-gray-400(type='button', @click='alertIsVisible = false', class='hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2')
+                 span.sr-only Close
+                 SolidXMarkIcon.h-5.w-5(aria-hidden='true')
 </template>
 
 <script>
@@ -57,14 +70,18 @@ import {
   ArrowRightOnRectangleIcon
 } from '@heroicons/vue/24/outline'
 
+import { XMarkIcon as SolidXMarkIcon} from '@heroicons/vue/20/solid'
+
 
 
 export default {
   components: { 
     Dialog, DialogPanel, TransitionChild, 
-    TransitionRoot, XMarkIcon, Bars3Icon },
+    TransitionRoot, XMarkIcon, Bars3Icon, SolidXMarkIcon },
   data() {
     return {
+      alertMessage: "",
+      alertIsVisible: false,
       navigation: [
         { name: 'Page Setup', href: '/app#/page-setup', icon: PencilSquareIcon, current: true },
 
@@ -76,7 +93,9 @@ export default {
       sidebarOpen: false
     };
   }, 
-  mounted() {},
+  mounted() {
+    window.AlertManager = this.alertManager;
+  },
   methods: {
     navChange: function(navItem){
       
@@ -85,6 +104,19 @@ export default {
     },
     openSidebar: function(){
       this.sidebarOpen = true;
+    },
+    
+    /**
+     * Shows alert notification
+     * @param {Object} alertObj - {type: <String>, message: <String>, hideAfter: <Number>}
+     */
+    alertManager(alertObj){
+      this.alertMessage = alertObj.message;
+      this.alertIsVisible = true;
+      var that = this;
+      setInterval(function(){
+        that.alertIsVisible = false;
+      }, alertObj.hideAfter || 3000);
     }
   }
 };

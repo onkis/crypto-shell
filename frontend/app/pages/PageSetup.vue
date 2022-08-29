@@ -114,21 +114,6 @@
     :modalActive="openValidateEmailModal"
     @close="validateEmailModalClosed"
   )
-  // Global notification live region, render this permanently at the end of the document
-  .pointer-events-none.fixed.inset-0.flex.items-end.px-4.py-6(aria-live='assertive', class='sm:items-start sm:p-6')
-    .flex.w-full.flex-col.items-center.space-y-4(class='sm:items-end')
-      // Notification panel, dynamically insert this into the live region when it needs to be displayed
-      transition(enter-active-class='transform ease-out duration-300 transition', enter-from-class='translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2', enter-to-class='translate-y-0 opacity-100 sm:translate-x-0', leave-active-class='transition ease-in duration-100', leave-from-class='opacity-100', leave-to-class='opacity-0')
-        .pointer-events-auto.w-full.max-w-sm.overflow-hidden.rounded-lg.bg-white.shadow-lg.ring-1.ring-black.ring-opacity-5(v-if='alertIsVisible')
-          .p-4
-            .flex.items-center
-              .flex.w-0.flex-1.justify-between
-                p.w-0.flex-1.text-sm.font-medium.text-gray-900 {{alertMessage}}
-              .ml-4.flex.flex-shrink-0
-                button.inline-flex.rounded-md.bg-white.text-gray-400(type='button', @click='alertIsVisible = false', class='hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2')
-                  span.sr-only Close
-                  XMarkIcon.h-5.w-5(aria-hidden='true')
-
 </template>
 
 <script setup>
@@ -140,8 +125,6 @@ const openValidateEmailModal = ref(false);
 import ValidateEmailModal from '../modals/ValidateEmailModal.vue';
 //import EulaModal from '../modals/EulaModal.vue';
 import { debounce, isEmpty } from "lodash";
-
-import { XMarkIcon } from '@heroicons/vue/20/solid'
 
 export default {
   components: { },
@@ -222,14 +205,14 @@ export default {
       }
       else if(response){
         this.is_published = true;
-        this.alertManager({type: "success", "message": "Page Published!", hideAfter: 3000 });
+        window.AlertManager({type: "success", "message": "Page Published!", hideAfter: 3000 });
       }
     },
     async unpublish(){
       const response = await this.$http.post("/api/paymentpage/3/unpublish");
       if(response){
         this.is_published = false;
-        this.alertManager({type: "success", "message": "Page Unpublished!", hideAfter: 3000 });
+        window.AlertManager({type: "success", "message": "Page Unpublished!", hideAfter: 3000 });
       }
     },
     async update(passedEula){
@@ -243,7 +226,7 @@ export default {
       const response = await this.$http.put("/api/paymentpage/3", update);
       if(response){
         document.getElementById('preview').contentWindow.location.reload();
-        this.alertManager({type: "success", "message": "Setup Saved!", hideAfter: 3000 });
+        window.AlertManager({type: "success", "message": "Setup Saved!", hideAfter: 3000 });
       }
     },
     chooseFiles(){
@@ -270,7 +253,7 @@ export default {
       if (imageFile) {
         // check the file type to be image
         if (!imageFile.type.includes("image")) {
-          this.alertManager({type: "error", "message": "Invalid File Type", hideAfter: 3000 });
+          window.AlertManager({type: "error", "message": "Invalid File Type", hideAfter: 3000 });
         }
         else {
           let data = new FormData();
@@ -283,7 +266,7 @@ export default {
             })
             .catch((err) => {
               console.error("error uploading image", err);
-              this.alertManager({type: "error", "message": "Error Uploading Image", hideAfter: 3000 });
+              window.AlertManager({type: "error", "message": "Error Uploading Image", hideAfter: 3000 });
 
             });
         }
@@ -305,12 +288,8 @@ export default {
       str = str.replace(/^-+|-+$/g, '');
       str = str.replace(/-+/g, '-');
       return encodeURIComponent(str.toLowerCase());
-    },
-    
-    alertManager(alertObj){
-      this.alertMessage = alertObj.message;
-      this.alertIsVisible = true;
     }
+
   }
 }
 </script>
