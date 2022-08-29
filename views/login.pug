@@ -7,56 +7,24 @@ html(lang="en")
     //link(rel="icon", type="image/png", href="../../../assets/img/favicon.png")
     title
       | Login
-    // Fonts and icons
-    link(rel="stylesheet", type="text/css", href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700")
-    // Material Icons
-    link(href='https://fonts.googleapis.com/icon?family=Material+Icons+Round' rel='stylesheet')
-    // Font Awesome Icons
-    script(src='https://kit.fontawesome.com/42d5adcbca.js' crossorigin='anonymous')
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
-  body.bg-gray-200
-    main.main-content.mt-0
-      .page-header.align-items-start.min-vh-90.m-3.border-radius-xl(style="")
-        .container.my-auto
-          .row
-            .col-lg-4.col-md-7.mx-auto
-              .card.z-index-0.my-auto
-                .card-header.p-0.position-relative.mt-n4.mx-3.z-index-2
-                  .bg-gradient-success.shadow-success.border-radius-lg.py-3.text-center
-                    h4.font-weight-bolder.text-white.mb-0.mt-1 Request Login Code
-                    p.text-white.mb-1 You will receive an e-mail shortly
-                .card-body
-                  form(role='form', action="/auth/login", method="post")
-                    .input-group.input-group-static.mb-3
-                      label Email
-                      input.form-control(name='email', type="email", placeholder="")
-
-                    .text-center
-                      button.btn.bg-gradient-dark.btn-lg.w-100.my-4.mb-2(type='submit') Send Code
-      footer.footer.my-auto.py-2
-        .container-fluid
-          .row.align-items-center.justify-content-lg-between
-            .col-12.col-md-6.my-auto
-              .copyright.text-center.text-sm.text-muted.text-lg-start
-                
-            .col-12.col-md-6
-              // ul.nav.nav-footer.justify-content-center.justify-content-lg-end
-              //   li.nav-item
-              //     a.nav-link.text-muted(href='https://www.creative-tim.com', target='_blank') Creative Tim
-              //   li.nav-item
-              //     a.nav-link.text-muted(href='https://www.creative-tim.com/presentation', target='_blank') About Us
-              //   li.nav-item
-              //     a.nav-link.text-muted(href='https://www.creative-tim.com/blog', target='_blank') Blog
-              //   li.nav-item
-              //     a.nav-link.pe-0.text-muted(href='https://www.creative-tim.com/license', target='_blank') License
-    
-    script.
-      var win = navigator.platform.indexOf('Win') > -1;
-      if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-          damping: '0.5'
-        }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-      }
-    link(rel='stylesheet' href='dist/material-dashboard.css')
-    script(type='text/javascript' src='dist/material-dashboard.js')
+    link(rel='stylesheet', href='https://rsms.me/inter/inter.css')
+    link(rel='stylesheet' href='/dist/tailwind.css')
+  body
+    .min-h-full.flex.items-center.justify-center.py-12.px-4(class='sm:px-6 lg:px-8')
+      .max-w-md.w-full.space-y-8
+        div
+          img.mx-auto.h-12.w-auto(src='/images/rotipay-logo-purple.gif', alt='Workflow')
+          h2.mt-6.text-center.text-3xl.tracking-tight.font-bold.text-gray-900 Request Login Code
+          p.mt-2.text-center.text-sm.text-gray-600 You will receive an e-mail shortly
+        form.mt-8.space-y-6(action="/auth/login", method="post")
+          .rounded-md.shadow-sm.-space-y-px
+            div
+              label.sr-only(for='email-address') Email address
+              input#email-address.appearance-none.rounded-none.relative.block.w-full.px-3.py-2.border.border-gray-300.placeholder-gray-500.text-gray-900.rounded-t-md.rounded-b-md(name='email', type='email', autocomplete='email', required='', class='focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm', placeholder='Email address')
+          div
+            button.group.relative.w-full.flex.justify-center.py-2.px-4.border.border-transparent.text-sm.font-medium.rounded-md.text-white.bg-indigo-600(type='submit', class='hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500')
+              span.absolute.left-0.inset-y-0.flex.items-center.pl-3
+                // Heroicon name: mini/lock-closed
+                svg.h-5.w-5.text-indigo-500(class='group-hover:text-indigo-400', xmlns='http://www.w3.org/2000/svg', viewbox='0 0 20 20', fill='currentColor', aria-hidden='true')
+                  path(fill-rule='evenodd', d='M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z', clip-rule='evenodd')
+              |           Send Code
