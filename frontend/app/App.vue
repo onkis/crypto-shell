@@ -11,7 +11,7 @@ div
               .absolute.top-0.right-0.-mr-12.pt-2
                 button.ml-1.flex.items-center.justify-center.h-10.w-10.rounded-full(type='button', class='focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white', @click='sidebarOpen = false')
                   span.sr-only Close sidebar
-                  XIcon.h-6.w-6.text-white(aria-hidden='true')
+                  XMarkIcon.h-6.w-6.text-white(aria-hidden='true')
             .flex-1.h-0.pt-5.pb-4.overflow-y-auto
               .flex-shrink-0.flex.items-center.px-4
                 img.h-8.w-auto(src='/images/rotipay-logo-purple.gif', alt='Workflow')
@@ -37,11 +37,12 @@ div
     .sticky.top-0.z-10.pl-1.pt-1.bg-gray-100(class='md:hidden sm:pl-3 sm:pt-3')
       button.h-12.w-12.inline-flex.items-center.justify-center.rounded-md.text-gray-500(type='button', class='-ml-0.5 -mt-0.5 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500', @click='openSidebar()')
         span.sr-only Open sidebar
-        MenuIcon.h-6.w-6(aria-hidden='true')
+        Bars3Icon.h-6.w-6(aria-hidden='true')
     main.flex-1
       router-view
 
-  
+
+ 
 </template>
 
 <script>
@@ -49,27 +50,27 @@ div
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import {
   UserIcon,
-  MenuIcon,
-  ChartSquareBarIcon,
-  XIcon,
-  PencilAltIcon,
-  LogoutIcon
-} from '@heroicons/vue/outline'
+  Bars3Icon,
+  ChartBarIcon,
+  XMarkIcon,
+  PencilSquareIcon,
+  ArrowRightOnRectangleIcon
+} from '@heroicons/vue/24/outline'
 
 
 
 export default {
   components: { 
     Dialog, DialogPanel, TransitionChild, 
-    TransitionRoot, XIcon, MenuIcon },
+    TransitionRoot, XMarkIcon, Bars3Icon },
   data() {
     return {
       navigation: [
-        { name: 'Page Setup', href: '/app#/page-setup', icon: PencilAltIcon, current: true },
+        { name: 'Page Setup', href: '/app#/page-setup', icon: PencilSquareIcon, current: true },
 
         { name: 'User Settings', href: '/app#/user-settings', icon: UserIcon, current: false },
-        { name: 'Payment History', href: '/app#/payment-history', icon: ChartSquareBarIcon, current: false },
-        { name: 'Logout', href: '/logout', icon: LogoutIcon, current: false }
+        { name: 'Payment History', href: '/app#/payment-history', icon: ChartBarIcon, current: false },
+        { name: 'Logout', href: '/logout', icon: ArrowRightOnRectangleIcon, current: false }
         
       ],
       sidebarOpen: false
