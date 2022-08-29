@@ -53,7 +53,7 @@
               label.block.text-sm.font-medium.text-gray-700 Details
               .mt-1
                 input(
-                  v-model="config.details"
+                  v-model="config.detail"
                   v-on:click="changePreview('donate')"
                   v-on:change="updatePageLink()"
                   type='text'
