@@ -5,7 +5,7 @@ import PaymentHistory from './pages/PaymentHistory.vue'
 
 const routes = [
   {
-    path: "/user-setttings",
+    path: "/user-settings",
     name: "UserSettings",
     component: UserSettings
   },
