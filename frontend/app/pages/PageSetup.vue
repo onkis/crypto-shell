@@ -103,7 +103,7 @@
                 @click="unpublish()"
                 type='button'
                 class='py-2.5 hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg'
-              ).inline-block.px-6.bg-yellow-500.text-white.font-medium.text-xs.leading-tight.uppercase.rounded.shadow-md.transition.duration-150.ease-in-out Warning
+              ).inline-block.px-6.bg-yellow-500.text-white.font-medium.text-xs.leading-tight.uppercase.rounded.shadow-md.transition.duration-150.ease-in-out UnPublish
         .col-span-4
           div.rounded-lg.shadow-lg.bg-white.p-4.h-full
             div
