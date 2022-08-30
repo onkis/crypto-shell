@@ -114,16 +114,21 @@
     :modalActive="openValidateEmailModal"
     @close="validateEmailModalClosed"
   )
+  EulaModal(
+    :modalActive="openEulaModal"
+    @close="eulaModalClosed"
+  )
 </template>
 
 <script setup>
 import { ref } from 'vue'
 const openValidateEmailModal = ref(false);
+const openEulaModal = ref(false);
 </script>
 
 <script>
 import ValidateEmailModal from '../modals/ValidateEmailModal.vue';
-//import EulaModal from '../modals/EulaModal.vue';
+import EulaModal from '../modals/EulaModal.vue';
 import { debounce, isEmpty } from "lodash";
 
 export default {

@@ -75,8 +75,8 @@ main#donation
                       option(value='USDC') USDC
                       option(value='SOL') SOL
                   .col
-                    label.form-label(for="Ammount") Ammount
-                    input#Ammount.form-control(v-model="config.ammount", min=0, type='number')
+                    label.form-label(for="Amount") Amount
+                    input#Amount.form-control(v-model="config.ammount", min=0, type='number')
           .col-lg-6
             div.row(v-if="validConfig && paymentMethod !== 'QR_CODE'")
               div.d-grid.vstack.gap-3.col-md-12.mx-auto(style="margin-top:16px;")
