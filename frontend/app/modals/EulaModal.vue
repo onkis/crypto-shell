@@ -32,7 +32,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                       mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                       color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
                         | NOTICE TO USER:
-                        o:p
+                        
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -45,7 +45,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:\
                     "Times New Roman";mso-bidi-font-family:"Times New Roman";color:#303030;\
                     mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     b
@@ -53,7 +53,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                       mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                       color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
                         | 1. DEFINITIONS
-                        o:p
+                        
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -64,7 +64,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                       | such meanings to be applicable to both the singular and plural forms of the
                       | terms defined:
                       b
-                        o:p
+                        
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -76,7 +76,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -87,7 +87,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -106,7 +106,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -119,7 +119,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:\
                     "Times New Roman";mso-bidi-font-family:"Times New Roman";color:#303030;\
                     mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -130,7 +130,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     b
@@ -138,7 +138,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                       mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                       color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
                         | 2. GENERAL USE&nbsp;
-                        o:p
+                        
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -147,7 +147,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                       | You are granted a
                       | non-exclusive License to use the Software for any purposes for an unlimited
                       | period of time.
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -160,7 +160,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -171,7 +171,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -182,7 +182,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -195,7 +195,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -208,7 +208,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -220,7 +220,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     b
@@ -232,7 +232,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -245,7 +245,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -257,7 +257,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -269,7 +269,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -282,7 +282,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -297,7 +297,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -312,7 +312,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     b
@@ -322,7 +322,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";mso-fareast-font-family:\
                     "Times New Roman";mso-bidi-font-family:"Times New Roman";color:#303030;\
                     mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -333,7 +333,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:\
                     "Times New Roman";mso-bidi-font-family:"Times New Roman";color:#303030;\
                     mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -345,7 +345,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -357,7 +357,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:\
                     "Helvetica Neue";mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:\
                     "Times New Roman";color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -370,7 +370,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:\
                     "Times New Roman";mso-bidi-font-family:"Times New Roman";color:#303030;\
                     mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -383,7 +383,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";\
                     mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";\
                     color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -401,7 +401,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:\
                     "Times New Roman";mso-bidi-font-family:"Times New Roman";color:#303030;\
                     mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     b
@@ -410,7 +410,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                       color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
                         | 5. LIMITATION OF
                         | LIABILITY
-                        o:p
+                        
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -424,7 +424,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:"Helvetica Neue";mso-fareast-font-family:"Times New Roman";\
                     mso-bidi-font-family:"Times New Roman";color:#303030;mso-font-kerning:0pt;\
                     mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -436,7 +436,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-family:\
                     "Helvetica Neue";mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:\
                     "Times New Roman";color:#303030;mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     b
@@ -446,7 +446,7 @@ TransitionRoot(as="template" :show="openValidateEmailModal")
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";mso-fareast-font-family:\
                     "Times New Roman";mso-bidi-font-family:"Times New Roman";color:#303030;\
                     mso-font-kerning:0pt;mso-ligatures:none')
-                      o:p
+                      
                   p.MsoNormal(style='margin-bottom:11.25pt;text-align:justify;line-height:\
                   13.5pt;background:white')
                     span(style='font-size:10.0pt;font-family:"Helvetica Neue";\
@@ -491,7 +491,6 @@ export default {
       this.close({ eventType: "cancel" });
     },
     handleValidate(){
-      if(!this.email.length) return;
       this.close({ eventType: "agreed" });
     },
     close(props){
