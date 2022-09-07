@@ -1,8 +1,4 @@
-# Welcome to Cypto Shell. A holding place for initial crypto ideas
-
-The crypto ecosystem moves very quickly. Being able to adapt rapidly is important
-
-This branch is all about building a "traditional" node/express/knex app shell
+# Welcome to Cypto Shell. The repo for rotipay.com
 
 Try the production build at rotipay.com https://rotipay.com/
 
@@ -45,6 +41,3 @@ Airdrop 1 SOL devnet
 ```
 solana airdrop 1 <ADDRESS> --url https://api.devnet.solana.com
 ```
-
-# UIKit
-Docs here https://www.creative-tim.com/learning-lab/vue/overview/material-dashboard/
